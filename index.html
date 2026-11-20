@@ -1972,6 +1972,15 @@ function renderSettings(){
         <button type="button" class="set-toggle" id="privacySecurityToggle" aria-label="Уведомления о безопасности"></button>
       </div>
       <div class="set-row" style="display:block">
+        <div class="lbl">Email аккаунта</div>
+        <div class="sub" id="accountEmailValue">Загрузка…</div>
+      </div>
+      <div class="set-row" style="display:block">
+        <div class="lbl">Поддержка</div>
+        <div class="sub">Вопросы по аккаунту, приватности или удалению данных — через официальный Telegram.</div>
+        <a href="https://t.me/Facearenan" target="_blank" rel="noopener noreferrer" class="menu-item" style="display:inline-flex;width:auto;margin-top:8px;padding:10px 13px;color:#8fcaff;text-decoration:none">Написать в Telegram ↗</a>
+      </div>
+      <div class="set-row" style="display:block">
         <div class="lbl">Активные сеансы</div>
         <div class="sub" id="currentSessionInfo">Загрузка списка сеансов…</div>
         <div id="activeSessionsList" aria-live="polite" style="display:grid;gap:8px;margin-top:10px"></div>
@@ -1979,16 +1988,32 @@ function renderSettings(){
       </div>
       <div class="set-row" style="display:block">
         <div class="lbl">Удаление аккаунта</div>
-        <div class="sub">Удаление аккаунта и фотографий требует отдельной процедуры, чтобы не повредить сохранённые результаты боёв.</div>
-        <button type="button" class="menu-item danger" id="accountDeletionInfo" style="padding:10px 0">Подробнее</button>
+        <div class="sub">Безвозвратно удалить аккаунт, профиль, фотографии и персональные данные. Завершённые результаты сохраняются обезличенными.</div>
+        <button type="button" class="menu-item danger" id="accountDeletionInfo" style="padding:10px 0">Удалить аккаунт</button>
+      </div>
+      <div id="faAccountDeleteModal" role="dialog" aria-modal="true" aria-labelledby="faAccountDeleteTitle" style="display:none;position:fixed;inset:0;z-index:100500;background:rgba(0,0,0,.82);place-items:center;padding:20px">
+        <div style="width:min(100%,420px);padding:22px;border:1px solid #343434;border-radius:18px;background:#101010;box-shadow:0 18px 70px #000">
+          <h2 id="faAccountDeleteTitle" class="sec-h" style="margin:0 0 12px;color:#ff6b6b">Удалить аккаунт?</h2>
+          <p class="set-info" style="margin:0 0 12px">Это действие нельзя отменить. Будут удалены email-аккаунт, профиль, аватар, загруженные фотографии, личные голоса и комментарии, уведомления и Push-подписки.</p>
+          <p class="set-info" style="margin:0 0 14px">Завершённые результаты баттлов и счёт сохранятся без имени и фотографий — для целостности истории и статистики. Незавершённые баттлы будут отменены, фотографии соперников вернутся в очередь.</p>
+          <label for="faAccountDeleteInput" class="lbl" style="display:block;margin-bottom:7px">Для подтверждения введите DELETE</label>
+          <input id="faAccountDeleteInput" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="DELETE" style="width:100%;padding:13px;border:1px solid #444;border-radius:10px;background:#080808;color:#fff;font:700 14px Manrope,Arial,sans-serif">
+          <div style="display:flex;gap:9px;margin-top:16px">
+            <button type="button" class="menu-item" id="faAccountDeleteCancel" style="flex:1;padding:12px;border:1px solid #333;border-radius:10px">Отмена</button>
+            <button type="button" class="menu-item danger" id="faAccountDeleteConfirm" disabled style="flex:1;padding:12px;border:1px solid #572323;opacity:.45">Удалить навсегда</button>
+          </div>
+          <p id="faAccountDeleteStatus" role="status" aria-live="polite" style="margin:12px 0 0;color:#ff9a9a;font-size:12px"></p>
+        </div>
       </div>
     </div>
 
     <div id="setSubData" class="settings-sub">
       <button type="button" class="settings-back" id="backFromData">← Назад</button>
       <h2 class="sec-h" style="margin-top:4px">Данные</h2>
-      <p class="set-info">Аккаунт, фотографии, очередь, голоса и результаты хранятся на сервере и синхронизируются между устройствами.</p>
-      <p class="set-info">Очистка локального кэша не удаляет серверные фотографии и историю.</p>
+      <p class="set-info">Email и данные профиля обрабатываются через Supabase. Фотографии хранятся в закрытом хранилище и выдаются по временным ссылкам.</p>
+      <p class="set-info">При удалении аккаунта удаляются профиль, email-учётная запись, аватар, фотографии, личные голоса и комментарии, уведомления и Push-подписки.</p>
+      <p class="set-info">Завершённые итоги баттлов и количество голосов остаются в обезличенном виде. Имя, профиль и изображения удалённого участника больше не отображаются. Незавершённые баттлы отменяются.</p>
+      <p class="set-info">Очистка локального кэша не удаляет серверные данные. Политика конфиденциальности: <a href="./privacy.html" style="color:#8db2ff">Privacy Policy</a>.</p>
       <button type="button" class="menu-item danger" id="setResetBtn">Очистить локальный кэш</button>
     </div>
 
@@ -2285,8 +2310,64 @@ function renderSettings(){
     catch(error){toast(window.FaceArenaErrors.message(error,"Не удалось завершить другие сеансы. Попробуйте позже."));}
     finally{revokeBtn.disabled=false;}
   };
+  const accountEmailValue=$("accountEmailValue");
+  if(accountEmailValue){
+    const currentUser=window.FaceArenaSync?.getUser?.();
+    accountEmailValue.textContent=currentUser?.email||"Email недоступен";
+  }
   const deletionInfo=$("accountDeletionInfo");
-  if(deletionInfo)deletionInfo.onclick=()=>toast("Удаление будет включено после безопасного переноса исторических результатов в обезличенный архив");
+  const deletionModal=$("faAccountDeleteModal");
+  const deletionInput=$("faAccountDeleteInput");
+  const deletionConfirm=$("faAccountDeleteConfirm");
+  const deletionCancel=$("faAccountDeleteCancel");
+  const deletionStatus=$("faAccountDeleteStatus");
+  const closeDeletionModal=()=>{
+    if(deletionModal)deletionModal.style.display="none";
+    if(deletionInput){deletionInput.value="";deletionInput.disabled=false;}
+    if(deletionConfirm){deletionConfirm.disabled=true;deletionConfirm.style.opacity=".45";deletionConfirm.textContent="Удалить навсегда";}
+    if(deletionCancel)deletionCancel.disabled=false;
+    if(deletionStatus)deletionStatus.textContent="";
+  };
+  if(deletionInfo&&deletionModal&&deletionInput&&deletionConfirm){
+    deletionInfo.onclick=()=>{
+      deletionModal.style.display="grid";
+      deletionInput.value="";
+      deletionConfirm.disabled=true;
+      deletionConfirm.style.opacity=".45";
+      if(deletionStatus)deletionStatus.textContent="";
+      setTimeout(()=>deletionInput.focus(),50);
+    };
+    deletionInput.addEventListener("input",()=>{
+      const valid=deletionInput.value.trim()==="DELETE";
+      deletionConfirm.disabled=!valid;
+      deletionConfirm.style.opacity=valid?"1":".45";
+    });
+    if(deletionCancel)deletionCancel.onclick=closeDeletionModal;
+    deletionModal.addEventListener("click",event=>{if(event.target===deletionModal)closeDeletionModal()});
+    deletionConfirm.onclick=async()=>{
+      if(deletionInput.value.trim()!=="DELETE"||deletionConfirm.disabled)return;
+      const sync=window.FaceArenaSync;
+      if(!sync?.isOnline?.()){if(deletionStatus)deletionStatus.textContent="Сеанс истёк. Войдите снова.";return;}
+      deletionConfirm.disabled=true;
+      deletionInput.disabled=true;
+      if(deletionCancel)deletionCancel.disabled=true;
+      deletionConfirm.textContent="Удаляем…";
+      if(deletionStatus)deletionStatus.textContent="Удаляем файлы и обезличиваем историю баттлов. Не закрывайте страницу.";
+      try{
+        await sync.deleteAccount();
+        closeDeletionModal();
+        location.hash="";
+        toast("Аккаунт и персональные данные удалены");
+      }catch(error){
+        if(deletionStatus)deletionStatus.textContent=window.FaceArenaErrors.message(error,"Не удалось удалить аккаунт. Попробуйте позже.");
+        deletionConfirm.textContent="Повторить удаление";
+        deletionConfirm.disabled=deletionInput.value.trim()!=="DELETE";
+      }finally{
+        deletionInput.disabled=false;
+        if(deletionCancel)deletionCancel.disabled=false;
+      }
+    };
+  }
 
   const avatarInput=$("profileAvatarFile"),avatarChoose=$("chooseProfileAvatar"),avatarPreview=$("profileAvatarPreview");
   if(avatarChoose&&avatarInput)avatarChoose.onclick=()=>avatarInput.click();
