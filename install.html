@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#050505">
+<title>FACE ARENA — Добавить на экран «Домой»</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;800&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#050505;--c:#111;--tx:#fff;--mu:#8c8c8c;--red:#FF3434;--blue:#3478FF;--hd:'Unbounded','Arial Black',system-ui,sans-serif;--bd:'Manrope',system-ui,-apple-system,sans-serif;color-scheme:dark;box-sizing:border-box}
+html{background:var(--bg);scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;min-height:100vh;background:var(--bg);color:var(--tx);font:400 15px/1.5 var(--bd);overflow-x:hidden;-webkit-font-smoothing:antialiased;padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)}
+.wrap{max-width:520px;margin:0 auto;padding:28px 20px 48px}
+@keyframes enter{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@keyframes glow{0%,100%{box-shadow:0 0 0 1px #222,0 12px 44px rgba(255,52,52,.22)}50%{box-shadow:0 0 0 1px #222,0 12px 44px rgba(52,120,255,.28)}}
+@keyframes ring{0%{box-shadow:0 0 0 0 rgba(120,140,255,.55)}100%{box-shadow:0 0 0 14px rgba(120,140,255,0)}}
+.icon{width:84px;height:84px;object-fit:cover;border-radius:21px;display:block;margin:0 auto 22px;box-shadow:0 0 0 1px #222,0 12px 40px rgba(52,120,255,.18);animation:enter .6s cubic-bezier(.2,.7,.2,1) both,float 5s .6s ease-in-out infinite,glow 6s .6s ease-in-out infinite}
+.brand{text-align:center;font:800 12px var(--hd);letter-spacing:.16em;color:var(--mu);margin-bottom:14px;animation:enter .6s .04s both}
+h1{font:800 clamp(24px,7vw,36px)/1.12 var(--hd);letter-spacing:-.02em;text-align:center;text-transform:uppercase;margin:0 0 12px;animation:enter .6s .08s both}
+.lead{color:var(--mu);text-align:center;margin:0 auto 28px;max-width:360px;animation:enter .6s .14s both}
+.seg{display:flex;justify-content:center;gap:22px;margin-bottom:22px}
+.seg button{background:none;border:0;border-bottom:2px solid transparent;color:var(--mu);font:700 12px var(--bd);letter-spacing:.12em;text-transform:uppercase;min-height:44px;padding:0 2px;cursor:pointer;touch-action:manipulation;transition:color .2s,border-color .2s}
+.seg button.on{color:#fff;border-bottom-color:var(--blue);border-image:linear-gradient(90deg,var(--red),var(--blue)) 1}
+ol{list-style:none;margin:0;padding:0;counter-reset:step}
+li{counter-increment:step;display:grid;grid-template-columns:34px 1fr;gap:14px;padding:18px 0;border-top:1px solid #1c1c1c;animation:enter .5s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--i)*60ms)}
+li:last-child{border-bottom:1px solid #1c1c1c}
+li::before{content:counter(step);font:800 12px var(--hd);width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--c);color:var(--blue);animation:ring 1s calc(var(--i)*60ms + .5s) ease-out both}
+li:nth-child(odd)::before{color:var(--red)}
+li b{display:block;font-weight:700;margin-bottom:2px}
+li span{color:var(--mu);font-size:13px;display:block}
+.k{display:inline-flex;vertical-align:middle;width:26px;height:26px;border-radius:7px;background:var(--c);align-items:center;justify-content:center;margin:0 2px;box-shadow:0 0 0 1px #2a2a2a}
+.k svg{width:15px;height:15px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.note{margin:24px 0 0;color:var(--mu);font-size:12px;text-align:center}
+.back{display:block;width:max-content;margin:26px auto 0;color:#aaa;text-decoration:none;font-size:12px;font-weight:700}
+.back:hover{color:#fff}
+[hidden]{display:none!important}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<img class="icon" alt="Иконка FACE ARENA" width="84" height="84" src="./icons/apple-touch-icon.png">
+<div class="brand">FACE ARENA</div>
+<h1>Добавьте на экран «Домой»</h1>
+<p class="lead">Для удобства: FACE ARENA откроется в один тап, как приложение, без адресной строки.</p>
+<div class="seg" role="tablist" aria-label="Выберите устройство">
+<button class="on" id="tab-ios" data-t="ios" role="tab" aria-controls="ios" aria-selected="true">iPhone</button>
+<button id="tab-and" data-t="and" role="tab" aria-controls="and" aria-selected="false">Android</button>
+</div>
+<ol id="ios" role="tabpanel" aria-labelledby="tab-ios">
+<li style="--i:0"><div><b>Откройте сайт в Safari</b><span>Из мессенджеров кнопки может не быть: выберите «Открыть в Safari».</span></div></li>
+<li style="--i:1"><div><b>Нажмите «Поделиться»</b><span>Значок <i class="k" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 15V3M8 7l4-4 4 4"/><path d="M6 11H5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-8a1 1 0 0 0-1-1h-1"/></svg></i> внизу экрана (на iPad — вверху).</span></div></li>
+<li style="--i:2"><div><b>Выберите «На экран “Домой”»</b><span>Пролистайте список действий вниз. Значок <i class="k" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M12 8v8M8 12h8"/></svg></i></span></div></li>
+<li style="--i:3"><div><b>Нажмите «Добавить»</b><span>Кнопка находится в правом верхнем углу. Иконка FACE ARENA появится на экране «Домой».</span></div></li>
+</ol>
+<ol id="and" role="tabpanel" aria-labelledby="tab-and" hidden>
+<li style="--i:0"><div><b>Откройте сайт в Chrome</b><span>Если сайт открыт в другом браузере, шаги могут отличаться.</span></div></li>
+<li style="--i:1"><div><b>Откройте меню</b><span>Нажмите три точки <i class="k" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.2"/><circle cx="12" cy="12" r="1.2"/><circle cx="12" cy="19" r="1.2"/></svg></i> справа от адресной строки.</span></div></li>
+<li style="--i:2"><div><b>Выберите «Установить приложение»</b><span>Если такого пункта нет, выберите «Добавить на главный экран».</span></div></li>
+<li style="--i:3"><div><b>Подтвердите установку</b><span>Нажмите «Установить» или «Добавить».</span></div></li>
+</ol>
+<p class="note">Это ярлык веб-приложения: бесплатно и без загрузки из магазина приложений.</p>
+<a class="back" href="./">← Вернуться в FACE ARENA</a>
+</main>
+<script>
+(function(){
+const buttons=document.querySelectorAll(".seg button");
+buttons.forEach(function(button){
+button.addEventListener("click",function(){
+const selected=button.dataset.t;
+buttons.forEach(function(item){
+const active=item===button;
+item.classList.toggle("on",active);
+item.setAttribute("aria-selected",String(active));
+item.tabIndex=active?0:-1;
+});
+document.getElementById("ios").hidden=selected!=="ios";
+document.getElementById("and").hidden=selected!=="and";
+});
+});
+})();
+</script>
+</body>
+</html>
