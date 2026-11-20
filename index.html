@@ -479,6 +479,21 @@ html.no-anim .victory-overlay,html.no-anim .victory-panel{transition:none}
 .faig-key{display:inline-flex;vertical-align:middle;width:24px;height:24px;border-radius:7px;background:#151515;align-items:center;justify-content:center;margin:0 2px;box-shadow:0 0 0 1px #303030}
 .faig-key svg{width:14px;height:14px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .faig-note{margin:18px 0 0;color:#888;font-size:11px;text-align:center}
+#fa-install-confirm{position:absolute;inset:0;z-index:5;display:none;align-items:center;justify-content:center;padding:22px;background:rgba(0,0,0,.82);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+#fa-install-confirm.is-visible{display:flex}
+.fa-install-confirm-card{width:min(100%,390px);padding:25px 21px 20px;border:1px solid #343434;border-radius:20px;background:linear-gradient(155deg,#171717,#080808 76%);box-shadow:0 24px 80px rgba(0,0,0,.8);color:#fff;text-align:center}
+.fa-install-confirm-mark{width:46px;height:46px;margin:0 auto 13px;border-radius:13px;display:grid;place-items:center;background:linear-gradient(135deg,rgba(255,52,52,.16),rgba(52,120,255,.18));border:1px solid #333;font:800 20px Unbounded,Arial,sans-serif}
+.fa-install-confirm-mark span:first-child{color:#ff3434}.fa-install-confirm-mark span:last-child{color:#3478ff}
+.fa-install-confirm-card h3{margin:0 0 9px;font:800 17px/1.3 Unbounded,Arial,sans-serif;text-transform:uppercase}
+.fa-install-confirm-card p{margin:0;color:#aaa;font:400 13px/1.55 Manrope,Arial,sans-serif}
+.fa-install-confirm-list{margin:15px 0 19px;padding:0;list-style:none;text-align:left;display:grid;gap:9px}
+.fa-install-confirm-list li{position:relative;padding-left:18px;color:#ddd;font:600 12px/1.45 Manrope,Arial,sans-serif}
+.fa-install-confirm-list li:before{content:"";position:absolute;left:0;top:6px;width:7px;height:7px;border-radius:50%;background:linear-gradient(135deg,#ff3434,#3478ff)}
+.fa-install-confirm-actions{display:grid;gap:9px}
+.fa-install-confirm-actions button{width:100%;min-height:47px;border-radius:12px;font:800 11px Unbounded,Arial,sans-serif;letter-spacing:.03em;cursor:pointer}
+#fa-install-confirm-back{border:0;background:linear-gradient(100deg,#ef3434,#3478ff);color:#fff}
+#fa-install-confirm-exit{border:1px solid #343434;background:#151515;color:#aaa}
+
 @media(max-width:520px){#fa-install-guide{padding:0}.fa-install-guide-shell{width:100%;height:100dvh;max-height:100dvh;border:0;border-radius:0}.fa-install-guide-content{height:100%;max-height:100dvh;padding:calc(env(safe-area-inset-top) + 30px) 22px calc(env(safe-area-inset-bottom) + 26px)}.fa-install-guide-close{top:calc(env(safe-area-inset-top) + 10px);right:14px}}
 @media(prefers-reduced-motion:reduce){#fa-install-guide *{animation:none!important;transition:none!important}}
 
@@ -549,6 +564,22 @@ html.no-anim .victory-overlay,html.no-anim .victory-panel{transition:none}
       <p class="faig-note">Это ярлык веб-приложения: бесплатно и без загрузки из магазина приложений.</p>
     </div>
   </section>
+  <div id="fa-install-confirm" aria-hidden="true">
+    <section class="fa-install-confirm-card" role="alertdialog" aria-modal="true" aria-labelledby="fa-install-confirm-title" aria-describedby="fa-install-confirm-description">
+      <div class="fa-install-confirm-mark" aria-hidden="true"><span>F</span><span>A</span></div>
+      <h3 id="fa-install-confirm-title">Вы уверены?</h3>
+      <p id="fa-install-confirm-description">Если закрыть инструкцию и не добавить FACE ARENA на экран «Домой», вы сможете пользоваться сайтом, но часть удобств приложения будет недоступна.</p>
+      <ul class="fa-install-confirm-list">
+        <li>FACE ARENA будет открываться в обычной вкладке браузера, с адресной строкой.</li>
+        <li>Для следующего входа придётся снова искать сайт или открывать сохранённую вкладку.</li>
+        <li>На iPhone push-уведомления в браузере могут быть недоступны, пока сайт не добавлен на экран «Домой».</li>
+      </ul>
+      <div class="fa-install-confirm-actions">
+        <button type="button" id="fa-install-confirm-back">Вернуться к инструкции</button>
+        <button type="button" id="fa-install-confirm-exit">Всё равно закрыть</button>
+      </div>
+    </section>
+  </div>
 </div>
 
 <div id="appScroll">
@@ -2683,16 +2714,32 @@ saveState();
 (()=>{
   const overlay=document.getElementById("fa-install-guide");
   const close=document.getElementById("fa-install-guide-close");
+  const confirmLayer=document.getElementById("fa-install-confirm");
+  const confirmBack=document.getElementById("fa-install-confirm-back");
+  const confirmExit=document.getElementById("fa-install-confirm-exit");
   const loader=document.getElementById("fa-boot-loader");
-  if(!overlay||!close)return;
+  if(!overlay||!close||!confirmLayer||!confirmBack||!confirmExit)return;
   const key="fa_install_guide_seen_v4";
   let shown=false;
   const hasSeen=()=>{try{return localStorage.getItem(key)==="1"}catch(_){return true}};
   const dismiss=()=>{
     try{localStorage.setItem(key,"1")}catch(_){}
+    confirmLayer.classList.remove("is-visible");
+    confirmLayer.setAttribute("aria-hidden","true");
     overlay.classList.remove("is-visible");
     document.documentElement.style.overflow="";
     window.dispatchEvent(new Event("face-arena-install-guide-dismissed"));
+  };
+  const requestClose=()=>{
+    if(!overlay.classList.contains("is-visible"))return;
+    confirmLayer.classList.add("is-visible");
+    confirmLayer.setAttribute("aria-hidden","false");
+    confirmBack.focus({preventScroll:true});
+  };
+  const cancelClose=()=>{
+    confirmLayer.classList.remove("is-visible");
+    confirmLayer.setAttribute("aria-hidden","true");
+    close.focus({preventScroll:true});
   };
   const show=()=>{
     if(shown||hasSeen())return;
@@ -2708,10 +2755,15 @@ saveState();
     tabs.forEach((item,i)=>{item.setAttribute("aria-selected",String(i===index));item.tabIndex=i===index?0:-1});
     panels.forEach((panel,i)=>panel.hidden=i!==index);
   }));
-  close.addEventListener("click",dismiss);
-  overlay.addEventListener("click",event=>{if(event.target===overlay)dismiss()});
+  close.addEventListener("click",requestClose);
+  confirmBack.addEventListener("click",cancelClose);
+  confirmExit.addEventListener("click",dismiss);
+  overlay.addEventListener("click",event=>{if(event.target===overlay)requestClose()});
   document.addEventListener("keydown",event=>{
-    if(event.key==="Escape"&&overlay.classList.contains("is-visible"))dismiss();
+    if(event.key==="Escape"&&overlay.classList.contains("is-visible")){
+      if(confirmLayer.classList.contains("is-visible"))cancelClose();
+      else requestClose();
+    }
   });
   const observer=loader?new MutationObserver(()=>{
     if(loader.classList.contains("is-hidden"))setTimeout(show,500);
