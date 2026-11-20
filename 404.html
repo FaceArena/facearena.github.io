@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#050505">
+<meta name="robots" content="noindex, follow">
+<title>404 — FACE ARENA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;800&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark;--bg:#050505;--mu:#8c8c8c;--red:#ff3434;--blue:#3478ff;--hd:'Unbounded','Arial Black',system-ui,sans-serif;--bd:'Manrope',system-ui,-apple-system,sans-serif}
+*{box-sizing:border-box}
+html,body{min-height:100%;margin:0;background:var(--bg);color:#fff}
+body{min-height:100svh;display:grid;place-items:center;padding:24px;font:400 14px/1.45 var(--bd);-webkit-font-smoothing:antialiased}
+main{width:100%;max-width:520px;text-align:center;padding:36px 0}
+.brand{display:flex;align-items:center;justify-content:center;gap:9px;margin-bottom:42px;font:800 12px var(--hd);letter-spacing:.16em}
+.mark{display:flex;gap:4px}.mark b{width:8px;height:17px;display:block}.mark b:first-child{background:var(--red);transform:skewX(-14deg)}.mark b:last-child{background:var(--blue);transform:skewX(-14deg)}
+.code{margin:0;font:800 clamp(76px,22vw,132px)/.9 var(--hd);letter-spacing:-.08em;background:linear-gradient(105deg,#fff 15%,#777 48%,var(--blue) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+h1{margin:22px 0 10px;font:800 clamp(17px,4.5vw,23px)/1.25 var(--hd);letter-spacing:.015em;text-transform:uppercase}
+p{max-width:340px;margin:0 auto;color:var(--mu);font-size:14px;line-height:1.6}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:380px;margin:28px auto 0}
+a,button{display:grid;place-items:center;min-height:48px;padding:12px 10px;border-radius:12px;font:800 11px var(--hd);letter-spacing:.04em;text-transform:uppercase;text-decoration:none;cursor:pointer}
+.home{background:#fff;color:#050505;border:1px solid #fff}
+.back{background:#111;color:#fff;border:1px solid #292929}
+a:focus-visible,button:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+@media(prefers-reduced-motion:no-preference){.code{animation:arrive .55s cubic-bezier(.2,.7,.2,1) both}@keyframes arrive{from{opacity:0;transform:translateY(12px) scale(.97)}to{opacity:1;transform:none}}}
+</style>
+</head>
+<body>
+<main>
+  <div class="brand"><span class="mark" aria-hidden="true"><b></b><b></b></span>FACE ARENA</div>
+  <p class="code" aria-label="404">404</p>
+  <h1>Арена не найдена</h1>
+  <p>Похоже, ты забрёл за пределы арены. Такой страницы здесь нет.</p>
+  <div class="actions">
+    <a class="home" href="/">На главную</a>
+    <button class="back" id="back" type="button">Назад</button>
+  </div>
+</main>
+<script>
+document.getElementById("back").addEventListener("click",function(){
+  if(history.length>1)history.back();else location.replace("/");
+});
+</script>
+</body>
+</html>
