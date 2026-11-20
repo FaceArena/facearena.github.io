@@ -470,31 +470,7 @@ html.no-anim .victory-overlay,html.no-anim .victory-panel{transition:none}
 </style>
 
 
-<style id="fa-install-guide-style">
-#fa-install-guide{position:fixed;inset:0;z-index:220000;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(0,0,0,.88);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);overflow-y:auto}
-#fa-install-guide.is-visible{display:flex}
-.fa-install-guide-card{width:min(100%,410px);max-height:calc(100dvh - 36px);overflow-y:auto;padding:24px 20px 18px;border:1px solid #292929;border-radius:22px;background:linear-gradient(155deg,#171717 0%,#090909 72%);box-shadow:0 24px 90px #000b;color:#fff;text-align:left}
-.fa-install-guide-brand{display:flex;align-items:center;justify-content:center;gap:11px;margin:0 auto 20px}
-.fa-install-guide-brand img{width:52px;height:52px;object-fit:contain;border-radius:8px}
-.fa-install-guide-name{font:800 15px/1.35 var(--hd);letter-spacing:.055em;text-align:left}
-.fa-install-guide-name span:first-child{color:#ff3434}.fa-install-guide-name span:last-child{color:#3478ff}
-.fa-install-guide-kicker{text-align:center;color:#9a9a9a;font:700 10px var(--bd);letter-spacing:.18em;text-transform:uppercase;margin-bottom:9px}
-.fa-install-guide-card h2{margin:0 0 9px;text-align:center;font:800 clamp(19px,5vw,23px)/1.2 var(--hd);letter-spacing:-.025em;text-transform:uppercase}
-.fa-install-guide-intro{margin:0 auto 19px;max-width:330px;text-align:center;color:#aaa;font:400 13px/1.55 var(--bd)}
-.fa-install-guide-steps{display:grid;gap:11px;margin:0;padding:0;list-style:none}
-.fa-install-guide-steps li{display:grid;grid-template-columns:30px minmax(0,1fr);gap:11px;align-items:start;padding:12px;border:1px solid #242424;border-radius:13px;background:#101010}
-.fa-install-guide-num{width:27px;height:27px;display:grid;place-items:center;border-radius:9px;background:linear-gradient(135deg,#ef3434,#3478ff);font:800 12px var(--hd);color:#fff}
-.fa-install-guide-steps strong{display:block;font:700 12px var(--bd);color:#fff;margin:1px 0 3px}
-.fa-install-guide-steps p{margin:0;color:#a5a5a5;font:400 11px/1.45 var(--bd)}
-.fa-install-guide-real-shot{display:block;width:min(100%,220px);height:auto;max-height:310px;object-fit:contain;object-position:center top;margin:10px auto 2px;border:1px solid #333;border-radius:14px;background:#050505}
-.fa-install-guide-image-credit{margin:4px 0 0;text-align:center;color:#666;font:400 9px/1.4 var(--bd)}
-.fa-install-guide-tip{margin:13px 1px 0;color:#858585;font:400 10px/1.5 var(--bd);text-align:center}
-.fa-install-guide-apple-link{display:block;text-align:center;margin:10px auto 0;color:#8eafff;font:700 10px var(--bd);text-decoration:none}
-.fa-install-guide-actions{display:grid;grid-template-columns:1fr;gap:8px;margin-top:17px}
-.fa-install-guide-actions button{min-height:47px;border:0;border-radius:12px;background:linear-gradient(100deg,#ef3434,#3478ff);color:#fff;font:800 11px var(--hd);letter-spacing:.04em;text-transform:uppercase;cursor:pointer}
-.fa-install-guide-actions button:focus-visible{outline:2px solid #fff;outline-offset:3px}
-@media(prefers-reduced-motion:no-preference){#fa-install-guide.is-visible .fa-install-guide-card{animation:faInstallGuideIn .28s ease-out}@keyframes faInstallGuideIn{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:none}}}
-</style>
+
 </head>
 <body>
 <div id="fa-boot-loader" role="status" aria-live="polite">
@@ -515,27 +491,6 @@ html.no-anim .victory-overlay,html.no-anim .victory-panel{transition:none}
       <button type="button" id="fa-push-onboarding-enable">Включить</button>
     </div>
   </div>
-</div>
-
-<div id="fa-install-guide" role="dialog" aria-modal="true" aria-labelledby="fa-install-guide-title" aria-describedby="fa-install-guide-description">
-  <section class="fa-install-guide-card">
-    <div class="fa-install-guide-brand">
-      <img src="https://face-arena-cloudflare.pages.dev/IMG_9559.png?v=1" alt="FACE ARENA">
-      <div class="fa-install-guide-name">FACE ARENA (<span>F</span><span>A</span>)</div>
-    </div>
-    <div class="fa-install-guide-kicker">Быстрый доступ на iPhone</div>
-    <h2 id="fa-install-guide-title">Твоя арена —<br>в одном нажатии</h2>
-    <p class="fa-install-guide-intro" id="fa-install-guide-description">Добавь FACE ARENA на главный экран iPhone. Так будет удобнее возвращаться на арену: откроешь её прямо с иконки, без поиска сайта во вкладках.</p>
-    <ol class="fa-install-guide-steps">
-      <li><span class="fa-install-guide-num">1</span><div><strong>Открой сайт в Safari</strong><p>Перейди на FACE ARENA через браузер Safari на iPhone. Если сайт открылся внутри Telegram или другого приложения — открой его в Safari.</p><img class="fa-install-guide-real-shot" src="https://help.apple.com/assets/69F8EBBDF3B89A4F6E0C704C/69F8EBC43862495245036393/en_US/9334a74d4e485ea1028ab6539a075db3.png" alt="Настоящий скриншот Safari на iPhone из руководства Apple"><div class="fa-install-guide-image-credit">Реальный экран Safari · Apple Support</div></div></li>
-      <li><span class="fa-install-guide-num">2</span><div><strong>Открой меню «Поделиться»</strong><p>Нажми кнопку меню страницы (•••) или значок «Поделиться» — расположение зависит от выбранного вида вкладок Safari. Затем выбери «Поделиться».</p></div></li>
-      <li><span class="fa-install-guide-num">3</span><div><strong>Нажми «На экран Домой»</strong><p>Прокрути список действий вниз и выбери «На экран Домой». На настоящем скриншоте Apple этот пункт показан в меню Safari.</p><img class="fa-install-guide-real-shot" src="https://help.apple.com/assets/69F8EBBDF3B89A4F6E0C704C/69F8EBC43862495245036393/en_US/b8e5c4bf66357ca92eedd4a8c688f595.png" alt="Настоящий скриншот меню Safari с пунктом Add to Home Screen, выделенным Apple"><div class="fa-install-guide-image-credit">Реальный экран меню iPhone · Apple Support</div></div></li>
-      <li><span class="fa-install-guide-num">4</span><div><strong>Подтверди добавление</strong><p>Проверь название FACE ARENA. Оставь «Открывать как веб-приложение» включённым, если переключатель отображается, и нажми «Добавить». Иконка появится на главном экране.</p></div></li>
-    </ol>
-    <p class="fa-install-guide-tip">Готово! Иконка FACE ARENA появится на главном экране. Открывай арену одним нажатием — не нужно каждый раз искать сайт в Safari.</p>
-    <a class="fa-install-guide-apple-link" href="https://support.apple.com/en-lamr/guide/iphone/iphea86e5236/ios" target="_blank" rel="noopener">Официальная инструкция Apple ↗</a>
-    <div class="fa-install-guide-actions"><button type="button" id="fa-install-guide-close">Понятно, перейти к арене</button></div>
-  </section>
 </div>
 
 <div id="appScroll">
@@ -3091,35 +3046,6 @@ saveState();
 })();
 </script>
 
-<script id="fa-install-guide-script">
-(()=>{
-  const guide=document.getElementById("fa-install-guide");
-  const close=document.getElementById("fa-install-guide-close");
-  const loader=document.getElementById("fa-boot-loader");
-  const pushGuide=document.getElementById("fa-push-onboarding");
-  if(!guide||!close)return;
-  const key="fa_install_guide_seen_v2";
-  const isIOS=/iPhone|iPad|iPod/i.test(navigator.userAgent)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);
-  const isStandalone=window.matchMedia("(display-mode: standalone)").matches||navigator.standalone===true;
-  if(!isIOS||isStandalone)return;
-  let shown=false;
-  const dismiss=()=>{try{localStorage.setItem(key,"1")}catch(_){}guide.classList.remove("is-visible")};
-  close.addEventListener("click",dismiss);
-  guide.addEventListener("click",event=>{if(event.target===guide)dismiss()});
-  const maybeShow=()=>{
-    if(shown)return;
-    try{if(localStorage.getItem(key)==="1")return}catch(_){}
-    if(loader&&!loader.classList.contains("is-hidden")&&loader.classList.contains("is-active"))return;
-    if(pushGuide?.classList.contains("is-visible"))return;
-    shown=true;
-    guide.classList.add("is-visible");
-  };
-  if(loader){new MutationObserver(()=>{if(loader.classList.contains("is-hidden")||!loader.classList.contains("is-active"))setTimeout(maybeShow,500)}).observe(loader,{attributes:true,attributeFilter:["class"]})}
-  if(pushGuide){new MutationObserver(()=>{if(!pushGuide.classList.contains("is-visible"))setTimeout(maybeShow,350)}).observe(pushGuide,{attributes:true,attributeFilter:["class"]})}
-  window.addEventListener("face-arena-authenticated-boot-stop",()=>setTimeout(maybeShow,650));
-  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",()=>setTimeout(maybeShow,900),{once:true});
-  else setTimeout(maybeShow,900);
-})();
-</script>
+
 </body>
 </html>
