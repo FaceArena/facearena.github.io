@@ -454,14 +454,32 @@ html.no-anim .victory-overlay,html.no-anim .victory-panel{transition:none}
 @keyframes faBootFade{to{opacity:1}}
 @media(prefers-reduced-motion:reduce){#fa-boot-loader *{animation-duration:.01ms!important;animation-delay:0ms!important;animation-iteration-count:1!important}}
 
-/* First-visit installation guide */
-#fa-install-guide{position:fixed;inset:0;z-index:220000;display:none;align-items:center;justify-content:center;padding:12px;background:rgba(0,0,0,.82);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+/* First-visit installation guide — native FACE ARENA overlay, no iframe */
+#fa-install-guide{position:fixed;inset:0;z-index:220000;display:none;align-items:center;justify-content:center;padding:14px;background:rgba(0,0,0,.88);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);color:#fff;color-scheme:dark}
 #fa-install-guide.is-visible{display:flex}
-.fa-install-guide-shell{position:relative;width:min(100%,560px);height:90vh;height:min(90dvh,820px);overflow:hidden;border:1px solid rgba(255,255,255,.12);border-radius:20px;background:#050505;box-shadow:0 28px 100px rgba(0,0,0,.7)}
-.fa-install-guide-frame{display:block;width:100%;height:100%;border:0;background:#050505}
-.fa-install-guide-close{position:absolute;z-index:2;top:10px;right:10px;width:38px;height:38px;border:1px solid rgba(255,255,255,.18);border-radius:50%;background:rgba(15,15,18,.92);color:#fff;font:600 23px/1 Arial,sans-serif;cursor:pointer;box-shadow:0 3px 14px rgba(0,0,0,.4)}
+.fa-install-guide-shell{position:relative;width:min(100%,560px);max-height:min(92dvh,860px);overflow:hidden;border:1px solid #292929;border-radius:22px;background:#050505!important;color:#fff;box-shadow:0 28px 100px rgba(0,0,0,.8)}
+.fa-install-guide-content{max-height:min(92dvh,860px);overflow-y:auto;overscroll-behavior:contain;background:#050505!important;color:#fff;padding:30px 24px 34px; font:400 14px/1.5 Manrope,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+.fa-install-guide-close{position:absolute;z-index:3;top:12px;right:12px;width:38px;height:38px;border:1px solid #343434;border-radius:50%;background:#171717;color:#fff;font:600 23px/1 Arial,sans-serif;cursor:pointer;box-shadow:0 3px 14px rgba(0,0,0,.5)}
 .fa-install-guide-close:focus-visible{outline:2px solid #3478ff;outline-offset:3px}
-@media(max-width:520px){#fa-install-guide{padding:0}.fa-install-guide-shell{width:100%;height:100vh;height:100dvh;max-height:100%;border:0;border-radius:0}.fa-install-guide-close{top:max(12px,env(safe-area-inset-top));right:14px}}
+.faig-icon{width:68px;height:68px;object-fit:cover;border-radius:17px;display:block;margin:0 auto 14px;box-shadow:0 0 0 1px #252525,0 10px 30px rgba(52,120,255,.2)}
+.faig-brand{text-align:center;font:800 10px Unbounded,Arial,sans-serif;letter-spacing:.16em;color:#888;margin-bottom:12px}
+.faig-title{font:800 clamp(21px,5.8vw,30px)/1.15 Unbounded,Arial,sans-serif;letter-spacing:-.02em;text-align:center;text-transform:uppercase;margin:0 0 10px;color:#fff}
+.faig-lead{color:#999;text-align:center;margin:0 auto 22px;max-width:370px;font-size:13px}
+.faig-tabs{display:flex;justify-content:center;gap:24px;margin:0 0 16px}
+.faig-tabs button{background:transparent;border:0;border-bottom:2px solid transparent;color:#888;font:700 11px Manrope,Arial,sans-serif;letter-spacing:.12em;text-transform:uppercase;min-height:42px;padding:0 3px;cursor:pointer}
+.faig-tabs button[aria-selected="true"]{color:#fff;border-image:linear-gradient(90deg,#ff3434,#3478ff) 1}
+.faig-steps{list-style:none!important;margin:0!important;padding:0!important;counter-reset:faig-step}
+.faig-steps[hidden]{display:none!important}
+.faig-steps li{counter-increment:faig-step;display:grid;grid-template-columns:32px minmax(0,1fr);gap:12px;padding:14px 0;border-top:1px solid #202020;list-style:none!important;margin:0!important;background:transparent!important}
+.faig-steps li:last-child{border-bottom:1px solid #202020}
+.faig-steps li:before{content:counter(faig-step);font:800 11px Unbounded,Arial,sans-serif;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:#151515;color:#3478ff}
+.faig-steps li:nth-child(odd):before{color:#ff3434}
+.faig-steps b{display:block;font-weight:800;margin-bottom:3px;color:#fff}
+.faig-steps span{display:block;color:#999;font-size:12px;line-height:1.5}
+.faig-key{display:inline-flex;vertical-align:middle;width:24px;height:24px;border-radius:7px;background:#151515;align-items:center;justify-content:center;margin:0 2px;box-shadow:0 0 0 1px #303030}
+.faig-key svg{width:14px;height:14px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.faig-note{margin:18px 0 0;color:#888;font-size:11px;text-align:center}
+@media(max-width:520px){#fa-install-guide{padding:0}.fa-install-guide-shell{width:100%;height:100dvh;max-height:100dvh;border:0;border-radius:0}.fa-install-guide-content{height:100%;max-height:100dvh;padding:calc(env(safe-area-inset-top) + 30px) 22px calc(env(safe-area-inset-bottom) + 26px)}.fa-install-guide-close{top:calc(env(safe-area-inset-top) + 10px);right:14px}}
 @media(prefers-reduced-motion:reduce){#fa-install-guide *{animation:none!important;transition:none!important}}
 
 </style>
@@ -505,10 +523,32 @@ html.no-anim .victory-overlay,html.no-anim .victory-panel{transition:none}
 </div>
 
 <div id="fa-install-guide" role="dialog" aria-modal="true" aria-label="Как добавить FACE ARENA на экран Домой">
-  <div class="fa-install-guide-shell">
+  <section class="fa-install-guide-shell">
     <button type="button" class="fa-install-guide-close" id="fa-install-guide-close" aria-label="Закрыть инструкцию">×</button>
-    <iframe class="fa-install-guide-frame" src="./install.html?embedded=1" title="Инструкция по установке FACE ARENA"></iframe>
-  </div>
+    <div class="fa-install-guide-content">
+      <img class="faig-icon" alt="Иконка FACE ARENA" width="68" height="68" src="https://face-arena-cloudflare.pages.dev/IMG_9559.png?v=20261121">
+      <div class="faig-brand">FACE ARENA</div>
+      <h2 class="faig-title">Добавьте на экран «Домой»</h2>
+      <p class="faig-lead">Для удобства: FACE ARENA откроется в один тап, как приложение, без адресной строки.</p>
+      <div class="faig-tabs" role="tablist" aria-label="Выберите устройство">
+        <button type="button" id="faig-tab-ios" role="tab" aria-controls="faig-ios" aria-selected="true">iPhone</button>
+        <button type="button" id="faig-tab-and" role="tab" aria-controls="faig-and" aria-selected="false">Android</button>
+      </div>
+      <ol class="faig-steps" id="faig-ios" role="tabpanel" aria-labelledby="faig-tab-ios">
+        <li><div><b>Откройте сайт в Safari</b><span>Из мессенджеров кнопки может не быть: выберите «Открыть в Safari».</span></div></li>
+        <li><div><b>Нажмите «Поделиться»</b><span>Значок <i class="faig-key" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 15V3M8 7l4-4 4 4"/><path d="M6 11H5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-8a1 1 0 0 0-1-1h-1"/></svg></i> внизу экрана (на iPad — вверху).</span></div></li>
+        <li><div><b>Выберите «На экран “Домой”»</b><span>Пролистайте список действий вниз. Значок <i class="faig-key" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M12 8v8M8 12h8"/></svg></i></span></div></li>
+        <li><div><b>Нажмите «Добавить»</b><span>Кнопка находится в правом верхнем углу. Иконка FACE ARENA появится на экране «Домой».</span></div></li>
+      </ol>
+      <ol class="faig-steps" id="faig-and" role="tabpanel" aria-labelledby="faig-tab-and" hidden>
+        <li><div><b>Откройте сайт в Chrome</b><span>Если сайт открыт в другом браузере, шаги могут отличаться.</span></div></li>
+        <li><div><b>Откройте меню</b><span>Нажмите три точки <i class="faig-key" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.2"/><circle cx="12" cy="12" r="1.2"/><circle cx="12" cy="19" r="1.2"/></svg></i> справа от адресной строки.</span></div></li>
+        <li><div><b>Выберите «Установить приложение»</b><span>Если такого пункта нет, выберите «Добавить на главный экран».</span></div></li>
+        <li><div><b>Подтвердите установку</b><span>Нажмите «Установить» или «Добавить».</span></div></li>
+      </ol>
+      <p class="faig-note">Это ярлык веб-приложения: бесплатно и без загрузки из магазина приложений.</p>
+    </div>
+  </section>
 </div>
 
 <div id="appScroll">
@@ -2645,9 +2685,9 @@ saveState();
   const close=document.getElementById("fa-install-guide-close");
   const loader=document.getElementById("fa-boot-loader");
   if(!overlay||!close)return;
-  const key="fa_install_guide_seen_v3";
+  const key="fa_install_guide_seen_v4";
   let shown=false;
-  const hasSeen=()=>{try{return localStorage.getItem(key)==="1"}catch(_){return false}};
+  const hasSeen=()=>{try{return localStorage.getItem(key)==="1"}catch(_){return true}};
   const dismiss=()=>{
     try{localStorage.setItem(key,"1")}catch(_){}
     overlay.classList.remove("is-visible");
@@ -2662,6 +2702,12 @@ saveState();
     document.documentElement.style.overflow="hidden";
     close.focus({preventScroll:true});
   };
+  const tabs=[document.getElementById("faig-tab-ios"),document.getElementById("faig-tab-and")];
+  const panels=[document.getElementById("faig-ios"),document.getElementById("faig-and")];
+  tabs.forEach((tab,index)=>tab.addEventListener("click",()=>{
+    tabs.forEach((item,i)=>{item.setAttribute("aria-selected",String(i===index));item.tabIndex=i===index?0:-1});
+    panels.forEach((panel,i)=>panel.hidden=i!==index);
+  }));
   close.addEventListener("click",dismiss);
   overlay.addEventListener("click",event=>{if(event.target===overlay)dismiss()});
   document.addEventListener("keydown",event=>{
