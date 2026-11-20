@@ -57,7 +57,7 @@ Deno.serve(async (req: Request) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers });
   if (req.method !== "POST") return json({ error: "Method not allowed" }, 405, headers);
   try {
-    const token = (req.headers.get("Authorization") || "").match(/^Bearer\\s+(.+)$/i)?.[1];
+    const token = (req.headers.get("Authorization") || "").match(/^Bearer\s+(.+)$/i)?.[1];
     if (!token) return json({ error: "Требуется авторизация." }, 401, headers);
     const body = await req.json().catch(() => ({}));
     if (body?.confirmation !== "DELETE") return json({ error: "Подтверждение удаления не пройдено." }, 400, headers);
