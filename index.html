@@ -2719,11 +2719,17 @@ saveState();
   const confirmExit=document.getElementById("fa-install-confirm-exit");
   const loader=document.getElementById("fa-boot-loader");
   if(!overlay||!close||!confirmLayer||!confirmBack||!confirmExit)return;
-  const key="fa_install_guide_seen_v4";
   let shown=false;
-  const hasSeen=()=>{try{return localStorage.getItem(key)==="1"}catch(_){return true}};
+  // Detect that the site is currently running as an installed PWA.
+  // iOS Safari exposes navigator.standalone; Chromium exposes display-mode.
+  const isInstalledMode=()=>{
+    try{
+      if(navigator.standalone===true)return true;
+      return ["standalone","fullscreen","minimal-ui","window-controls-overlay"]
+        .some(mode=>window.matchMedia("(display-mode: "+mode+")").matches);
+    }catch(_){return false}
+  };
   const dismiss=()=>{
-    try{localStorage.setItem(key,"1")}catch(_){}
     confirmLayer.classList.remove("is-visible");
     confirmLayer.setAttribute("aria-hidden","true");
     overlay.classList.remove("is-visible");
@@ -2742,7 +2748,7 @@ saveState();
     close.focus({preventScroll:true});
   };
   const show=()=>{
-    if(shown||hasSeen())return;
+    if(shown||isInstalledMode())return;
     if(loader&&!loader.classList.contains("is-hidden"))return;
     shown=true;
     overlay.classList.add("is-visible");
