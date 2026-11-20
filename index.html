@@ -1,0 +1,3046 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#050505">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="FACE ARENA">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="./icons/apple-touch-icon.png">
+<title>FACE ARENA — Кто красивее?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;800&family=Manrope:wght@400;600;700&display=block">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;800&family=Manrope:wght@400;600;700&display=block" rel="stylesheet">
+<style>
+:root{--bg:#050505;--s:#101010;--c:#151515;--tx:#fff;--mu:#8c8c8c;--red:#FF3434;--blue:#3478FF;
+--hd:'Unbounded','Arial Black',system-ui,sans-serif;--bd:'Manrope',system-ui,-apple-system,sans-serif;
+color-scheme:dark;box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px);background:var(--bg)}
+*,*::before,*::after{box-sizing:inherit}
+/* Keep content visible while web fonts load; avoid full-page opacity flash */
+html,body{opacity:1}
+html,body{height:100%;margin:0;background:var(--bg);overflow:hidden;overscroll-behavior:none}
+body{position:fixed;inset:0;display:flex;flex-direction:column;background:var(--bg);color:var(--tx);font:400 14px/1.45 var(--bd);overflow:hidden;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
+#appScroll{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior-y:contain;padding-top:env(safe-area-inset-top,0px)}
+.wrap{max-width:1180px;margin:0 auto;padding:0 12px}
+header{display:flex;align-items:center;justify-content:space-between;padding:14px 0 6px;gap:10px}
+.logo{font:800 clamp(12px,3.6vw,14px) var(--hd);letter-spacing:.1em;display:flex;align-items:center;gap:2px;min-width:0;white-space:nowrap;flex-shrink:1}
+.fa-brand-logo-image{display:block;width:34px;height:34px;flex:none;object-fit:contain;border-radius:5px}
+.logo{gap:7px}
+.hdr-right{display:flex;align-items:center;gap:12px;flex-shrink:0;height:36px}
+.btn-gear,.btn-notifications{position:relative;width:36px;height:36px;min-width:36px;border:0;border-radius:50%;background:transparent;color:var(--mu);display:grid;place-items:center;cursor:pointer;padding:0;flex-shrink:0;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.btn-notifications:active,.btn-gear:active{color:#fff;background:var(--s)}
+.btn-notifications svg{width:19px;height:19px;display:block}
+.btn-gear svg{width:20px;height:20px;display:block}
+@media(max-width:420px){
+  header{gap:8px}
+  .hdr-right{gap:8px}
+  .logo{letter-spacing:.075em;gap:2px}
+  .fa-brand-logo-image{width:32px;height:32px}
+  .live{font-size:10px;letter-spacing:.09em;gap:5px}
+  .btn-gear,.btn-notifications{width:32px;height:32px;min-width:32px}
+  .btn-notifications svg{width:18px;height:18px}
+  .btn-gear svg{width:19px;height:19px}
+}
+.btn-notifications:active{color:#fff;background:var(--s)}
+.btn-notifications svg{width:17px;height:17px;display:block}
+.notification-count{position:absolute;right:-3px;top:-2px;min-width:15px;height:15px;padding:0 4px;border-radius:99px;background:var(--red);color:#fff;font:800 9px/15px var(--bd);text-align:center}
+.notification-list{display:grid;gap:8px;margin-top:12px}
+.notification-item{width:100%;text-align:left;border:0;border-radius:13px;background:var(--c);padding:13px 14px;color:#fff;display:grid;grid-template-columns:8px minmax(0,1fr);gap:10px;cursor:pointer}
+.notification-item.unread{background:#171717}
+.notification-dot{width:7px;height:7px;border-radius:50%;background:var(--blue);margin-top:5px}
+.notification-item.read .notification-dot{background:#444}
+.notification-item strong{display:block;font-size:13px;line-height:1.35}
+.notification-item p{margin:4px 0 0;color:#b8b8b8;font-size:12px;line-height:1.4}
+.notification-item time{display:block;margin-top:7px;color:var(--mu);font-size:10px}
+.btn-gear:active{color:#fff;background:var(--s)}
+.btn-gear svg{width:16px;height:16px;display:block}
+.live{font:600 11px var(--bd);letter-spacing:.14em;text-transform:uppercase;color:var(--mu);display:flex;align-items:center;gap:6px;height:28px;line-height:1}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--red);animation:pulse 1.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.7)}}
+h1{font:800 clamp(28px,8.5vw,72px)/.95 var(--hd);letter-spacing:-.02em;margin:16px 0 10px;text-transform:uppercase}
+.lead{color:var(--mu);max-width:520px;margin:0 0 16px;font-size:14px;line-height:1.45}
+.stats{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.stat{background:var(--s);border-radius:12px;padding:10px 12px}
+.stat b{display:block;font:800 18px var(--hd)}
+.stat span{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--mu)}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(2,1fr);contain:content}
+@media(min-width:640px){.grid{gap:16px}}
+@media(min-width:1000px){.grid{grid-template-columns:repeat(3,1fr)}}
+.card{background:var(--c);border-radius:16px;padding:10px;cursor:pointer;opacity:1;animation:none;transition:transform .18s cubic-bezier(.2,.7,.2,1);-webkit-tap-highlight-color:transparent;touch-action:manipulation;will-change:auto;contain:layout style}
+@keyframes in{from{opacity:0;transform:translate3d(0,8px,0)}to{opacity:1;transform:translate3d(0,0,0)}}
+.card:hover{transform:translateY(-2px)}.card:active{transform:scale(.97)}
+.card:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.num{font:800 11px var(--hd);letter-spacing:.1em}
+.chip{font:700 9px var(--bd);letter-spacing:.1em;text-transform:uppercase;padding:4px 8px;border-radius:99px;background:var(--s);color:var(--mu)}
+.chip.v{color:#fff}.chip.v::before{content:"";display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--red);margin-right:5px;animation:pulse 1.6s infinite}
+.duel{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:3px;border-radius:12px;overflow:hidden}
+.ph{position:relative;aspect-ratio:3/4;background:var(--s);overflow:hidden;box-sizing:border-box}
+.ph.R{
+  background:radial-gradient(ellipse 80% 70% at 50% 45%,#5a1818 0%,#2a0808 55%,#120404 100%);
+  box-shadow:inset 0 0 0 3px var(--red);
+}
+.ph.B{
+  background:radial-gradient(ellipse 80% 70% at 50% 45%,#183a7a 0%,#081830 55%,#040812 100%);
+  box-shadow:inset 0 0 0 3px var(--blue);
+}
+.ph img{
+  width:100%;height:100%;object-fit:cover;object-position:center top;display:block;
+  transition:transform .25s ease-out;
+  /* soft vignette so subject sits on colored studio back */
+  -webkit-mask-image:radial-gradient(ellipse 92% 88% at 50% 42%,#000 55%,transparent 100%);
+  mask-image:radial-gradient(ellipse 92% 88% at 50% 42%,#000 55%,transparent 100%);
+}
+.ph.R img{mix-blend-mode:normal}
+.ph.B img{mix-blend-mode:normal}
+.card:hover .ph img{transform:scale(1.04)}
+.side{position:absolute;left:6px;top:6px;font:800 10px var(--hd);letter-spacing:.08em;padding:3px 6px;border-radius:5px;color:#fff;z-index:1}
+.R .side{background:var(--red)}.B .side{background:var(--blue)}
+.nm{position:absolute;left:0;right:0;bottom:0;padding:16px 6px 5px;background:linear-gradient(transparent,rgba(0,0,0,.88));font-weight:700;font-size:10px;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.vs{position:absolute;left:50%;top:50%;width:36px;height:36px;margin:0;border-radius:50%;background:var(--bg);display:grid;place-items:center;font:800 11px var(--hd);box-shadow:0 0 0 2px var(--bg);transform:translate(-50%,-50%);z-index:2}
+.bar{position:relative;height:5px;border-radius:99px;background:var(--blue);overflow:hidden;margin:10px 0 6px}
+.bar u{position:absolute;inset:0;background:var(--red);transform-origin:left;transform:scaleX(0);transition:transform .6s ease-out;text-decoration:none}
+.bar.zero{background:#262626}.bar.zero u{display:none}
+.pct{display:flex;justify-content:space-between;align-items:center;font:700 10px var(--bd);gap:4px}
+.pct .r{color:var(--red);flex-shrink:0}.pct .b{color:var(--blue);flex-shrink:0}.pct .m{color:var(--mu);font-weight:600;text-align:center;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tm{margin-top:8px;padding-top:8px;border-top:1px solid #222;display:flex;justify-content:space-between;align-items:center}
+.tm small{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--mu)}
+.tm b{font:800 16px var(--hd);font-variant-numeric:tabular-nums}
+.tl{height:2px;background:#222;margin-top:6px;overflow:hidden;border-radius:2px}
+.tl u{display:block;height:100%;background:#fff;transform-origin:left;transition:transform 1s linear;text-decoration:none}
+nav{position:relative;flex:0 0 auto;left:auto;right:auto;bottom:auto;padding:6px 10px calc(6px + env(safe-area-inset-bottom,0px));background:#0a0a0a;backdrop-filter:none;-webkit-backdrop-filter:none;z-index:5}
+.tabs{position:relative;max-width:520px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr)}
+.tabs button{background:none;border:0;color:var(--mu);font:700 9px var(--bd);letter-spacing:.08em;text-transform:uppercase;padding:6px 0 4px;display:grid;grid-template-rows:22px 14px;align-content:center;justify-items:center;gap:6px;min-height:58px;box-sizing:border-box;cursor:pointer;transition:color .22s;touch-action:manipulation}
+.tabs button.on{color:#fff}
+.tabs button svg{width:18px;height:18px;display:block;align-self:center;justify-self:center;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.tabs button:not(svg){text-align:center;white-space:nowrap}
+.ind{position:absolute;top:0;left:0;width:25%;height:2px;display:flex;justify-content:center;transition:transform .35s cubic-bezier(.2,.7,.2,1)}
+.ind::after{content:"";width:28px;height:2px;background:linear-gradient(90deg,var(--red),var(--blue))}
+.toast{position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom,0px));transform:translate(-50%,16px);background:#fff;color:#000;font-weight:700;font-size:12px;padding:9px 14px;border-radius:99px;opacity:0;pointer-events:none;transition:opacity .22s,transform .22s;z-index:6;max-width:90vw;text-align:center}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.back{background:none;border:0;color:var(--mu);font:700 12px var(--bd);letter-spacing:.1em;text-transform:uppercase;padding:14px 0 8px;min-height:44px;cursor:pointer;touch-action:manipulation}
+.view,#av{pointer-events:none}
+.view.is-on,#av.is-on{pointer-events:auto;animation:viewIn .12s ease-out}
+@keyframes viewIn{from{opacity:0}to{opacity:1}}
+html.no-anim .view,html.no-anim #av{animation:none!important}
+@media (prefers-reduced-motion:reduce){.view.is-on,#av.is-on{animation:none}}
+@keyframes fadeUp{from{opacity:0;transform:translate3d(0,6px,0)}to{opacity:1;transform:translate3d(0,0,0)}}
+@keyframes fadeScale{from{opacity:0;transform:scale3d(.98,.98,1)}to{opacity:1;transform:scale3d(1,1,1)}}
+.card{animation-name:fadeUp}
+.top-item{opacity:0;animation:fadeUp .18s ease-out forwards;animation-delay:calc(min(var(--i,0),4)*18ms)}
+.match-card{animation:fadeScale .18s ease-out}
+.q-item{opacity:0;animation:fadeUp .18s ease-out forwards;animation-delay:calc(min(var(--i,0),5)*16ms)}
+.settings-block{opacity:0;animation:fadeUp .18s ease-out forwards;animation-delay:calc(min(var(--i,0),3)*16ms)}
+.pr-head,.pr-stats{opacity:0;animation:fadeUp .18s ease-out forwards}
+.pr-head{animation-delay:12ms}.pr-stats{animation-delay:24ms}
+html.no-anim .view,html.no-anim #av{animation:none!important}
+html.no-anim .top-item,html.no-anim .q-item,html.no-anim .settings-block,html.no-anim .pr-head,html.no-anim .pr-stats,html.no-anim .match-card{animation:none!important;opacity:1!important}
+.big{max-width:640px;margin:0 auto}
+.big .duel{border-radius:16px;gap:3px}
+.big .ph{aspect-ratio:3/4}
+.big .nm{font-size:15px;padding:28px 12px 10px}
+.big .vs{width:48px;height:48px;margin:0;font-size:14px;box-shadow:0 0 0 3px var(--bg);transform:translate(-50%,-50%)}
+.big .bar{height:7px;margin-top:14px}
+.big .side{left:8px;top:8px;font-size:11px;padding:4px 8px}
+.B .side{left:auto;right:6px}
+.big .B .side{left:auto;right:8px}
+.big .pct{font-size:13px}
+.big .tm b{font-size:22px}
+.big .tm small{font-size:11px}
+.note{color:var(--mu);font-size:12px;margin:10px 0 0;line-height:1.4}
+.picks{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0 8px}
+.pick{border:0;border-radius:14px;padding:16px 8px;min-height:52px;color:#fff;font:800 12px var(--hd);letter-spacing:.06em;cursor:pointer;transition:transform .18s cubic-bezier(.2,.7,.2,1);touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.pick:active{transform:scale(.96)}.pick.R{background:var(--red)}.pick.B{background:var(--blue)}
+h2{font:800 15px var(--hd);letter-spacing:.08em;text-transform:uppercase;margin:24px 0 10px}
+.cms{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.cm{background:var(--c);border-radius:12px;padding:11px 12px;border-left:3px solid;animation:in .45s both;animation-delay:calc(var(--i)*60ms)}
+.cm.R{border-color:var(--red)}.cm.B{border-color:var(--blue)}
+.cm b{font-size:13px}.cm .tg{font:800 10px var(--hd);margin-left:8px;letter-spacing:.1em}
+.cm.R .tg{color:var(--red)}.cm.B .tg{color:var(--blue)}.cm p{margin:4px 0 0;color:#cfcfcf;font-size:13px;line-height:1.35}
+.empty{background:var(--c);border-radius:12px;padding:20px;text-align:center;color:var(--mu);font-size:13px}
+.big .nm{display:flex;align-items:center;gap:8px}
+.av{width:28px;height:28px;border-radius:50%;overflow:hidden;flex:none;position:relative;background:var(--s)}
+.av img{width:100%;height:100%;object-fit:cover;transform:scale(2.4);transform-origin:50% 42%}
+.nk{background:none;border:0;color:#fff;font:700 14px var(--bd);padding:4px 0;min-height:40px;cursor:pointer;transition:opacity .2s;touch-action:manipulation}.nk:hover{opacity:.7}.nk[data-profile-user]{text-decoration:underline;text-decoration-color:#ffffff55;text-underline-offset:4px}.public-profile-photos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.public-profile-photos .ph-card{aspect-ratio:1;overflow:hidden;border-radius:13px;background:#111}.public-profile-photos img{width:100%;height:100%;object-fit:cover;background:var(--s);display:block}.profile-loading{padding:28px 12px;text-align:center;color:var(--mu)}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.75);opacity:0;pointer-events:none;transition:opacity .28s;z-index:10}
+.ov.on{opacity:1;pointer-events:auto}
+.sh{position:absolute;left:0;right:0;bottom:0;max-width:560px;margin:0 auto;background:var(--s);border-radius:20px 20px 0 0;padding:20px 16px calc(16px + env(safe-area-inset-bottom,0px));transform:translateY(100%);transition:transform .32s cubic-bezier(.2,.7,.2,1)}
+.ov.on .sh{transform:none}
+.sh h3{font:800 15px var(--hd);letter-spacing:.06em;text-transform:uppercase;margin:0 0 4px}
+textarea{width:100%;background:var(--c);color:#fff;border:0;border-radius:12px;padding:12px;font:400 16px/1.4 var(--bd);resize:none;margin-top:10px}
+textarea:focus{outline:2px solid #fff}
+.row{display:flex;justify-content:space-between;gap:10px;margin:6px 0 12px;min-height:18px}
+.err{color:#ffb454;font-size:12px;font-weight:600;text-align:right}
+.send,.cancel{width:100%;border:0;border-radius:12px;min-height:50px;font:800 13px var(--hd);letter-spacing:.06em;color:#fff;cursor:pointer;touch-action:manipulation}
+.send:disabled{opacity:.55}.cancel{background:none;color:var(--mu);margin-top:4px;font-family:var(--bd);font-weight:700}
+.done{background:var(--c);border-radius:12px;padding:12px;margin:16px 0 8px;font-weight:600;font-size:14px}
+
+/* Not-found view — match the site's black palette and typography */
+.not-found{min-height:100%;display:flex;align-items:center;justify-content:center;padding:40px 18px;text-align:center}
+.not-found-inner{width:100%;max-width:520px}
+.not-found-mark{display:flex;align-items:center;justify-content:center;gap:9px;font:800 12px var(--hd);letter-spacing:.16em;color:#fff;margin-bottom:42px}
+.not-found-mark i{display:flex;gap:4px}
+.not-found-mark i b{width:8px;height:17px;display:block}
+.not-found-mark i b:first-child{background:var(--red);transform:skewX(-14deg)}
+.not-found-mark i b:last-child{background:var(--blue);transform:skewX(-14deg)}
+.not-found-code{font:800 clamp(76px,22vw,132px)/.9 var(--hd);letter-spacing:-.08em;margin:0;background:linear-gradient(105deg,#fff 15%,#777 48%,#3478ff 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.not-found-title{font:800 clamp(17px,4.5vw,23px)/1.25 var(--hd);letter-spacing:.015em;text-transform:uppercase;margin:22px 0 10px}
+.not-found-copy{color:var(--mu);font:400 14px/1.6 var(--bd);margin:0 auto;max-width:340px}
+.not-found-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:28px auto 0;max-width:380px}
+.not-found-actions a,.not-found-actions button{min-height:48px;border-radius:12px;padding:12px 10px;font:800 11px var(--hd);letter-spacing:.04em;text-transform:uppercase;text-decoration:none;cursor:pointer}
+.not-found-home{background:#fff;color:#050505;border:1px solid #fff}
+.not-found-back{background:#111;color:#fff;border:1px solid #292929}
+.not-found-actions a:focus-visible,.not-found-actions button:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.card{opacity:1}}
+html.no-anim *,html.no-anim *::before,html.no-anim *::after{animation:none!important;transition:none!important}
+html.no-anim .card{opacity:1}
+/* Settings — full-screen menu style */
+#sv.settings-menu{padding-bottom:24px;min-height:100%}
+.settings-menu-list{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-direction:column}
+.settings-menu-list li{margin:0}
+.settings-menu-list a,.settings-menu-list button.menu-item{
+  display:block;width:100%;text-align:left;background:none;border:0;
+  color:#ececec;font:400 18px/1.3 var(--bd);
+  padding:20px 6px;cursor:pointer;touch-action:manipulation;
+  -webkit-tap-highlight-color:transparent;transition:color .15s,opacity .15s;
+}
+.settings-menu-list a:active,.settings-menu-list button.menu-item:active{opacity:.55}
+.settings-menu-list .menu-item.danger{color:#ff6b6b}
+.settings-menu-sep{height:1px;background:#222;margin:18px 0 10px}
+.settings-menu-foot{margin-top:28px;padding-top:8px;text-align:center}
+.settings-menu-foot .menu-exit{
+  background:none;border:0;color:#cfcfcf;font:400 16px var(--bd);
+  padding:16px 12px;cursor:pointer;touch-action:manipulation;
+}
+.settings-menu-foot .menu-exit:active{opacity:.55}
+.settings-sub{display:none}
+.settings-sub.on{display:block}
+.settings-sub .set-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 0;border-top:1px solid #222;min-height:52px}
+.settings-sub .set-row:first-of-type{border-top:0;padding-top:4px}
+.settings-sub .lbl{font-size:15px;font-weight:600}
+.settings-sub .sub{font-size:12px;color:var(--mu);margin-top:3px}
+.settings-sub input[type=text]{width:100%;max-width:180px;background:var(--s);border:0;border-radius:10px;padding:11px 12px;color:#fff;font:600 14px var(--bd)}
+.settings-sub input:focus{outline:2px solid #fff}
+.set-toggle{position:relative;width:48px;height:28px;border-radius:99px;background:#333;border:0;cursor:pointer;flex-shrink:0;touch-action:manipulation}
+.set-toggle.on{background:var(--blue)}
+.set-toggle::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:transform .2s}
+.set-toggle.on::after{transform:translateX(20px)}
+.btn-danger{width:100%;border:0;border-radius:14px;min-height:52px;font:800 13px var(--hd);letter-spacing:.06em;color:#fff;background:#5a1010;cursor:pointer;touch-action:manipulation;margin-top:8px}
+.btn-main{width:100%;border:0;border-radius:14px;min-height:52px;font:800 13px var(--hd);letter-spacing:.06em;color:#fff;background:var(--blue);cursor:pointer;touch-action:manipulation;margin-top:12px}
+.set-info{font-size:13px;color:var(--mu);line-height:1.5;margin:0 0 12px}
+.settings-back{background:none;border:0;color:var(--mu);font:700 12px var(--bd);letter-spacing:.1em;text-transform:uppercase;padding:14px 0 6px;min-height:44px;cursor:pointer;touch-action:manipulation}
+.sec-h{font:800 22px var(--hd);letter-spacing:-.01em;text-transform:uppercase;margin:8px 0 6px}
+.sec-lead{color:var(--mu);font-size:13px;margin:0 0 16px;line-height:1.4}
+.q-pos{background:var(--c);border-radius:16px;padding:18px 16px;margin-bottom:14px;text-align:center}
+.q-pos .big-n{font:800 42px var(--hd);line-height:1;letter-spacing:-.03em}
+.q-pos .lbl{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--mu);margin-top:4px}
+.q-meta{display:flex;gap:8px;margin-bottom:16px}
+.q-meta .stat{flex:1;text-align:center}
+.status-pill{display:inline-flex;align-items:center;gap:6px;font:700 11px var(--bd);letter-spacing:.08em;text-transform:uppercase;padding:6px 12px;border-radius:99px;background:var(--s)}
+.status-pill.queued{color:#ffb454}.status-pill.matched{color:var(--blue)}.status-pill.confirmed{color:#a78bfa}.status-pill.voting{color:#fff;background:var(--red)}
+.status-pill.completed{color:#4ade80}.status-pill.cancelled{color:var(--mu)}
+.status-pill::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.q-list{display:grid;gap:10px}
+.q-item{background:var(--c);border-radius:14px;padding:10px;display:grid;grid-template-columns:64px 1fr auto;gap:12px;align-items:center}
+.q-item img{width:64px;height:80px;object-fit:cover;border-radius:10px;background:var(--s);box-sizing:border-box}
+.q-item img.frame-R{box-shadow:inset 0 0 0 2px var(--red)}
+.q-item img.frame-B{box-shadow:inset 0 0 0 2px var(--blue)}
+.my-photos .ph-card.frame-R{box-shadow:inset 0 0 0 3px var(--red)}
+.my-photos .ph-card.frame-B{box-shadow:inset 0 0 0 3px var(--blue)}
+.q-item .info b{display:block;font-size:13px;margin-bottom:2px}
+.q-item .info span{font-size:11px;color:var(--mu)}
+.queue-wait{display:block;margin-top:5px;color:#ffb454;font-size:10px;font-variant-numeric:tabular-nums}
+.queue-explain{margin:0 0 14px;padding:11px 13px;border-radius:12px;background:var(--c);color:var(--mu);font-size:11px;line-height:1.45}
+.q-item .st{font:700 10px var(--bd);letter-spacing:.08em;text-transform:uppercase;color:var(--mu)}
+.q-item .acts{display:flex;flex-direction:column;gap:4px}
+.q-item .acts button{border:0;border-radius:8px;padding:6px 10px;font:700 10px var(--bd);cursor:pointer;touch-action:manipulation}
+.btn-sm-blue{background:var(--blue);color:#fff}
+.btn-sm-muted{background:var(--s);color:var(--mu)}
+.empty-box{background:var(--c);border-radius:16px;padding:28px 16px;text-align:center;color:var(--mu)}
+.empty-box p{margin:8px 0 0;font-size:13px;line-height:1.4}
+.up-zone{background:var(--c);border:0;border-radius:14px;padding:17px 14px;text-align:center;cursor:pointer;transition:background .2s;touch-action:manipulation;min-height:112px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+.up-zone:active{background:#0a1220}
+.up-zone input{display:none}
+.up-zone .ic{font-size:23px;line-height:1;margin:0 0 3px;opacity:.75}
+.up-zone b{display:block;font:700 13px var(--bd);margin:0}
+.up-zone span{font-size:11px;color:var(--mu)}
+#uv .sec-h{margin:4px 0 3px}
+#uv .sec-lead{font-size:12px;margin:0 0 11px;line-height:1.3}
+.upload-check{font-size:11px;color:var(--mu);margin:7px 2px 0;text-align:center;line-height:1.35}
+.upload-count{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:15px 0 9px}
+.upload-count strong{font:700 14px var(--bd)}
+.upload-count span{font-size:12px;color:var(--mu);font-variant-numeric:tabular-nums}
+.upload-slots{display:flex;gap:5px;margin:0 0 10px}
+.upload-slots i{display:block;height:4px;flex:1;border-radius:5px;background:#292929}
+.upload-slots i.filled{background:var(--blue)}
+.preview-box{background:var(--c);border-radius:16px;overflow:hidden;margin-bottom:14px}
+.preview-box img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block;max-height:360px}
+.preview-box .act{display:flex;gap:8px;padding:12px}
+.preview-box .act button{flex:1;border:0;border-radius:12px;min-height:48px;font:800 12px var(--hd);letter-spacing:.05em;cursor:pointer;touch-action:manipulation}
+.preview-box .act .rep{background:var(--s);color:#fff}
+.preview-box .act .add{background:var(--blue);color:#fff}
+.preview-box{animation:faPreviewIn .24s cubic-bezier(.2,.75,.25,1) both}
+.preview-box .act .add{position:relative;overflow:hidden;transition:filter .18s,transform .18s,opacity .18s}
+.preview-box .act .add:active:not(:disabled){transform:scale(.97)}
+.preview-box .act .add.is-loading{opacity:.9;pointer-events:none;padding-left:34px}
+.preview-box .act .add.is-loading:before{content:"";position:absolute;left:13px;top:50%;width:13px;height:13px;margin-top:-7px;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:faUploadSpin .7s linear infinite}
+.preview-box .act .add.is-loading:after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 25%,rgba(255,255,255,.13) 48%,transparent 70%);transform:translateX(-100%);animation:faUploadShimmer 1.15s ease-in-out infinite}
+@keyframes faUploadSpin{to{transform:rotate(360deg)}}
+@keyframes faUploadShimmer{to{transform:translateX(100%)}}
+@keyframes faPreviewIn{from{opacity:0;transform:translate3d(0,10px,0) scale(.985)}to{opacity:1;transform:translate3d(0,0,0) scale(1)}}
+@media(prefers-reduced-motion:reduce){.preview-box,.preview-box .act .add.is-loading:before,.preview-box .act .add.is-loading:after{animation:none!important;transition:none!important}}
+
+.limit-note{font-size:12px;color:var(--mu);margin:8px 0 0;text-align:center}
+.my-photos{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:0}
+.my-photos .ph-card{position:relative;aspect-ratio:3/4;border-radius:12px;overflow:hidden;background:var(--s)}
+.my-photos .ph-card img{width:100%;height:100%;object-fit:cover;background:var(--s);display:block}
+.my-photos .ph-card .rm{position:absolute;top:6px;right:6px;width:28px;height:28px;border:0;border-radius:50%;background:rgba(0,0,0,.7);color:#fff;font-size:16px;cursor:pointer;display:grid;place-items:center}
+.pr-head{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+.pr-av{width:72px;height:72px;border-radius:50%;overflow:hidden;background:var(--s);flex:none}
+.pr-av img{width:100%;height:100%;object-fit:cover}
+.profile-avatar-tools{display:flex;align-items:center;gap:12px;margin:12px 0 18px}
+.profile-avatar-preview{width:64px;height:64px;border-radius:50%;overflow:hidden;background:#202020;border:1px solid #333;flex:none}
+.profile-avatar-preview img{width:100%;height:100%;object-fit:cover}
+.profile-avatar-tools .btn-ghost{width:auto;padding:10px 14px}
+.pr-name{font:800 18px var(--hd)}
+.verified-badge{display:inline-grid;place-items:center;vertical-align:middle;margin-left:5px;width:16px;height:16px;border-radius:50%;background:#2589ff;color:#fff;font:800 11px/1 var(--bd);box-shadow:0 0 0 1.5px rgba(37,137,255,.2);flex:0 0 auto}
+.pr-handle{font-size:13px;color:var(--mu);margin-top:2px}
+.pr-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:18px}
+.pr-stats .stat{text-align:center;padding:12px 8px}
+.pr-stats .stat b{font-size:20px}
+.hist{display:grid;gap:10px}
+.hist-item{background:var(--c);border-radius:14px;padding:12px;display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;cursor:pointer;touch-action:manipulation}
+.hist-item:active{opacity:.85}
+.hist-item .sides{display:flex;align-items:center;gap:8px}
+.hist-item .sides img{width:40px;height:50px;object-fit:cover;border-radius:8px;background:var(--s);display:block}
+.hist-item .vs-s{font:800 10px var(--hd);color:var(--mu)}
+.hist-item .res{font:800 12px var(--hd);letter-spacing:.06em}
+.hist-item .res.win{color:#4ade80}.hist-item .res.lose{color:var(--red)}.hist-item .res.draw{color:var(--mu)}.hist-item .res.red{color:var(--red)}.hist-item .res.blue{color:var(--blue)}
+.champion-tag{display:inline-block;font:700 9px var(--bd);letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:6px;background:#3a3010;color:#f0d060;margin-left:6px;vertical-align:middle}.legendary-tag{background:linear-gradient(135deg,#4a3410,#8a6818);color:#ffe89a}
+.btn-main{width:100%;border:0;border-radius:14px;min-height:52px;font:800 13px var(--hd);letter-spacing:.06em;color:#fff;background:var(--blue);cursor:pointer;touch-action:manipulation;margin-top:12px}
+.btn-main:disabled{opacity:.5}
+.btn-ghost{width:100%;border:0;border-radius:14px;min-height:48px;font:700 13px var(--bd);color:var(--mu);background:none;cursor:pointer;margin-top:6px}
+.match-card{background:var(--c);border-radius:16px;padding:20px 16px;text-align:center;margin-bottom:16px}
+.match-card .countdown{font:800 48px var(--hd);line-height:1;margin:12px 0 4px;color:var(--blue)}
+.match-card .cd-lbl{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--mu)}
+.match-duel{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:16px 0}
+.match-duel img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:center top;border-radius:12px}
+.match-duel>div:first-child img{background:radial-gradient(ellipse 80% 70% at 50% 45%,#5a1818,#120404);box-shadow:inset 0 0 0 2px var(--red)}
+.match-duel>div:last-child img{background:radial-gradient(ellipse 80% 70% at 50% 45%,#183a7a,#040812);box-shadow:inset 0 0 0 2px var(--blue)}
+.btn-cancel-match{width:100%;border:0;border-radius:14px;min-height:52px;font:800 13px var(--hd);background:var(--red);color:#fff;cursor:pointer;touch-action:manipulation}
+.btn-confirm-ok{width:100%;border:0;border-radius:14px;min-height:48px;font:700 13px var(--bd);background:var(--s);color:#fff;cursor:pointer;margin-top:8px}
+.result-detail{background:var(--c);border-radius:16px;padding:16px;margin-bottom:14px}
+.result-detail .score{font:800 28px var(--hd);text-align:center;margin:12px 0}
+
+.champ-badge{position:absolute;right:6px;top:6px;z-index:2;font:800 9px var(--hd);letter-spacing:.06em;padding:3px 6px;border-radius:5px;background:linear-gradient(135deg,#c9a227,#f0d060);color:#1a1200}
+.streak{font:700 10px var(--bd);color:#f0d060;margin-top:4px}
+.top-arena{margin:8px 0 14px}
+.top-arena h2{font:800 13px var(--hd);letter-spacing:.1em;text-transform:uppercase;margin:0 0 10px;display:flex;align-items:center;gap:8px}
+.top-arena h2 span{color:#f0d060}
+.top-list{display:flex;flex-direction:column;gap:8px}
+.top-item{background:var(--c);border-radius:14px;padding:10px 12px;display:grid;grid-template-columns:28px 48px 1fr auto;gap:10px;align-items:center}
+.top-item.gold{box-shadow:inset 0 0 0 1px rgba(240,208,96,.35)}
+.top-item .pos{font:800 14px var(--hd);color:var(--mu);text-align:center}
+.top-item.gold .pos{color:#f0d060}
+.top-item img{width:48px;height:60px;object-fit:cover;border-radius:8px;background:var(--s)}
+.top-item .nm{font-weight:700;font-size:13px}
+.top-item .meta{font-size:11px;color:var(--mu);margin-top:2px}
+.top-item .stats{text-align:right;font-size:11px;color:var(--mu)}
+.top-item .stats b{color:#fff;font:800 14px var(--hd)}
+.lane-label{font:700 9px var(--bd);letter-spacing:.08em;text-transform:uppercase;color:var(--mu)}
+
+
+/* Dominance / fight pulse */
+.ph.dom{z-index:1}
+.ph.dom img{animation:domPulse 1.6s ease-in-out infinite}
+.ph.weak img{filter:brightness(.72) saturate(.85);transform:scale(.97)}
+.ph.dom::after{content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;
+  box-shadow:inset 0 0 0 0 transparent;animation:domGlow 1.6s ease-in-out infinite}
+.ph.R.dom::after{box-shadow:inset 0 0 24px rgba(255,52,52,.35)}
+.ph.B.dom::after{box-shadow:inset 0 0 24px rgba(52,120,255,.35)}
+@keyframes domPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
+@keyframes domGlow{0%,100%{opacity:.55}50%{opacity:1}}
+.vs.push-r{animation:vsPushR 1.2s ease-in-out infinite}
+.vs.push-b{animation:vsPushB 1.2s ease-in-out infinite}
+@keyframes vsPushR{0%,100%{transform:translate(-45%,-50%)}50%{transform:translate(-58%,-50%)}}
+@keyframes vsPushB{0%,100%{transform:translate(-55%,-50%)}50%{transform:translate(-42%,-50%)}}
+.bar.fight{height:6px;box-shadow:0 0 10px rgba(255,52,52,.2),inset 0 0 0 0 transparent;overflow:visible}
+.big .bar.fight{height:9px}
+.bar.fight u{
+  background:linear-gradient(90deg,#ff1a1a 0%,#FF3434 70%,#ff6b4a 100%);
+  animation:barStruggle 1s ease-in-out infinite;
+  box-shadow:2px 0 8px rgba(255,52,52,.55);
+}
+.bar.fight{background:linear-gradient(90deg,#1a4dff,#3478FF 40%,#5a9fff)}
+.bar.fight .clash{
+  position:absolute;top:50%;width:10px;height:10px;margin-top:-5px;margin-left:-5px;
+  border-radius:50%;background:#fff;z-index:3;pointer-events:none;
+  box-shadow:0 0 6px #fff,0 0 14px #FF3434,0 0 18px #3478FF;
+  animation:clashSpark .7s ease-in-out infinite;
+  left:calc(var(--p,50)*1%);
+}
+.bar.fight .clash::before,.bar.fight .clash::after{
+  content:"";position:absolute;top:50%;left:50%;border-radius:50%;
+  transform:translate(-50%,-50%);pointer-events:none;
+}
+.bar.fight .clash::before{width:18px;height:18px;border:1px solid rgba(255,255,255,.45);animation:clashRing .7s ease-out infinite}
+.bar.fight .clash::after{width:4px;height:16px;background:linear-gradient(180deg,transparent,#fff,transparent);opacity:.8;animation:clashBolt .7s ease-in-out infinite}
+@keyframes barStruggle{
+  0%,100%{filter:brightness(1) saturate(1)}
+  50%{filter:brightness(1.25) saturate(1.15)}
+}
+@keyframes clashSpark{
+  0%,100%{transform:scale(1);opacity:1}
+  50%{transform:scale(1.35);opacity:.85}
+}
+@keyframes clashRing{
+  0%{transform:translate(-50%,-50%) scale(.6);opacity:.8}
+  100%{transform:translate(-50%,-50%) scale(1.8);opacity:0}
+}
+@keyframes clashBolt{
+  0%,100%{opacity:.35;height:12px}
+  50%{opacity:1;height:20px}
+}
+html.no-anim .bar.fight .clash,html.no-anim .bar.fight .clash::before,html.no-anim .bar.fight .clash::after{animation:none!important;display:none}
+.pct .r.lead,.pct .b.lead{animation:pctFlash 1.5s ease-in-out infinite}
+@keyframes pctFlash{0%,100%{opacity:1}50%{opacity:.7}}
+html.no-anim .ph.dom img,html.no-anim .ph.dom::after,html.no-anim .vs.push-r,html.no-anim .vs.push-b,
+html.no-anim .bar.fight u,html.no-anim .bar.fight .clash,html.no-anim .pct .r.lead,html.no-anim .pct .b.lead{animation:none!important}
+
+/* Showcase victory overlay */
+.victory-overlay{position:fixed;inset:0;z-index:30;display:grid;place-items:center;padding:22px;background:rgba(0,0,0,.88);backdrop-filter:blur(12px);opacity:0;pointer-events:none;transition:opacity .35s ease}
+.victory-overlay.on{opacity:1;pointer-events:auto}
+.victory-panel{position:relative;width:min(100%,420px);text-align:center;padding:26px 20px 22px;border:1px solid rgba(52,120,255,.55);border-radius:24px;background:radial-gradient(ellipse at 50% 0%,rgba(52,120,255,.25),transparent 58%),#090b11;box-shadow:0 0 70px rgba(52,120,255,.22);overflow:hidden;transform:translateY(22px) scale(.94);transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.victory-overlay.on .victory-panel{transform:translateY(0) scale(1)}
+.victory-kicker{font:800 10px var(--hd);letter-spacing:.24em;color:#8bb4ff}
+.victory-title{font:800 clamp(27px,8vw,40px)/1.05 var(--hd);margin:10px 0 6px;color:#fff;text-shadow:0 0 24px rgba(52,120,255,.7)}
+.victory-photo{width:min(56vw,210px);aspect-ratio:3/4;object-fit:cover;object-position:center top;border-radius:18px;border:2px solid var(--blue);box-shadow:0 0 0 7px rgba(52,120,255,.1),0 0 42px rgba(52,120,255,.45);animation:victoryRise .8s cubic-bezier(.2,.8,.2,1) both}
+.victory-name{font:800 18px var(--hd);margin:14px 0 4px;color:#fff}
+.victory-sub{font-size:11px;letter-spacing:.16em;color:#8bb4ff;text-transform:uppercase}
+.victory-close{margin-top:20px;width:100%;min-height:48px;border:0;border-radius:12px;background:var(--blue);color:white;font:800 12px var(--hd);letter-spacing:.08em}
+.victory-rays{position:absolute;inset:-45%;pointer-events:none;background:repeating-conic-gradient(from 0deg,rgba(52,120,255,.11) 0deg 7deg,transparent 7deg 16deg);animation:victorySpin 18s linear infinite}
+@keyframes victoryRise{from{opacity:0;transform:translateY(28px) scale(.82)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes victorySpin{to{transform:rotate(360deg)}}
+html.no-anim .victory-rays{animation:none}
+html.no-anim .victory-photo{animation:none}
+html.no-anim .victory-overlay,html.no-anim .victory-panel{transition:none}
+
+#fa-boot-loader{--fa-progress:0;position:fixed;inset:0;z-index:200000;display:none;align-items:center;justify-content:center;background:#050505;opacity:1;visibility:visible;transition:opacity .7s cubic-bezier(.4,0,.2,1),visibility .7s}#fa-boot-loader.is-active{display:flex}
+#fa-boot-loader.is-hidden{opacity:0;visibility:hidden;pointer-events:none}
+.fa-boot-inner{display:flex;flex-direction:column;align-items:center;gap:0;padding:24px;text-align:center;transition:transform .7s cubic-bezier(.4,0,.2,1),opacity .5s ease}
+#fa-boot-loader.is-hidden .fa-boot-inner{transform:translateY(-6px);opacity:0}
+.fa-boot-brand{display:flex;align-items:center;gap:4px;color:#fff}
+.fa-boot-brand-mark{display:block;width:48px;height:48px;flex:none;object-fit:contain;opacity:0;animation:faBootLogoIn .9s cubic-bezier(.16,.8,.2,1) .15s forwards,faBootBreath 3.2s ease-in-out 1.3s infinite,faBootFloat 3.2s ease-in-out 1.3s infinite}
+@keyframes faBootLogoIn{from{opacity:0;transform:translateY(9px) scale(.72) rotate(-7deg);filter:blur(3px)}to{opacity:1;transform:translateY(0) scale(1) rotate(0);filter:blur(0)}}
+@keyframes faBootFloat{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-2px) scale(1.035)}}
+.fa-boot-name{font:800 17px var(--hd);letter-spacing:.32em;margin-left:-7px;margin-right:-.32em;white-space:nowrap;background:linear-gradient(100deg,#fff 40%,#ef4444 47%,#3b82f6 53%,#fff 60%) 100% 0/300% 100% no-repeat;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;opacity:0;animation:faBootUp .9s cubic-bezier(.16,.8,.2,1) .55s forwards,faBootShine 3s cubic-bezier(.45,0,.55,1) 1.5s infinite}
+.fa-boot-bar{position:relative;width:132px;height:1px;margin-top:38px;background:#1c1c1c;overflow:hidden;opacity:0;animation:faBootFade .8s ease 1s forwards}
+.fa-boot-bar b{position:absolute;inset:0;background:linear-gradient(90deg,#ef4444,#3b82f6);transform-origin:left;transform:scaleX(var(--fa-progress));transition:transform .35s cubic-bezier(.4,0,.2,1)}
+.fa-boot-bar:after{content:"";position:absolute;top:0;bottom:0;width:40%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);animation:faBootSweep 1.8s ease-in-out infinite}
+.fa-boot-caption{margin-top:16px;min-height:14px;color:#6b6b6b;font:600 11px/1.3 var(--bd);letter-spacing:.18em;text-transform:uppercase;opacity:0;animation:faBootFade .8s ease 1.2s forwards}
+@keyframes faBootInR{from{opacity:0;transform:translateX(-16px)}to{opacity:1;transform:none}}
+@keyframes faBootInB{from{opacity:0;transform:translateX(16px)}to{opacity:1;transform:none}}
+@keyframes faBootBreath{50%{opacity:.78}}
+@keyframes faBootUp{from{opacity:0;transform:translateY(8px);filter:blur(4px)}to{opacity:1;transform:none;filter:none}}
+@keyframes faBootShine{from{background-position:100% 0}to{background-position:0 0}}
+@keyframes faBootSweep{from{left:-40%}to{left:100%}}
+@keyframes faBootFade{to{opacity:1}}
+@media(prefers-reduced-motion:reduce){#fa-boot-loader *{animation-duration:.01ms!important;animation-delay:0ms!important;animation-iteration-count:1!important}}
+</style>
+
+<style id="fa-push-onboarding-style">
+#fa-push-onboarding{position:fixed;inset:0;z-index:210000;display:none;align-items:center;justify-content:center;padding:22px;background:rgba(0,0,0,.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+#fa-push-onboarding.is-visible{display:flex}
+.fa-push-onboarding-card{width:min(100%,360px);padding:24px 22px 20px;border:1px solid rgba(255,255,255,.12);border-radius:20px;background:linear-gradient(155deg,#171a20,#090a0d 72%);box-shadow:0 24px 80px rgba(0,0,0,.55);text-align:center;color:#fff}
+.fa-push-onboarding-mark{display:block;width:64px;height:64px;margin:0 auto 16px;object-fit:contain;border-radius:8px}
+.fa-push-onboarding-card h2{margin:0 0 9px;font-size:20px;font-weight:800;letter-spacing:-.03em}
+.fa-push-onboarding-card p{margin:0;color:#a6a6ad;font-size:13px;line-height:1.55}
+.fa-push-onboarding-actions{display:flex;gap:10px;margin-top:21px}
+.fa-push-onboarding-actions button{flex:1;min-height:44px;border-radius:11px;font:700 13px inherit;cursor:pointer}
+#fa-push-onboarding-enable{border:0;background:linear-gradient(100deg,#ef4444,#3978ff);color:#fff}
+#fa-push-onboarding-later{border:1px solid #303038;background:#17171c;color:#c8c8ce}
+#fa-push-onboarding-enable:disabled{opacity:.6;cursor:wait}
+</style>
+
+</head>
+<body>
+<div id="fa-boot-loader" role="status" aria-live="polite">
+  <div class="fa-boot-inner">
+    <div class="fa-boot-brand" aria-label="FACE ARENA"><img class="fa-boot-brand-mark" src="https://face-arena-cloudflare.pages.dev/IMG_9559.png?v=1" alt="" aria-hidden="true"><span class="fa-boot-name">FACE ARENA</span></div>
+    <div class="fa-boot-bar" aria-hidden="true"><b></b></div>
+    <div class="fa-boot-caption" id="fa-boot-caption">Загружаем арену</div>
+  </div>
+</div>
+
+<div id="fa-push-onboarding" role="dialog" aria-modal="true" aria-labelledby="fa-push-onboarding-title" aria-describedby="fa-push-onboarding-description">
+  <div class="fa-push-onboarding-card">
+    <img class="fa-push-onboarding-mark" src="https://face-arena-cloudflare.pages.dev/IMG_9559.png?v=1" alt="" aria-hidden="true">
+    <h2 id="fa-push-onboarding-title">Не пропускай битвы</h2>
+    <p id="fa-push-onboarding-description">Разреши уведомления FACE ARENA, чтобы получать сообщения о начале баттлов и результатах прямо на телефон.</p>
+    <div class="fa-push-onboarding-actions">
+      <button type="button" id="fa-push-onboarding-later">Позже</button>
+      <button type="button" id="fa-push-onboarding-enable">Включить</button>
+    </div>
+  </div>
+</div>
+
+<div id="appScroll">
+<div class="wrap" id="av">
+<header><div class="logo"><img class="fa-brand-logo-image" src="https://face-arena-cloudflare.pages.dev/IMG_9559.png?v=1" alt="" aria-hidden="true">FACE ARENA</div><div class="hdr-right"><div class="live"><span class="dot"></span><span data-i="live"></span></div><button type="button" class="btn-notifications" aria-label="Уведомления"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg><span class="notification-count" hidden></span></button><button type="button" class="btn-gear"  aria-label="Настройки"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button></div></header>
+<h1 data-i="title"></h1>
+<p class="lead" data-i="lead"></p>
+<div class="stats" id="stats"></div>
+<div id="topArena" class="top-arena"></div>
+<main class="grid" id="grid" aria-live="polite"></main>
+
+</div>
+<div class="wrap view" id="bv" hidden></div>
+<div class="wrap view" id="qv" hidden></div>
+<div class="wrap view" id="uv" hidden></div>
+<div class="wrap view" id="pv" hidden></div>
+<div class="wrap view" id="sv" hidden></div>
+<div class="wrap view" id="mv" hidden></div>
+<div class="wrap view" id="rv" hidden></div>
+<div class="wrap view" id="iv" hidden></div>
+<div class="wrap view" id="nv" hidden></div>
+<div class="wrap view" id="nfv" hidden></div>
+</div>
+<nav><div class="tabs" id="tabs"><span class="ind" id="ind"></span></div></nav>
+<div class="toast" id="toast" role="status"></div>
+<div class="ov" id="ov"><div class="sh" id="sh" role="dialog" aria-modal="true"></div></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./face-arena-sync.js?v=20261119-web-push-v1"></script>
+<script src="./face-arena-audio.js"></script>
+<script src="./face-arena-game-engine.js"></script>
+<script>
+(function(){
+  var done=function(){document.documentElement.classList.add("fonts-ready")};
+  if(document.fonts&&document.fonts.ready){
+    var t=setTimeout(done,800);
+    document.fonts.ready.then(function(){clearTimeout(t);done()});
+  } else {done()}
+})();
+const STR={ru:{
+live:"Прямой эфир",title:"Кто красивее?",lead:"Десять баттлов идут одновременно. Выбери сторону и объясни свой выбор комментарием.",
+battle:"Баттл №",wait:"Ждём первого зрителя",vote:"Идёт голосование",tWait:"До отмены",tVote:"До конца голосования",
+noVotes:"Голосов пока нет",slots:"слотов занято",queue:"фото в очереди",ending:"Подсчёт итогов",
+arena:"Арена",q:"Очередь",up:"Загрузка",pr:"Профиль",results:"Итоги",st:"Ещё",of:"из",back:"Назад",
+setTitle:"Настройки",setLead:"Настройки приложения.",
+setProfile:"Профиль",setName:"Имя",setHandle:"Никнейм",setSave:"Сохранить",
+setAppear:"Оформление",setAnim:"Анимации",setAnimSub:"Отключение ускоряет интерфейс",
+setData:"Данные",setDataInfo:"Данные хранятся только в этом браузере и пока не синхронизируются между устройствами.",
+setReset:"Сброс",setResetInfo:"Удалит фото, голоса, комментарии, историю и настройки профиля из этого браузера.",
+setResetBtn:"Сбросить данные",
+cm:"Комментарии зрителей",cmEmpty:"Комментариев пока нет. Станьте первым, кто объяснит свой выбор.",
+pickR:"Голосую за RED",pickB:"Голосую за BLUE",hint:"Чтобы проголосовать, нужно написать комментарий и объяснить выбор.",
+srv:"Таймер работает, пока эта страница открыта.",
+dup:"Повторное голосование запрещено: вы уже голосовали в этом баттле",yourVote:"Ваш голос за",
+ph:"Почему вы выбрали эту сторону?",send:"Отправить голос",cancel:"Отмена",sending:"Отправляем…",
+e0:"Напишите комментарий: без него голос не засчитывается",e1:"Слишком коротко: напишите минимум 10 символов",
+ok:"Голос и комментарий сохранены на этом устройстве",closed:"Голосование в этом баттле уже завершено",
+done:"Ваш голос засчитан. Повторное голосование запрещено.",you:"Вы",
+qTitle:"Очередь",qLead:"Ваши фото ждут пары или уже участвуют в баттлах.",
+qPos:"Ваша позиция",qAhead:"фото впереди",
+stQueued:"В очереди",stMatched:"Пара найдена",stConfirmed:"Ожидание зрителя",stVoting:"Идёт голосование",stChampion:"Чемпион",
+stCompleted:"Завершён",stCancelled:"Отменён",
+qEmpty:"В очереди пока нет ваших фото. Загрузите портрет во вкладке «Загрузка».",
+qYours:"Ваши фото",
+findPair:"Найти пару",cancelMatch:"Отменить участие",
+upTitle:"Загрузка",upLead:"До 3 активных фотографий одновременно.",
+upTap:"Нажмите, чтобы выбрать фото",upHint:"JPEG, PNG, WebP · до 5 МБ",
+upReplace:"Заменить",upAdd:"Добавить в очередь",upCancel:"Отменить",
+upOk:"Фото добавлено в локальную очередь",upLimit:"Лимит: максимум 3 активных фото",
+upBadType:"Поддерживаются только JPEG, PNG и WebP",upBadSize:"Файл больше 5 МБ",
+upNoFile:"Сначала выберите изображение",upMy:"Активные фото",upEmptyMy:"Пока нет загруженных фото",
+upConfirmAdd:"Добавить это фото в очередь?",upConfirmDel:"Удалить фото из очереди?",
+prTitle:"Профиль",prLead:"Статистика по вашим результатам и участию.",
+prWins:"Победы",prLosses:"Поражения",prBattles:"Баттлы",
+prActive:"Активные фото",prHist:"История баттлов",prArchived:"Архив фото",
+prEmptyHist:"История пуста. Завершите баттл, чтобы увидеть результат.",
+prWin:"ПОБЕДА",prLose:"ПОРАЖЕНИЕ",prDraw:"НИЧЬЯ",
+prLocal:"Профиль пока хранится на этом устройстве.",
+prReset:"Сбросить данные",
+matchTitle:"Пара найдена",matchLead:"У вас 10 секунд, чтобы отменить участие.",
+matchConfirm:"Баттл подтверждён",matchCancelOk:"Участие отменено, фото вернулось в очередь",
+matchExpired:"Время вышло — баттл подтверждён",
+resTitle:"Результат баттла",resBack:"К профилю"
+}};
+const LANG="ru",t=k=>STR[LANG][k]||k;
+document.querySelectorAll("[data-i]").forEach(e=>e.textContent=t(e.dataset.i));
+const pl=(n,f)=>{const m=n%10,h=n%100;return n+" "+(m==1&&h!=11?f[0]:m>=2&&m<=4&&(h<12||h>14)?f[1]:f[2])};
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+const verifiedBadge=verified=>verified?`<span class="verified-badge" title="Подтверждённый аккаунт" aria-label="Подтверждённый аккаунт">✓</span>`:"";
+const fmt=s=>String(Math.floor(s/60)).padStart(2,"0")+":"+String(Math.max(0,s%60)).padStart(2,"0");
+const elapsedQueue=ms=>{const sec=Math.max(0,Math.floor((Date.now()-Number(ms||Date.now()))/1000));return sec>=3600?String(Math.floor(sec/3600)).padStart(2,"0")+":"+String(Math.floor(sec%3600/60)).padStart(2,"0")+":"+String(sec%60).padStart(2,"0"):fmt(sec)};
+function tickQueueWaits(){document.querySelectorAll("[data-queued-at]").forEach(el=>{el.textContent="В очереди · "+elapsedQueue(el.dataset.queuedAt)})}
+const toast=m=>{const e=$("toast");e.textContent=m;e.classList.add("show");clearTimeout(toast.h);toast.h=setTimeout(()=>e.classList.remove("show"),2400)};
+const GEAR_SVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>';
+function hdrHTML(showGear=true){
+  return `<header><div class="logo"><img class="fa-brand-logo-image" src="https://face-arena-cloudflare.pages.dev/IMG_9559.png?v=1" alt="" aria-hidden="true">FACE ARENA</div><div class="hdr-right"><div class="live"><span class="dot"></span><span>${t("live")}</span></div>${showGear?`<button type="button" class="btn-notifications" aria-label="Уведомления"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg><span class="notification-count" hidden></span></button><button type="button" class="btn-gear"  aria-label="Настройки">${GEAR_SVG}</button>`:""}</div></header>`;
+}
+function bindGear(){
+  document.querySelectorAll(".btn-gear").forEach(g=>{
+    g.onclick=e=>{e.preventDefault();e.stopPropagation();location.hash="settings"};
+  });
+}
+// Global capture: works even if header re-rendered
+document.addEventListener("click",function(e){
+  const n=e.target.closest&&e.target.closest(".btn-notifications");
+  if(n){e.preventDefault();location.hash="notifications";return}
+  const g=e.target.closest&&e.target.closest(".btn-gear");
+  if(g){e.preventDefault();location.hash="settings"}
+},true);
+function updateNotificationBadges(){
+  const rows=window.FaceArenaSync?.notifications||[];
+  const unread=rows.reduce((count,row)=>count+(!row.read_at?1:0),0);
+  document.querySelectorAll(".btn-notifications .notification-count").forEach(el=>{
+    el.hidden=unread===0;
+    el.textContent=unread>99?"99+":String(unread);
+  });
+}
+window.addEventListener("face-arena-notifications",()=>{
+  updateNotificationBadges();
+  if(location.hash==="#notifications")renderNotifications(false);
+});
+
+const SK=["#f1c9a5","#d9a47c","#b97d57","#8d5a3b","#f6d9c0"],HR=["#1a1209","#3b2414","#8a5a2b","#c9a15a","#222"],CL=["#2b2b2b","#3a3f4a","#4a2f2f","#1f3a2f","#555"];
+function face(s,tm){const g=tm=="R"?["#4a1010","#140404"]:["#0f2a5c","#040a18"],sk=SK[s%5],hr=HR[(s*3)%5],cl=CL[(s*2)%5],long=s%2;
+const svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400"><defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${g[0]}"/><stop offset="1" stop-color="${g[1]}"/></linearGradient></defs><rect width="300" height="400" fill="url(#g)"/>${long?`<ellipse cx="150" cy="175" rx="92" ry="110" fill="${hr}"/>`:""}<path d="M25 400c0-75 55-110 125-110s125 35 125 110z" fill="${cl}"/><rect x="125" y="245" width="50" height="70" rx="16" fill="${sk}"/><ellipse cx="150" cy="185" rx="62" ry="78" fill="${sk}"/><path d="M85 175c-5-58 28-82 65-82s70 24 65 82c-12-28-32-42-65-42s-52 14-65 42z" fill="${hr}"/><circle cx="126" cy="188" r="4.5" fill="#1a1a1a"/><circle cx="174" cy="188" r="4.5" fill="#1a1a1a"/><path d="M132 228q18 14 36 0" stroke="#7a3b2e" stroke-width="3.5" fill="none" stroke-linecap="round"/></svg>`;
+return "data:image/svg+xml,"+encodeURIComponent(svg)}
+
+const MAX_ACTIVE=3, MAX_SIZE=5*1024*1024, MATCH_SEC=10, STAGE_SEC=70, MAX_BATTLES=10;
+function arenaNow(){return window.FaceArenaSync?.isOnline?.()&&typeof window.FaceArenaSync.serverNow==="function"?window.FaceArenaSync.serverNow():Date.now()}
+const ACTIVE_STATUSES=new Set(["queued","matched","confirmed","voting","champion"]);
+const LS_KEY="face_arena_demo_v2";
+const ANIM_PREF_KEY="face_arena_pref_anim_v1";
+let photos=[];
+let arenaBattles=[];
+let history=[];
+let arenaResults=[];
+// Votes & comments keyed by immutable battleUid (NOT slot id)
+let VOTED=new Set(); // Set of battleUid strings
+let MY={}; // { [battleUid]: [{s,v}] }
+let pendingUrl=null, pendingFile=null, isPublishingPhoto=false;
+let matchTimerId=null;
+let profile={name:"Вы",handle:"user",isVerified:false,role:"user"}
+let prefAnim=(()=>{try{const saved=localStorage.getItem(ANIM_PREF_KEY);return saved===null?true:saved==="true"}catch{return true}})();
+let participantStats={}; // account-level stats for the signed-in user's own profile
+let topArenaRanking=null; // server-authoritative public aggregate; null means use local fallback
+let _uidSeq=0;
+function newBattleUid(){return "b_"+Date.now().toString(36)+"_"+((++_uidSeq)%1e6).toString(36)+"_"+Math.random().toString(36).slice(2,7)}
+
+function saveState(){
+  // Authenticated arena state is server-owned; never persist it under a shared browser key.
+  if(window.FaceArenaSync)return;
+  try{
+    const data={
+      v:3,
+      photos, history, profile, prefAnim, _uidSeq, participantStats,
+      arenaBattles:arenaBattles.map(b=>({...b})),
+      voted:[...VOTED],
+      my:MY,
+      savedAt:Date.now()
+    };
+    localStorage.setItem(LS_KEY,JSON.stringify(data));
+  }catch(e){
+    toast("Не удалось сохранить: память браузера переполнена или недоступна");
+  }
+}
+function loadState(){
+  // Wait for Supabase; do not restore legacy unscoped demo data before account identity is known.
+  if(window.FaceArenaSync)return false;
+  try{
+    // migrate from v1 if needed
+    let raw=localStorage.getItem(LS_KEY);
+    if(!raw)return false;
+    const data=JSON.parse(raw);
+    if(!data||!Array.isArray(data.photos)||!Array.isArray(data.arenaBattles))return false;
+    photos=window.FaceArenaGameEngine?window.FaceArenaGameEngine.normalizeQueue(data.photos||[]):(data.photos||[]);
+    history=data.history||[];
+    arenaBattles=(data.arenaBattles||[]).map(b=>{
+      b={...b};
+      if(b.stage==="w"||b.stage==="v"){
+        const oldDuration=STAGE_SEC*1000;
+        const started=typeof b.stageStarted==="number"&&b.stageStarted>0?b.stageStarted:(typeof b.stageEnd==="number"&&b.stageEnd>1e12?b.stageEnd-oldDuration:Date.now());
+        b.stageStarted=started;
+        b.stageEnd=Math.min(typeof b.stageEnd==="number"&&b.stageEnd>1e12?b.stageEnd:started+oldDuration,started+STAGE_SEC*1000);
+        b.totalStage=STAGE_SEC;
+      }
+      return b;
+    });
+    VOTED=new Set(data.voted||[]);
+    MY=data.my||{};
+    profile=data.profile||{name:"Вы",handle:"user"};
+    if(localStorage.getItem(ANIM_PREF_KEY)===null)prefAnim=data.prefAnim!==false;
+    _uidSeq=data._uidSeq||0;
+    participantStats=data.participantStats||{};
+    // Ensure every active battle has a battleUid
+    arenaBattles.forEach(b=>{
+      if((b.stage==="w"||b.stage==="v")&&!b.battleUid){
+        b.battleUid=newBattleUid();
+      }
+    });
+    applyAnimPref();
+    return true;
+  }catch(e){return false}
+}
+function resetData(){
+  if(!confirm("Сбросить все данные?\\n\\nБудут удалены фото, голоса, комментарии, история и настройки профиля."))return;
+  localStorage.removeItem(LS_KEY);localStorage.removeItem(ANIM_PREF_KEY);location.hash="";location.reload();
+}
+function applyAnimPref(){
+  const root=document.documentElement;
+  if(!prefAnim||window.matchMedia("(prefers-reduced-motion: reduce)").matches){
+    root.classList.add("no-anim");
+  } else {
+    root.classList.remove("no-anim");
+  }
+}
+
+function createDefaultArena(){
+  return Array.from({length:MAX_BATTLES},(_,i)=>({id:i+1,laneId:i+1,battleUid:null,isMock:false,userPhotoId:null,redName:"—",blueName:"—",redVotes:0,blueVotes:0,stage:"empty",stageEnd:0,stageStarted:0,totalStage:STAGE_SEC,championPhotoId:null,championSide:null,championStreak:0,championName:null,championImg:null}));
+}
+(function initArena(){
+  if(!loadState())arenaBattles=createDefaultArena();
+  const isDemoId=id=>/^(demo[_-]|mock[_-]|bot[_-])/i.test(String(id||""));
+  photos=photos.filter(p=>!isDemoId(p.id)&&!p.isDemo&&!p.demoOnly);
+  history=history.filter(h=>!isDemoId(h.photoId));
+  Object.keys(participantStats).forEach(id=>{if(isDemoId(id)||participantStats[id]?.isDemo||participantStats[id]?.demoOnly)delete participantStats[id]});
+  const byId=id=>photos.find(p=>String(p.id)===String(id));
+  arenaBattles=arenaBattles.map((b,i)=>{
+    const userPhoto=byId(b.userPhotoId),championIsDemo=isDemoId(b.championPhotoId);
+    if(userPhoto&&(b.isMock||b.demoShowcase||championIsDemo||!b.championPhotoId))Object.assign(userPhoto,{status:"queued",battleId:null,battleUid:null,targetLaneId:null,matchedAt:null,matchDeadline:null,side:null,opponentName:null,opponentImg:null});
+    if(b.isMock||b.demoShowcase||championIsDemo||(!b.userPhotoId&&!b.championPhotoId)||(userPhoto&&!b.championPhotoId))return {id:b.id||i+1,laneId:b.id||i+1,battleUid:null,isMock:false,userPhotoId:null,redName:"—",blueName:"—",redVotes:0,blueVotes:0,stage:"empty",stageEnd:0,stageStarted:0,totalStage:STAGE_SEC,championPhotoId:null,championSide:null,championStreak:0,championName:null,championImg:null};
+    b.isMock=false;b.victoryPending=false;b.victoryShown=false;return b;
+  });
+  saveState();
+})();
+
+function getMyPhotos(){
+  const sync=window.FaceArenaSync;
+  if(sync?.isOnline?.()){
+    const userId=sync.getUser?.()?.id;
+    return userId?photos.filter(p=>String(p.ownerId||p.userId)===String(userId)):[];
+  }
+  return photos;
+}
+function activeCount(){return getMyPhotos().filter(p=>ACTIVE_STATUSES.has(p.status)).length}
+function queuedPhotos(){return photos.filter(p=>p.status==="queued")}
+function updateArenaStats(){
+  const activePairs=arenaBattles.filter(b=>b.stage==="w"||b.stage==="v").length;
+  const waiting=photos.filter(p=>p.status==="queued").length;
+  $("stats").innerHTML=`<div class="stat"><b>${activePairs} ${t("of")} ${MAX_BATTLES}</b><span>${t("slots")}</span></div><div class="stat"><b>${waiting}</b><span>${t("queue")}</span></div>`;
+}
+
+
+function buildTopRanking(){
+  if(window.FaceArenaSync?.isOnline?.()&&Array.isArray(topArenaRanking)){
+    return topArenaRanking
+      .filter(r=>Number(r?.wins)>=5&&Number(r?.best)>=5)
+      .map(r=>({...r,img:r.img||face(1,"R")}));
+  }
+  if(window.FaceArenaGameEngine){
+    return window.FaceArenaGameEngine.buildRanking(participantStats,photos)
+      .filter(r=>Number(r?.wins)>=5&&Number(r?.best)>=5)
+      .map(r=>({
+        ...r,name:r.name||profile.name||"Вы",img:r.img||face(1,"R")
+      }));
+  }
+  return Object.keys(participantStats).filter(id=>!/^demo[_-]|^mock[_-]|^bot[_-]/i.test(id)).map(id=>{
+    const s=participantStats[id]||{},best=Number(s.bestStreak)||0,streak=Number(s.currentStreak)||0;
+    if(Number(s.wins||0)<5||best<5)return null;
+    return {id,name:s.name||profile.name||"Вы",img:s.img||face(1,"R"),wins:Number(s.wins)||0,losses:Number(s.losses)||0,defenses:Number(s.defenses)||0,streak,best,isChampion:!!s.isChampion,isLegendary:streak>=10,laneId:s.laneId||null};
+  }).filter(Boolean).sort((a,b)=>b.wins-a.wins||b.streak-a.streak||b.best-a.best||String(a.id).localeCompare(String(b.id)));
+}
+function renderTopArenaHTML(){
+  // Final UI guard: stale cached engines or malformed snapshots cannot bypass qualification.
+  const rows=buildTopRanking().filter(r=>Number(r?.wins)>=5&&Number(r?.best)>=5);
+  if(!rows.length)return `<div class="top-arena"><h2><span>★</span> TOP ARENA</h2><div class="empty-box"><p>Для входа в TOP ARENA нужно одержать 5 побед подряд.</p></div></div>`;
+  return `<div class="top-arena"><h2><span>★</span> TOP ARENA</h2><div class="top-list">`+
+    rows.slice(0,10).map((r,i)=>`<div class="top-item ${i===0?"gold":""}">
+      <div class="pos">${i+1}</div>
+      <img src="${r.img}" alt="">
+      <div><div class="nm">${esc(r.name)}${verifiedBadge(r.isVerified)} ${r.isLegendary?'<span class="champion-tag legendary-tag">ЛЕГЕНДАРНЫЙ ЧЕМПИОН</span>':r.isChampion?'<span class="champion-tag">ЧЕМПИОН</span>':''}</div>
+      <div class="meta">${r.isChampion&&r.laneId?"Линия "+r.laneId+" · ":""}Серия ${r.streak} · Защит ${r.defenses}</div></div>
+      <div class="stats"><b>${r.wins}</b><div>побед</div><div style="margin-top:2px">${r.losses} пор.</div></div>
+    </div>`).join("")+`</div></div>`;
+}
+
+function renderArenaGrid(){
+  const now=arenaNow();
+  // Show only active (w/v) and empty slots — completed/cancelled appear as empty state
+  $("grid").innerHTML=arenaBattles.map((b,i)=>{
+    const isActive=b.stage==="m"||b.stage==="w"||b.stage==="v";
+    const confirming=b.stage==="m";
+    const isEmpty=b.stage==="empty"||b.stage==="done"||b.stage==="cancelled";
+    if(isEmpty&&!b.isMock&&!b.championPhotoId){
+      // Empty slot card; a waiting champion must remain visible on its lane.
+      return `<article class="card" style="--i:${i};opacity:.55;pointer-events:none" data-id="${b.id}">
+<div class="top"><span class="num">${t("battle")}${String(b.id).padStart(2,"0")}</span><span class="chip">Слот свободен</span></div>
+<div class="duel"><div class="ph R" style="box-shadow:none;background:#111"></div><div class="ph B" style="box-shadow:none;background:#111"></div><div class="vs">VS</div></div>
+<div class="pct"><span class="m">Слот свободен</span></div></article>`;
+    }
+    const tot=b.redVotes+b.blueVotes, w=b.stage==="w", rp=tot?Math.round(b.redVotes/tot*100):50;
+    const left=isActive?Math.max(0,Math.ceil((b.stageEnd-now)/1000)):0;
+    let redSrc=b.redImg||face(i*2+1,"R"), blueSrc=b.blueImg||face(i*2+4,"B"), redNm="@"+b.redName, blueNm="@"+b.blueName;
+    if(b.championImg&&b.championSide==="R"){redSrc=b.championImg;redNm=b.championName||"Чемпион"}
+    if(b.championImg&&b.championSide==="B"){blueSrc=b.championImg;blueNm=b.championName||"Чемпион"}
+    if(b.userPhotoId&&!window.FaceArenaSync?.isOnline()){
+      const up=photos.find(x=>String(x.id)===String(b.userPhotoId));
+      if(up){
+        if(up.side==="R"){redSrc=up.dataUrl;redNm=(up.status==="champion"?"👑 ":"")+(profile.name||"Вы");blueSrc=up.opponentImg||blueSrc;blueNm=up.opponentName||blueNm}
+        else{blueSrc=up.dataUrl;blueNm=(up.status==="champion"?"👑 ":"")+(profile.name||"Вы");redSrc=up.opponentImg||redSrc;redNm=up.opponentName||redNm}
+      }
+    }
+    const chipText=confirming?"10 секунд на отмену":!isActive?(b.hasChampionWaiting||b.championPhotoId?"Чемпион ждёт":b.stage==="done"?"Итоги":"Слот свободен"):t(w?"wait":"vote");
+    const crownR=b.championSide==="R"&&b.championPhotoId?`<span class="champ-badge">👑</span>`:"";
+    const crownB=b.championSide==="B"&&b.championPhotoId?`<span class="champ-badge">👑</span>`:"";
+    const streak=b.championStatus==="initial"?`<div class="streak">Начальный чемпион</div>`:b.championStreak?`<div class="streak">Серия: ${b.championStreak}</div>`:"";
+    const redOwnerId=photos.find(p=>String(p.id)===String(b.redPhotoId))?.ownerId||null;
+  const blueOwnerId=photos.find(p=>String(p.id)===String(b.bluePhotoId))?.ownerId||null;
+  const redVerified=!!photos.find(p=>String(p.id)===String(b.redPhotoId))?.isVerified;
+  const blueVerified=!!photos.find(p=>String(p.id)===String(b.bluePhotoId))?.isVerified;
+  const lead=tot?(rp>55?"R":(rp<45?"B":"eq")):"eq";
+    const rCls=lead==="R"?"dom":(lead==="B"?"weak":"");
+    const bCls=lead==="B"?"dom":(lead==="R"?"weak":"");
+    const vsCls=lead==="R"?"push-b":(lead==="B"?"push-r":"");
+    return `<article class="card" tabindex="0" role="button" aria-label="${t("battle")}${b.id}" style="--i:${i}" data-id="${b.id}">
+<div class="top"><span class="num">Линия ${String(b.id).padStart(2,"0")}</span><span class="chip ${w&&isActive?"":isActive?"v":""}">${chipText}</span></div>
+<div class="duel"><div class="ph R ${rCls}">${crownR}<img alt="" loading="${i<4?"eager":"lazy"}" fetchpriority="${i===0?"high":"auto"}" decoding="async" src="${redSrc}"><span class="side">RED</span><div class="nm">${esc(redNm)}${verifiedBadge(redVerified)}</div></div>
+<div class="ph B ${bCls}">${crownB}<img alt="" loading="${i<4?"eager":"lazy"}" fetchpriority="${i===0?"high":"auto"}" decoding="async" src="${blueSrc}"><span class="side">BLUE</span><div class="nm">${esc(blueNm)}${verifiedBadge(blueVerified)}</div></div><div class="vs ${vsCls}">VS</div></div>${streak}
+<div class="bar ${tot?"":"zero"} ${lead!=="eq"?"fight":""}" style="--p:${rp};--sx:${rp/100}"><u data-p="${rp/100}"></u>${lead!=="eq"?`<i class="clash"></i>`:""}</div>
+<div class="pct">${tot?`<span class="r ${lead==="R"?"lead":""}">RED ${rp}%</span><span class="m">${pl(tot,["голос","голоса","голосов"])}</span><span class="b ${lead==="B"?"lead":""}">${100-rp}% BLUE</span>`:`<span class="m">${t("noVotes")}</span>`}</div>
+${isActive?`<div class="tm"><small>${confirming?"Отмена участия":t(w?"tWait":"tVote")}</small><b class="cd">${fmt(left)}</b></div><div class="tl"><u style="transform:scaleX(${left/STAGE_SEC})"></u></div>`:""}</article>`;
+  }).join("");
+  requestAnimationFrame(()=>{
+    document.querySelectorAll(".bar u").forEach(u=>{
+      const p=u.dataset.p||0;
+      const bar=u.parentElement;
+      if(bar){bar.style.setProperty("--sx",p);bar.style.setProperty("--p",String(Math.round((+p)*100)));}
+      if(bar&&bar.classList.contains("fight")){
+        u.style.transform=`scaleX(${p})`;
+        u.style.setProperty("--sx",p);
+      } else {
+        u.style.transform=`scaleX(${p})`;
+      }
+    });
+    setTimeout(()=>document.querySelectorAll(".card").forEach(c=>{c.style.willChange="auto"}),400);
+  });
+  document.querySelectorAll(".card[tabindex]").forEach(c=>{
+    const id=+c.dataset.id;
+    const b=arenaBattles.find(x=>x.id===id);
+    if(!b||(b.stage!=="m"&&b.stage!=="w"&&b.stage!=="v"))return;
+    c.onclick=()=>location.hash="battle-"+id;
+    c.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();location.hash="battle-"+id}};
+  });
+  // Also allow opening champion-waiting lanes
+  document.querySelectorAll(".card[data-id]").forEach(c=>{
+    if(c.onclick)return;
+    const id=+c.dataset.id;
+    const b=arenaBattles.find(x=>x.id===id);
+    if(b&&b.championPhotoId&&(b.stage==="done"||b.stage==="empty")){
+      c.style.pointerEvents="auto";c.style.opacity="1";c.tabIndex=0;
+      c.onclick=()=>toast("Чемпион линии "+id+" ждёт претендента из очереди");
+    }
+  });
+  updateArenaStats();
+  const topEl=$("topArena");
+  if(topEl)topEl.innerHTML=renderTopArenaHTML();
+}
+
+function ensureStats(photoId, name, img){
+  const k=String(photoId);
+  if(!participantStats[k]) participantStats[k]={wins:0,losses:0,defenses:0,bestStreak:0,currentStreak:0,name:name||"Участник",img:img||"",isChampion:false,laneId:null};
+  return participantStats[k];
+}
+function cancelInactiveBattle(b,now){
+  if(window.FaceArenaGameEngine){
+    const cancelled=window.FaceArenaGameEngine.cancelBattle({photos,lanes:arenaBattles,history,participantStats},b.id,now);
+    if(!cancelled.changed)return false;
+    photos=cancelled.state.photos;
+    arenaBattles=cancelled.state.lanes;
+    history=cancelled.state.history;
+    participantStats=cancelled.state.participantStats;
+    return true;
+  }
+  // Defensive fallback for a missing engine script: never leave a dead lane occupied.
+  const p=b.userPhotoId?photos.find(x=>String(x.id)===String(b.userPhotoId)):null;
+  if(p){
+    p.status="queued";p.battleId=null;p.battleUid=null;p.targetLaneId=null;
+    p.matchedAt=null;p.matchDeadline=null;p.completedAt=null;
+    p.side=null;p.opponentName=null;p.opponentImg=null;
+  }
+  b.userPhotoId=null;b.stage="done";b._finalized=true;
+  b.redVotes=0;b.blueVotes=0;
+  return true;
+}
+function finishBattle(b,now){
+  if(b.stage!=="w"&&b.stage!=="v")return false;
+  if(b._finalized)return false;
+  if(b.stage==="w"){
+    if(!cancelInactiveBattle(b,now))return false;
+    // The participant returns to FIFO; tickArena() immediately refills released lanes.
+    return true;
+  }
+  const tot=b.redVotes+b.blueVotes;
+  if(tot===0){
+    if(!cancelInactiveBattle(b,now))return false;
+    // The participant returns to FIFO; tickArena() immediately refills released lanes.
+    return true;
+  }
+  b.stage="done";b._finalized=true;
+  // Determine winning side
+  let winSide="draw";
+  if(b.redVotes>b.blueVotes)winSide="R";
+  else if(b.blueVotes>b.redVotes)winSide="B";
+
+  const p=b.userPhotoId?photos.find(x=>String(x.id)===String(b.userPhotoId)):null;
+  if(p&&p.status==="voting"&&window.FaceArenaGameEngine){
+    if(!p.name)p.name=profile.name||"Вы";
+    const wasChampion=String(b.championPhotoId||"")===String(p.id);
+    const resolved=window.FaceArenaGameEngine.resolveBattle({photos,lanes:arenaBattles,history,participantStats},b.id,now);
+    if(!resolved.changed)return false;
+    photos=resolved.state.photos;arenaBattles=resolved.state.lanes;history=resolved.state.history;participantStats=resolved.state.participantStats;
+    if(resolved.result.outcome==="win")window.FaceArenaAudio?.play(wasChampion?"victory":"champion");
+    else if(resolved.result.outcome==="lose")window.FaceArenaAudio?.play(wasChampion?"titleLost":"defeat");
+    return true;
+  }
+  if(p&&(p.status==="voting"||p.status==="confirmed"||p.status==="champion")){
+    const myV=p.side==="R"?b.redVotes:b.blueVotes, oppV=p.side==="R"?b.blueVotes:b.redVotes;
+    let res="draw";if(myV>oppV)res="win";else if(myV<oppV)res="lose";
+    const wasChampion=String(b.championPhotoId||"")===String(p.id);
+    const st=ensureStats(p.id, profile.name||"Вы", p.dataUrl);
+    if(res==="win"){
+      window.FaceArenaAudio?.play(wasChampion?"victory":"champion");
+      st.wins++;st.currentStreak=(st.currentStreak||0)+1;st.bestStreak=Math.max(st.bestStreak||0,st.currentStreak);
+      // User becomes/stays champion of this lane
+      if(b.championPhotoId&&String(b.championPhotoId)===String(p.id)){
+        st.defenses=(st.defenses||0)+1;
+        b.championStreak=(b.championStreak||0)+1;
+      } else {
+        // Challenger takes the title; archive the former user champion exactly once.
+        if(b.championPhotoId!=null){
+          const former=photos.find(x=>String(x.id)===String(b.championPhotoId));
+          if(former&&String(former.id)!==String(p.id)&&former.status==="champion"){
+            former.status="completed";former.result="lose";former.completedAt=now;former.battleId=null;
+            former.myVotes=oppV;former.oppVotes=myV;
+            const formerStats=ensureStats(former.id,profile.name||"Вы",former.dataUrl);
+            formerStats.losses=(formerStats.losses||0)+1;formerStats.currentStreak=0;formerStats.isChampion=false;formerStats.laneId=null;
+            if(!history.some(h=>String(h.battleUid)===String(b.battleUid)&&String(h.photoId)===String(former.id))){
+              history.unshift({photoId:former.id,battleId:b.id,battleUid:b.battleUid,laneId:b.id,side:former.side,result:"lose",myVotes:oppV,oppVotes:myV,opponentName:profile.name||"Вы",opponentImg:p.dataUrl,completedAt:now,myImg:former.dataUrl,championAfter:false});
+            }
+          }
+        }
+        b.championPhotoId=p.id;
+        b.championSide=p.side;
+        b.championStreak=1;
+        b.championName=profile.name||"Вы";
+        b.championImg=p.dataUrl;
+      }
+      st.isChampion=true;st.laneId=b.id;
+      p.status="champion"; // still active, holds title
+      p.battleId=b.id;p.result=res;p.myVotes=myV;p.oppVotes=oppV;
+      p.completedAt=null;
+      // Opponent mock loses — no photo record
+    } else if(res==="lose"){
+      window.FaceArenaAudio?.play(wasChampion?"titleLost":"defeat");
+      st.losses++;st.currentStreak=0;st.isChampion=false;st.laneId=null;
+      p.status="completed";p.result=res;p.myVotes=myV;p.oppVotes=oppV;p.completedAt=now;p.battleId=null;
+      // Title goes to mock opponent side — clear user championship on lane, keep lane open for next
+      if(b.championPhotoId&&String(b.championPhotoId)===String(p.id)){
+        b.championPhotoId=null;b.championSide=null;b.championStreak=0;b.championName=null;b.championImg=null;
+      } else {
+        // user was challenger and lost — existing champion (mock) remains; no user champ
+      }
+    } else {
+      // draw — no title change; user photo completes without streak
+      p.status="completed";p.result=res;p.myVotes=myV;p.oppVotes=oppV;p.completedAt=now;p.battleId=null;
+    }
+    history.unshift({photoId:p.id,battleId:b.id,battleUid:b.battleUid,laneId:b.id,side:p.side,result:res,myVotes:myV,oppVotes:oppV,opponentName:p.opponentName,opponentImg:p.opponentImg,completedAt:now,myImg:p.dataUrl,championAfter:p.status==="champion"});
+  } else if(winSide!=="draw"&&b.championPhotoId){
+    // Mock battle with real champion defending vs mock — rare path
+    const st=ensureStats(b.championPhotoId,b.championName,b.championImg);
+    if((winSide==="R"&&b.championSide==="R")||(winSide==="B"&&b.championSide==="B")){
+      st.wins++;st.defenses++;st.currentStreak++;st.bestStreak=Math.max(st.bestStreak,st.currentStreak);
+      b.championStreak=(b.championStreak||0)+1;
+    }
+  }
+  // Clear active battle link for next challenger assignment but keep champion on lane
+  b.userPhotoId=null;
+  b.redVotes=0;b.blueVotes=0;
+  return true;
+}
+function tryFillSlots(){
+  if(window.FaceArenaSync?.isOnline())return;
+  const now=Date.now();
+  const waitingMatched=photos.filter(p=>p.status==="matched"&&p.matchDeadline&&p.matchDeadline<=now&&!p._confirming);
+  waitingMatched.forEach(p=>confirmMatch(p));
+  if(!window.FaceArenaGameEngine)return;
+  let guard=0;
+  while(guard++<MAX_BATTLES){
+    const assignment=window.FaceArenaGameEngine.selectNextAssignment(photos,arenaBattles);
+    if(!assignment)break;
+    const p=photos.find(x=>String(x.id)===String(assignment.photoId));
+    const lane=arenaBattles.find(x=>String(x.id)===String(assignment.laneId));
+    if(!p||!lane)break;
+    p.status="matched";p.targetLaneId=lane.id;p.matchedAt=now;p.matchDeadline=now+MATCH_SEC*1000;
+    if(assignment.opening){
+      const opponent=photos.find(x=>String(x.id)===String(assignment.opponentPhotoId));
+      if(!opponent||opponent.status!=="queued"||(opponent.userId||opponent.ownerId||"__local_user__")===(p.userId||p.ownerId||"__local_user__")){
+        p.status="queued";p.targetLaneId=null;p.matchedAt=null;p.matchDeadline=null;break;
+      }
+      p.side="R";p.opponentName=opponent.name||"Участник";p.opponentImg=opponent.dataUrl||"";
+      p.openingOpponentPhotoId=opponent.id;
+      opponent.status="matched";opponent.targetLaneId=lane.id;opponent.matchedAt=now;opponent.matchDeadline=p.matchDeadline;
+      opponent.openingPairPrimaryId=p.id;opponent.side="B";opponent.opponentName=p.name||profile.name||"Участник";opponent.opponentImg=p.dataUrl||"";
+    }else if(lane.championPhotoId){
+      p.opponentName=lane.championName||"Чемпион";p.opponentImg=lane.championImg||face(1,"B");
+      p.side=lane.championSide==="R"?"B":"R";
+    }else{
+      p.status="queued";p.targetLaneId=null;p.matchedAt=null;p.matchDeadline=null;p._confirming=false;break;
+    }
+    p._confirming=false;
+    window.FaceArenaAudio?.play("matchFound");
+  }
+}
+function tickArena(){
+  const now=arenaNow();
+  if(window.FaceArenaSync?.isOnline()){
+    if(arenaBattles.some(b=>b.stage==="m"&&b.confirmUntil&&b.confirmUntil<=now)&&!window._faConfirmRefresh){
+      window._faConfirmRefresh=true;
+      window.FaceArenaSync.loadSnapshot().finally(()=>{window._faConfirmRefresh=false});
+    }
+    if(!$("av").hidden){
+      document.querySelectorAll(".card[data-id]").forEach(card=>{
+        const b=arenaBattles.find(x=>x.id===+card.dataset.id);
+        if(!b||(b.stage!=="m"&&b.stage!=="w"&&b.stage!=="v"))return;
+        const left=Math.max(0,Math.ceil((b.stageEnd-now)/1000));
+        const cd=card.querySelector(".cd");if(cd)cd.textContent=fmt(left);
+        const bar=card.querySelector(".tl u");if(bar)bar.style.transform=`scaleX(${Math.min(1,left/STAGE_SEC)})`;
+      });
+    }
+    return;
+  }
+  let changed=false;
+  arenaBattles.forEach(b=>{
+    if(b.stage!=="w"&&b.stage!=="v")return;
+    if(b.stageEnd>now)return;
+    if(finishBattle(b,now))changed=true;
+  });
+  photos.forEach(p=>{
+    if(p.status==="matched"&&p.matchDeadline&&p.matchDeadline<=now&&!p._confirming){
+      confirmMatch(p);changed=true;
+    }
+  });
+  // Live update countdown labels on arena grid (without full re-render)
+  if(!$("av").hidden){
+    document.querySelectorAll(".card[data-id]").forEach(card=>{
+      const id=+card.dataset.id;
+      const b=arenaBattles.find(x=>x.id===id);
+      if(!b||(b.stage!=="w"&&b.stage!=="v"))return;
+      const left=Math.max(0,Math.ceil((b.stageEnd-now)/1000));
+      const cd=card.querySelector(".cd");
+      if(cd)cd.textContent=fmt(left);
+      const bar=card.querySelector(".tl u");
+      if(bar)bar.style.transform=`scaleX(${Math.min(1,left/STAGE_SEC)})`;
+    });
+  }
+  if(changed){
+    tryFillSlots();
+    saveState();
+    if(!$("av").hidden)renderArenaGrid();
+    if(!$("qv").hidden)renderQueue();
+  }
+}
+
+function bview(n){
+  const b=arenaBattles.find(x=>x.id===n);if(!b)return;
+  if(!b.battleUid&&!window.FaceArenaSync?.isOnline())b.battleUid=newBattleUid();
+  const uid=b.battleUid;
+  if(window.FaceArenaSync?.isOnline()&&b.stage==="w"&&!b.isParticipant){
+    requestBattleVisit(b);
+  }else if(!window.FaceArenaSync?.isOnline()&&b.stage==="w"){
+    b.stage="v";b.stageEnd=Date.now()+STAGE_SEC*1000;b.stageStarted=Date.now();
+    window.FaceArenaAudio?.play("votingStart");
+    if(b.userPhotoId){const p=photos.find(x=>x.id===b.userPhotoId);if(p)p.status="voting"}
+    saveState(); // persist stage transition — do not restart on reopen
+    renderArenaGrid();
+  }
+  const tot=b.redVotes+b.blueVotes,w=b.stage==="w",rp=tot?Math.round(b.redVotes/tot*100):50;
+  const myComments=MY[uid]||[];
+  const k=Math.min(4,Math.max(0,tot-myComments.length));
+  let cs=myComments.map((m,j)=>`<li class="cm ${m.s}" style="--i:${j}"><b>${esc(m.author||t("you"))}</b><span class="tg">${m.s==="R"?"RED":"BLUE"}</span><p>${esc(m.v)}</p></li>`).join("");
+  const confirming=b.stage==="m";
+  const closed=b.stage==="done"||b.stage==="cancelled"||b.stage==="empty";
+  let redSrc=b.redImg||face((n-1)*2+1,"R"), blueSrc=b.blueImg||face((n-1)*2+4,"B"), redNm=b.redName, blueNm=b.blueName;
+  if(b.userPhotoId&&!window.FaceArenaSync?.isOnline()){
+    const up=photos.find(x=>x.id===b.userPhotoId);
+    if(up){
+      if(up.side==="R"){redSrc=up.dataUrl;redNm=profile.name||"Вы";blueSrc=up.opponentImg||blueSrc;blueNm=(up.opponentName||blueNm).replace("@","")}
+      else{blueSrc=up.dataUrl;blueNm=profile.name||"Вы";redSrc=up.opponentImg||redSrc;redNm=(up.opponentName||redNm).replace("@","")}
+    }
+  }
+  const redOwnerId=photos.find(p=>String(p.id)===String(b.redPhotoId))?.ownerId||null;
+  const blueOwnerId=photos.find(p=>String(p.id)===String(b.bluePhotoId))?.ownerId||null;
+  const lead=tot?(rp>55?"R":(rp<45?"B":"eq")):"eq";
+  const rCls=lead==="R"?"dom":(lead==="B"?"weak":"");
+  const bCls=lead==="B"?"dom":(lead==="R"?"weak":"");
+  const vsCls=lead==="R"?"push-b":(lead==="B"?"push-r":"");
+  $("bv").innerHTML=`<div class="big"><button class="back" id="bk">← ${t("back")}</button>
+<div class="top"><span class="num">${t("battle")}${String(n).padStart(2,"0")}</span><span class="chip ${w?"":"v"}">${closed?(b.stage==="done"?"Итоги":"Отменён"):t(w?"wait":"vote")}</span></div>
+<div class="duel"><div class="ph R ${rCls}"><img alt="" src="${redSrc}"><span class="side">RED</span><div class="nm"><span class="av"><img alt="" src="${redSrc}"></span><button class="nk" data-profile-user="${esc(redOwnerId||"")}">@${esc(redNm)}</button></div></div>
+<div class="ph B ${bCls}"><img alt="" src="${blueSrc}"><span class="side">BLUE</span><div class="nm"><span class="av"><img alt="" src="${blueSrc}"></span><button class="nk" data-profile-user="${esc(blueOwnerId||"")}">@${esc(blueNm)}</button></div></div><div class="vs ${vsCls}">VS</div></div>
+<div class="bar ${tot?"":"zero"} ${lead!=="eq"?"fight":""}" style="--p:${rp};--sx:${rp/100}"><u id="bp" data-p="${rp/100}"></u>${lead!=="eq"?`<i class="clash"></i>`:""}</div>
+<div class="pct">${tot?`<span class="r ${lead==="R"?"lead":""}">RED ${rp}%</span><span class="m">${pl(tot,["голос","голоса","голосов"])}</span><span class="b ${lead==="B"?"lead":""}">${100-rp}% BLUE</span>`:`<span class="m">${t("noVotes")}</span>`}</div>
+<div class="tm"><small>${confirming?"Отмена участия":t(w?"tWait":"tVote")}</small><b id="bcd" data-id="${n}"></b></div><div class="tl"><u id="btl"></u></div>
+<p class="note">${t("srv")}</p>
+${confirming?(b.isParticipant?`<p class="done">Можно отменить своё участие во вкладке «Очередь» ещё ${fmt(Math.max(0,Math.ceil((b.confirmUntil-arenaNow())/1000)))} сек.</p>`:`<p class="done">Окно отмены участия завершится через ${fmt(Math.max(0,Math.ceil((b.confirmUntil-arenaNow())/1000)))} сек. После этого откроется голосование.</p>`):b.isParticipant?`<p class="done">Участники не голосуют в собственном баттле</p>`:w?`<p class="done">Открываем голосование…</p>`:VOTED.has(uid)?`<p class="done">${t("done")}</p>`:closed?`<p class="done">${b.stage==="cancelled"?"Баттл отменён":"Голосование завершено"}</p>`:`<div class="picks"><button class="pick R">${t("pickR")}</button><button class="pick B">${t("pickB")}</button></div><p class="note">${t("hint")}</p>`}
+<h2>${t("cm")}</h2>${cs?`<ul class="cms">${cs}</ul>`:`<div class="empty">${t("cmEmpty")}</div>`}</div>`;
+  $("bk").onclick=()=>{location.hash=""};
+  document.querySelectorAll(".pick").forEach(btn=>btn.onclick=()=>openV(n,btn.classList.contains("R")?"R":"B"));
+  document.querySelectorAll(".nk").forEach(btn=>btn.onclick=()=>{
+    const userId=btn.dataset.profileUser;
+    if(!userId){toast("Профиль этого участника недоступен");return;}
+    // Always load the participant through the server-backed public profile route,
+    // including our own account; the local profile view is not a public profile.
+    location.hash="profile-"+encodeURIComponent(userId);
+  });
+  setTimeout(()=>{const bp=$("bp");if(bp){const p=bp.dataset.p||0;bp.style.transform=`scaleX(${p})`;const bar=bp.parentElement;if(bar){bar.style.setProperty("--sx",p);bar.style.setProperty("--p",String(Math.round((+p)*100)));}}},50);
+}
+function requestBattleVisit(b){
+  const sync=window.FaceArenaSync;
+  if(!sync?.isOnline?.()||!b||b.isParticipant||!b.battleUid||b._visitRequested||Date.now()<(b._visitRetryAt||0))return;
+  b._visitRequested=true;
+  sync.registerVisit(b.battleUid).then(result=>{
+    if(result?.ok===false)toast("Голосование открыто, но серверный таймер временно недоступен");
+    const latest=arenaBattles.find(x=>x.id===b.id);
+    if(latest&&(latest.stage==="m"||latest.stage==="w")){
+      latest._visitRequested=false;
+      latest._visitRetryAt=Date.now()+3000;
+    }
+  }).catch(error=>{
+    b._visitRequested=false;
+    b._visitRetryAt=Date.now()+3000;
+    if(location.hash==="#battle-"+b.id)toast(window.FaceArenaErrors.message(error,"Не удалось открыть голосование. Попробуйте ещё раз."));
+  });
+}
+function tick2(){
+  const e=$("bcd");if(!e)return;
+  const b=arenaBattles.find(x=>x.id===+e.dataset.id);if(!b)return;
+  if(b.stage!=="m"&&b.stage!=="w"&&b.stage!=="v"){e.textContent=t("ending");return}
+  const s=Math.max(0,Math.ceil((b.stageEnd-arenaNow())/1000));
+  if(!$("bv").hidden&&s>=1&&s<=3)window.FaceArenaAudio?.play("countdown");
+  // The server keeps a battle in "waiting" until someone opens it after
+  // the cancellation window. Refresh at expiry so the participant/viewer UI
+  // transitions correctly; only non-participants may register the visit.
+  const sync=window.FaceArenaSync;
+  if(!$("bv").hidden&&location.hash==="#battle-"+b.id&&b.stage==="m"&&s===0&&
+     sync?.isOnline?.()&&!b._stageRefreshRequested&&Date.now()>=(b._stageRefreshRetryAt||0)){
+    b._stageRefreshRequested=true;
+    sync.loadSnapshot().finally(()=>{
+      b._stageRefreshRequested=false;
+      b._stageRefreshRetryAt=Date.now()+2000;
+    });
+  }
+  if(!$("bv").hidden&&location.hash==="#battle-"+b.id&&b.stage==="w"&&!b.isParticipant){
+    requestBattleVisit(b);
+  }
+  e.textContent=s?fmt(s):t("ending");
+  const tl=$("btl");if(tl)tl.style.transform=`scaleX(${Math.min(1,Math.max(0,s/STAGE_SEC))})`;
+}
+
+let side="R",busy=false;
+function closeV(){$("ov").classList.remove("on")}
+function openV(n,s){
+  const b=arenaBattles.find(x=>x.id===n);
+  if(!b||b.stage!=="v"){toast(t("closed"));return}
+  if(window.FaceArenaSync?.isOnline()&&b.isParticipant){toast("Участники не голосуют в собственном баттле");return}
+  if(!b.battleUid)b.battleUid=newBattleUid();
+  if(VOTED.has(b.battleUid)){toast(t("dup"));return}
+  if(b.stageEnd<=arenaNow()){toast(t("closed"));return}
+  side=s;const c=s==="R"?"var(--red)":"var(--blue)";
+  $("sh").innerHTML=`<h3 style="color:${c}">${t("yourVote")} ${s==="R"?"RED":"BLUE"}</h3><p class="note">${t("hint")}</p><textarea id="ct" maxlength="300" rows="4" placeholder="${t("ph")}"></textarea><div class="row"><span class="note" id="cc">0/300</span><span class="err" id="er"></span></div><button class="send" id="sd" style="background:${c}">${t("send")}</button><button class="cancel" id="cx">${t("cancel")}</button>`;
+  $("ov").classList.add("on");
+  $("ct").oninput=()=>{$("cc").textContent=$("ct").value.length+"/300";$("er").textContent=""};
+  $("cx").onclick=closeV;$("sd").onclick=()=>submit(n);setTimeout(()=>$("ct").focus(),350);
+}
+async function submit(n){
+  if(busy)return;
+  const v=$("ct").value.trim();
+  if(!v){$("er").textContent=t("e0");return}
+  if(v.length<10){$("er").textContent=t("e1");return}
+  if(v.length>300){$("er").textContent="Максимум 300 символов";return}
+  const b=arenaBattles.find(x=>x.id===n);
+  if(!b||b.stage!=="v"){toast(t("closed"));return}
+  if(!b.battleUid)b.battleUid=newBattleUid();
+  const uid=b.battleUid;
+  if(VOTED.has(uid)){$("er").textContent=t("dup");return}
+  if(b.stageEnd<=arenaNow()){toast(t("closed"));return}
+  busy=true;$("sd").textContent=t("sending");$("sd").disabled=true;
+  // Final validation immediately before mutation
+  const b2=arenaBattles.find(x=>x.id===n);
+  if(!b2||b2.stage!=="v"||b2.stageEnd<=arenaNow()||!b2.battleUid||VOTED.has(b2.battleUid)){
+    busy=false;toast(t("closed"));closeV();return;
+  }
+  if(window.FaceArenaSync?.isOnline()){
+    const targetPhotoId=side==="R"?b2.redPhotoId:b2.bluePhotoId;
+    if(!targetPhotoId){busy=false;toast("Не удалось определить участника. Обновите арену.");return}
+    try{
+      const result=await window.FaceArenaSync.submitVote(b2.battleUid,targetPhotoId,v);
+      busy=false;closeV();window.FaceArenaAudio?.play("voteSuccess");
+      toast(result?.ok===false?"Голос принят. Серверный таймер временно недоступен.":t("ok"));
+      if(location.hash==="#battle-"+n)bview(n);
+    }catch(error){
+      busy=false;
+      const send=$("sd");if(send){send.disabled=false;send.textContent=t("send")}
+      const err=$("er");if(err)err.textContent=window.FaceArenaErrors.message(error,"Не удалось отправить голос. Попробуйте ещё раз.");
+    }
+    return;
+  }
+  VOTED.add(b2.battleUid);
+  if(side==="R")b2.redVotes++;else b2.blueVotes++;
+  (MY[b2.battleUid]=MY[b2.battleUid]||[]).unshift({s:side,v});
+  busy=false;closeV();
+  saveState();
+  window.FaceArenaAudio?.play("voteSuccess");
+  bview(n);renderArenaGrid();toast(t("ok"));
+}
+$("ov").onclick=e=>{if(e.target==$("ov"))closeV()};
+addEventListener("keydown",e=>{if(e.key==="Escape")closeV()});
+
+const _viewHtmlCache=new WeakMap();
+function setViewHTML(view,html){
+  if(!view)return false;
+  const source=String(html);
+  const normalize=markup=>{
+    const template=document.createElement("template");
+    template.innerHTML=String(markup);
+    template.content.querySelectorAll("img[data-photo-path]").forEach(img=>{
+      img.setAttribute("src","__FA_SIGNED_PHOTO_URL__");
+    });
+    return template.innerHTML;
+  };
+  const desired=normalize(source);
+  const current=normalize(view.innerHTML);
+  const cached=_viewHtmlCache.get(view);
+  // Skip only when both requested markup and live DOM match the last render.
+  // If iOS or another route cleared/mutated the view, rebuild it.
+  if(desired.trim()!==""&&desired===cached&&current===cached)return false;
+  view.innerHTML=source;
+  _viewHtmlCache.set(view,normalize(view.innerHTML));
+  return true;
+}
+function statusLabel(st){
+  return t({queued:"stQueued",matched:"stMatched",confirmed:"stConfirmed",voting:"stVoting",champion:"stChampion",completed:"stCompleted",cancelled:"stCancelled"}[st]||"stQueued");
+}
+function renderQueue(){
+  // FIFO positions are global, but the personal queue contains only this account's photos.
+  const myPhotos=getMyPhotos();
+  const qOrder=photos.filter(p=>p.status==="queued").sort((a,b)=>(a.queuedAt||0)-(b.queuedAt||0));
+  const active=myPhotos.filter(p=>ACTIVE_STATUSES.has(p.status));
+  // Summary: position of the earliest queued photo in local FIFO
+  let posHtml="—", aheadHtml="—";
+  const myQueued=qOrder.filter(p=>myPhotos.some(m=>String(m.id)===String(p.id)));
+  if(myQueued.length){const firstPos=qOrder.findIndex(p=>String(p.id)===String(myQueued[0].id))+1;posHtml=String(firstPos);aheadHtml=String(Math.max(0,firstPos-1))}
+  let statusHtml=`<span class="status-pill queued">${t("stQueued")}</span>`;
+  if(active.length){const top=active.sort((a,b)=>(a.queuedAt||0)-(b.queuedAt||0))[0];statusHtml=`<span class="status-pill ${top.status}">${statusLabel(top.status)}</span>`}
+
+  let list="";
+  const show=myPhotos.filter(p=>ACTIVE_STATUSES.has(p.status)||p.status==="completed"||p.status==="cancelled")
+    .sort((a,b)=>(a.queuedAt||0)-(b.queuedAt||0));
+  if(show.length){
+    list+=`<h2>${t("qYours")}</h2><div class="q-list">`+show.map(p=>{
+      const canCancel=p.status==="queued";
+      const canCancelMatch=p.status==="matched"&&p.confirmUntil>arenaNow()&&!!p.battleUid;
+      const canFind=p.status==="queued"&&!window.FaceArenaSync?.isOnline();
+      const canOpenMatch=p.status==="matched"&&!window.FaceArenaSync?.isOnline();
+      const canOpenBattle=!!p.battleId;
+      const frameCls=p.side?`frame-${p.side}`:"";
+      const qIdx=qOrder.findIndex(x=>x.id===p.id);
+      const posLabel=qIdx>=0?` · позиция ${qIdx+1} (впереди: ${qIdx})`:"";
+      const waitLabel=p.status==="queued"?`<small class="queue-wait" data-queued-at="${Number(p.queuedAt)||Date.now()}">В очереди</small>`:"";
+      return `<div class="q-item" style="--i:${show.indexOf(p)}">
+        <img class="${frameCls}" data-photo-path="${esc(p.objectPath||"")}" src="${p.dataUrl}" alt="">
+        <div class="info"><b>Фото #${String(p.id).slice(-4)}</b><span>${statusLabel(p.status)}${p.side?` · ${p.side}`:""}${posLabel}</span>${waitLabel}</div>
+        <div class="acts">
+          ${canFind?`<button class="btn-sm-blue" data-act="find" data-id="${p.id}">${t("findPair")}</button>`:""}
+          ${canOpenMatch?`<button class="btn-sm-blue" data-act="openmatch" data-id="${p.id}">Открыть таймер</button>`:""}
+          ${canOpenBattle?`<button class="btn-sm-blue" data-act="openbattle" data-id="${p.id}">Открыть</button>`:""}
+          ${canCancelMatch?`<button class="btn-sm-muted" data-act="cancelmatch" data-id="${p.id}">Отменить участие</button>`:""}
+          ${canCancel?`<button class="btn-sm-muted" data-act="del" data-id="${p.id}">Удалить</button>`:""}
+        </div>
+      </div>`;
+    }).join("")+`</div>`;
+  } else {
+    list=`<div class="empty-box"><div style="font-size:28px;opacity:.5">📷</div><p>${t("qEmpty")}</p>
+      <button class="btn-main" id="goUp">${t("upTitle")}</button></div>`;
+  }
+  
+
+  const queueHtml=`
+    ${hdrHTML()}
+    <h1 class="sec-h">${t("qTitle")}</h1>
+    <p class="sec-lead">${t("qLead")}</p>
+<div class="q-pos"><div class="big-n">${posHtml}</div><div class="lbl">${t("qPos")}</div></div>
+    <div class="q-meta">
+      <div class="stat"><b>${aheadHtml}</b><span>${t("qAhead")}</span></div>
+      <div class="stat" style="display:flex;align-items:center;justify-content:center">${statusHtml}</div>
+    </div>
+    ${qOrder.length?`<p class="queue-explain">Фото уже принято сервером. Поиск соперника идёт автоматически — время зависит от свободной линии и появления подходящего соперника.</p>`:""}
+    ${list}`;
+  if(!setViewHTML($("qv"),queueHtml)){tickQueueWaits();return;}
+  const go=$("goUp");if(go)go.onclick=()=>{location.hash="upload"};
+  $("qv").querySelectorAll("[data-act]").forEach(btn=>{
+    const id=btn.dataset.id, act=btn.dataset.act;
+    btn.onclick=()=>{
+      if(act==="find") startMatch(id);
+      else if(act==="openmatch") location.hash="match-"+encodeURIComponent(id);
+      else if(act==="openbattle"){const p=photos.find(x=>String(x.id)===String(id));if(p&&p.battleId)location.hash="battle-"+p.battleId}
+      else if(act==="cancelmatch"){
+        const p=photos.find(x=>String(x.id)===String(id));
+        if(p?.battleUid)window.FaceArenaSync.cancelMatch(p.battleUid).then(result=>toast(result?.ok===false?"Участие отменено. Серверный таймер временно недоступен.":"Участие отменено, обе фотографии возвращены в очередь")).catch(error=>toast(window.FaceArenaErrors.message(error,"Не удалось отменить участие. Обновите страницу и попробуйте снова.")));
+      }
+      else if(act==="del"){
+        const p=photos.find(x=>String(x.id)===String(id));
+        if(window.FaceArenaSync?.isOnline()){
+          window.FaceArenaSync.deletePhoto(id).then(result=>toast(result?.ok===false?"Фото удалено. Серверный таймер временно недоступен.":"Фото удалено")).catch(error=>toast(window.FaceArenaErrors.message(error,"Не удалось удалить фотографию. Попробуйте ещё раз.")));
+        }else if(p&&p.status==="queued"){photos=photos.filter(x=>String(x.id)!==String(id));toast("Фото удалено из очереди");saveState();renderQueue();updateArenaStats()}
+        else toast("Нельзя удалить: фото уже в баттле");
+      }
+    };
+  });
+  tickQueueWaits();
+}
+
+function startMatch(photoId){
+  const p=photos.find(x=>String(x.id)===String(photoId));
+  if(!p||p.status!=="queued"){toast("Фото не в очереди");return}
+  tryFillSlots();
+  if(p.status==="matched"){saveState();location.hash="match-"+encodeURIComponent(p.id);return}
+  toast("Нет свободной линии. Фото останется в FIFO-очереди.");
+  saveState();
+}
+
+function renderMatch(photoId){
+  const p=photos.find(x=>String(x.id)===String(photoId));
+  if(!p||p.status!=="matched"){location.hash="queue";return}
+  // Deadline-based remaining time (does not restart on re-entry)
+  if(!p.matchDeadline)p.matchDeadline=Date.now()+MATCH_SEC*1000;
+  const left=Math.max(0,Math.ceil((p.matchDeadline-Date.now())/1000));
+  if(left<=0){confirmMatch(p);return}
+  $("mv").innerHTML=`
+    ${hdrHTML()}
+    <button class="back" id="bkM">← ${t("back")}</button>
+    <h1 class="sec-h">${t("matchTitle")}</h1>
+    <p class="sec-lead">${t("matchLead")}</p>
+<div class="match-card">
+      <div class="countdown" id="mcd">${left}</div>
+      <div class="cd-lbl">секунд до автоподтверждения баттла</div>
+      <div class="match-duel">
+        <div><img src="${p.dataUrl}" alt=""><div style="font-size:11px;margin-top:4px;color:var(--mu)">Вы · ${p.side}</div></div>
+        <div><img src="${p.opponentImg}" alt=""><div style="font-size:11px;margin-top:4px;color:var(--mu)">${esc(p.opponentName)}</div></div>
+      </div>
+      <button class="btn-cancel-match" id="cancelMatch">${t("cancelMatch")}</button>
+    </div>`;
+  $("bkM").onclick=()=>{location.hash="queue"};
+  $("cancelMatch").onclick=()=>{
+    clearInterval(matchTimerId);
+    const paired=p.openingOpponentPhotoId?photos.find(x=>String(x.id)===String(p.openingOpponentPhotoId)):null;
+    if(paired){paired.status="queued";paired.battleId=null;paired.battleUid=null;paired.targetLaneId=null;paired.matchedAt=null;paired.matchDeadline=null;paired.side=null;paired.opponentName=null;paired.opponentImg=null;paired.openingPairPrimaryId=null;}
+    p.status="queued";p.matchedAt=null;p.matchDeadline=null;p.targetLaneId=null;p.opponentName=null;p.opponentImg=null;p.side=null;p.openingOpponentPhotoId=null;p._confirming=false;
+    toast(t("matchCancelOk"));saveState();location.hash="queue";
+  };
+  clearInterval(matchTimerId);
+  matchTimerId=setInterval(()=>{
+    if(p.status!=="matched"){clearInterval(matchTimerId);return}
+    const l=Math.max(0,Math.ceil((p.matchDeadline-Date.now())/1000));
+    const el=$("mcd");if(el)el.textContent=l;
+    if(l<=0){clearInterval(matchTimerId);confirmMatch(p)}
+  },250);
+}
+
+function findFreeSlot(photo){
+  if(photo&&photo.targetLaneId){
+    const target=arenaBattles.find(b=>String(b.id)===String(photo.targetLaneId));
+    if(target&&!target.userPhotoId&&(target.stage==="done"||target.stage==="cancelled"||target.stage==="empty"))return target;
+  }
+  return arenaBattles.filter(b=>!b.userPhotoId&&(b.stage==="done"||b.stage==="cancelled"||b.stage==="empty")).sort((a,b)=>Number(a.id)-Number(b.id))[0]||null;
+}
+function clearSlot(slot, preserveChampion){
+  // New battle identity — never reuse votes/comments
+  const champ={
+    championPhotoId:slot.championPhotoId,
+    championSide:slot.championSide,
+    championStreak:slot.championStreak,
+    championName:slot.championName,
+    championImg:slot.championImg
+  };
+  slot.userPhotoId=null;
+  slot.openingOpponentPhotoId=null;slot.openingOpponentName=null;slot.openingOpponentImg=null;
+  slot.battleUid=null;
+  slot.isMock=false;
+  slot.redVotes=0;slot.blueVotes=0;
+  slot.redName="—";slot.blueName="—";
+  slot.stage="empty";
+  slot.stageEnd=0;slot.stageStarted=0;
+  slot._finalized=false;
+  if(preserveChampion&&champ.championPhotoId){
+    Object.assign(slot, champ);
+  } else if(!preserveChampion){
+    slot.championPhotoId=null;slot.championSide=null;slot.championStreak=0;slot.championName=null;slot.championImg=null;
+  }
+}
+function confirmMatch(p){
+  if(!p||p.status!=="matched")return;
+  if(p._confirming)return; // prevent duplicate
+  p._confirming=true;
+  clearInterval(matchTimerId);
+  const slot=findFreeSlot(p);
+  if(!slot){
+    p.status="queued";
+    p.matchedAt=null;p.matchDeadline=null;p.targetLaneId=null;
+    p.opponentName=null;p.opponentImg=null;p.side=null;
+    p._confirming=false;
+    toast("Нет свободных слотов на арене. Фото вернулось в очередь.");
+    saveState();
+    location.hash="queue";
+    return;
+  }
+  const keepChamp=!!slot.championPhotoId;
+  const openingOpponent=p.openingOpponentPhotoId?photos.find(x=>String(x.id)===String(p.openingOpponentPhotoId)):null;
+  if(p.openingOpponentPhotoId&&!openingOpponent){
+    p.status="queued";p.targetLaneId=null;p.matchDeadline=null;p.matchedAt=null;p.openingOpponentPhotoId=null;p._confirming=false;saveState();return;
+  }
+  clearSlot(slot, keepChamp);
+  const uid=newBattleUid();
+  p.status="confirmed";
+  p.battleId=slot.id; // slot number for navigation
+  p.targetLaneId=null;
+  p.battleUid=uid;    // immutable instance id
+  p.matchDeadline=null;
+  p._confirming=false;
+  slot.isMock=false;
+  slot.userPhotoId=p.id;
+  slot.battleUid=uid;
+  if(openingOpponent){
+    slot.openingOpponentPhotoId=openingOpponent.id;
+    slot.openingOpponentName=openingOpponent.name||"Участник";
+    slot.openingOpponentImg=openingOpponent.dataUrl||"";
+    openingOpponent.status="confirmed";openingOpponent.battleId=slot.id;openingOpponent.battleUid=uid;
+    openingOpponent.targetLaneId=null;openingOpponent.matchDeadline=null;openingOpponent.matchedAt=Date.now();
+    openingOpponent.side="B";openingOpponent.openingPairPrimaryId=null;
+  }
+  slot.stage="w";
+  slot.stageEnd=Date.now()+STAGE_SEC*1000;
+  slot.stageStarted=Date.now();
+  slot.redVotes=0;slot.blueVotes=0;
+  slot._finalized=false;
+  // If lane has champion, challenger is opposite side
+  if(openingOpponent){
+    p.side="R";p.opponentName=openingOpponent.name||"Участник";p.opponentImg=openingOpponent.dataUrl||"";
+    slot.redName=profile.name||"Участник";slot.blueName=openingOpponent.name||"Участник";
+  }else if(slot.championPhotoId&&String(slot.championPhotoId)!==String(p.id)){
+    p.side=slot.championSide==="R"?"B":"R";
+    p.opponentName=slot.championName||p.opponentName;
+    p.opponentImg=slot.championImg||p.opponentImg;
+  }
+  if(p.side==="R"){slot.redName="you";slot.blueName=(p.opponentName||"opp").replace("@","")}
+  else{slot.blueName="you";slot.redName=(p.opponentName||"opp").replace("@","")}
+  // Self-challenge guard
+  if(slot.championPhotoId&&String(slot.championPhotoId)===String(p.id)){
+    p.status="queued";p.battleId=null;p._confirming=false;
+    toast("Нельзя бросить вызов самому себе");
+    saveState();location.hash="queue";return;
+  }
+  toast(t("matchConfirm"));
+  window.FaceArenaAudio?.play("impact");
+  saveState();
+  renderArenaGrid();
+  if(location.hash==="#match-"+encodeURIComponent(p.id))location.hash="queue";
+}
+
+function renderUpload(){
+  const canAdd=activeCount()<MAX_ACTIVE;
+  const platformPublicationsBlocked = window.FaceArenaPlatformControls?.publicationsBlocked === true;
+  let preview="";
+  if(platformPublicationsBlocked){
+    preview=`<div class="empty" style="border:1px solid #4a2828;color:#ffb0b0">Новые публикации временно приостановлены. Попробуйте позже.</div>`;
+  } else if(pendingUrl){
+    preview=`<div class="preview-box"><img src="${pendingUrl}" alt="preview">
+      <div class="act">
+        <button class="rep" id="repBtn">${t("upReplace")}</button>
+        <button class="add ${isPublishingPhoto?"is-loading":""}" id="addBtn" ${canAdd&&!isPublishingPhoto?"":"disabled"} ${isPublishingPhoto?'aria-busy="true"':""}>${isPublishingPhoto?"Публикуем…":t("upAdd")}</button>
+      </div>
+      <button class="btn-ghost" id="cancelPrev">${t("upCancel")}</button>
+    </div>`;
+  } else {
+    preview=`<div class="up-zone" id="upZone">
+      <input type="file" id="fileIn" accept="image/jpeg,image/png,image/webp">
+      <div class="ic">＋</div>
+      <b>${t("upTap")}</b>
+      <span>${t("upHint")}</span>
+    </div>`;
+  }
+  const actives=getMyPhotos().filter(p=>ACTIVE_STATUSES.has(p.status));
+  const usedSlots=Math.min(actives.length,MAX_ACTIVE);
+  const slotBars=Array.from({length:MAX_ACTIVE},(_,i)=>`<i class="${i<usedSlots?"filled":""}"></i>`).join("");
+  const my=`
+    <div class="upload-count"><strong>Ваши фото</strong><span>${actives.length} из ${MAX_ACTIVE} · очередь и баттлы</span></div>
+    <div class="upload-slots" aria-label="Занято ${actives.length} из ${MAX_ACTIVE} мест">${slotBars}</div>
+    ${actives.length?`<div class="my-photos">${actives.map(p=>`
+        <div class="ph-card ${p.side?`frame-${p.side}`:""}"><img src="${p.dataUrl}" alt="">
+          ${p.status==="queued"?`<button class="rm" data-id="${p.id}">×</button>`:""}
+        </div>`).join("")}</div>
+      <p class="limit-note" style="text-align:left">Удалить можно только фото, которые ещё ожидают участия в баттле.</p>`:`<p class="limit-note" style="text-align:left">${t("upEmptyMy")}</p>`}`;
+
+  $("uv").innerHTML=`
+    ${hdrHTML()}
+    <h1 class="sec-h">${t("upTitle")}</h1>
+    <p class="sec-lead">${t("upLead")}</p>
+    ${preview}
+    <p class="upload-check">ИИ пропускает только реальные фотографии людей.</p>
+    ${!canAdd&&!pendingUrl?`<p class="limit-note" style="color:#ffb454">${t("upLimit")}</p>`:""}
+    ${my}`;
+  const zone=$("upZone"),fin=$("fileIn");
+  if(zone&&fin){
+    zone.onclick=()=>fin.click();
+    fin.onchange=()=>{const f=fin.files&&fin.files[0];if(f)handleFile(f);fin.value=""};
+  }
+  const rep=$("repBtn");if(rep)rep.onclick=()=>{pendingFile=null;pendingUrl=null;renderUpload()};
+  const add=$("addBtn");if(add)add.onclick=()=>confirmAdd();
+  const can=$("cancelPrev");if(can)can.onclick=()=>{pendingFile=null;pendingUrl=null;renderUpload()};
+  $("uv").querySelectorAll(".rm").forEach(b=>b.onclick=async()=>{
+    const id=b.dataset.id;
+    const p=photos.find(x=>String(x.id)===String(id));
+    if(!p||p.status!=="queued"){toast("Нельзя удалить после подтверждения баттла");return}
+    const sync=window.FaceArenaSync;
+    if(sync?.isOnline?.()){
+      b.disabled=true;
+      try{
+        await sync.deletePhoto(id);
+        toast("Фото удалено");
+        renderUpload();
+        updateArenaStats();
+      }catch(error){
+        b.disabled=false;
+        toast(window.FaceArenaErrors.message(error,"Не удалось удалить фотографию. Попробуйте ещё раз."));
+      }
+      return;
+    }
+    photos=photos.filter(x=>String(x.id)!==String(id));
+    toast("Фото удалено");
+    saveState();
+    renderUpload();
+    updateArenaStats();
+  });
+}
+
+function handleFile(f){
+  if(!f)return;
+  if(!["image/jpeg","image/png","image/webp"].includes(f.type)){toast(t("upBadType"));pendingUrl=null;pendingFile=null;renderUpload();return}
+  if(f.size>MAX_SIZE){toast(t("upBadSize"));pendingUrl=null;pendingFile=null;renderUpload();return}
+  const reader=new FileReader();
+  reader.onerror=()=>{toast("Ошибка чтения файла");pendingUrl=null;pendingFile=null;renderUpload()};
+  reader.onload=e=>{
+    const img=new Image();
+    img.onload=()=>{
+      try{
+        if(!img.width||!img.height){toast("Некорректное изображение");return}
+        const maxW=900;
+        let w=img.width,h=img.height;
+        if(w>maxW){h=Math.round(h*maxW/w);w=maxW}
+        const c=document.createElement("canvas");c.width=w;c.height=h;
+        const ctx=c.getContext("2d");
+        if(!ctx){pendingUrl=e.target.result;pendingFile=f;renderUpload();return}
+        ctx.drawImage(img,0,0,w,h);
+        c.toBlob(blob=>{
+          if(!blob){pendingUrl=e.target.result;pendingFile=f;renderUpload();return}
+          pendingUrl=c.toDataURL("image/jpeg",0.82);
+          const base=(f.name||"photo").replace(/\\.[^.]+$/,"");
+          pendingFile=new File([blob],base+".jpg",{type:"image/jpeg",lastModified:Date.now()});
+          renderUpload();
+        },"image/jpeg",0.82);
+      }catch(err){
+        toast("Не удалось обработать изображение");
+        pendingUrl=null;pendingFile=null;renderUpload();
+      }
+    };
+    img.onerror=()=>{toast("Не удалось загрузить изображение");pendingUrl=null;pendingFile=null;renderUpload()};
+    img.src=e.target.result;
+  };
+  reader.readAsDataURL(f);
+}
+async function confirmAdd(){
+  if(isPublishingPhoto)return;
+  if(!pendingUrl){toast(t("upNoFile"));return}
+  if(activeCount()>=MAX_ACTIVE){toast(t("upLimit"));return}
+  isPublishingPhoto=true;
+  const addButton=$("addBtn");
+  if(addButton){
+    addButton.disabled=true;
+    addButton.classList.add("is-loading");
+    addButton.setAttribute("aria-busy","true");
+    addButton.textContent="Публикуем…";
+  }
+  if(window.FaceArenaSync?.isOnline()){
+    try{
+      const result=await window.FaceArenaSync.uploadPhoto(pendingFile);
+      pendingFile=null;pendingUrl=null;
+      if(result?.moderation==="review"){
+        toast("Фото отправлено администратору на проверку. После одобрения оно появится в очереди.");
+        isPublishingPhoto=false;
+        location.hash="upload";
+      }else{
+        toast(result?.coordinatorAvailable===false?"Фото сохранено. Серверный таймер временно недоступен.":"Фото прошло проверку и добавлено в общую очередь");
+        isPublishingPhoto=false;
+        location.hash="queue";
+      }
+    }catch(error){
+      isPublishingPhoto=false;
+      toast(window.FaceArenaErrors.message(error,"Не удалось загрузить фотографию. Попробуйте ещё раз."));
+      renderUpload();
+    }
+    return;
+  }
+  const id=Date.now()+"_"+Math.random().toString(36).slice(2,8);
+  photos.push({id,dataUrl:pendingUrl,status:"queued",queuedAt:Date.now(),queueSeq:photos.reduce((m,x)=>Math.max(m,Number.isFinite(x.queueSeq)?x.queueSeq:-1),-1)+1});
+  tryFillSlots();
+  pendingFile=null;pendingUrl=null;
+  toast(t("upOk")+" → смотрите во вкладке «Очередь»");
+  try{saveState()}catch(e){toast("Фото добавлено, но сохранение не удалось");}
+  updateArenaStats();
+  location.hash="queue";
+  isPublishingPhoto=false;
+}
+
+function renderProfile(){
+  const myPhotos=getMyPhotos();
+  const wins=history.filter(h=>h.result==="win").length;
+  const losses=history.filter(h=>h.result==="lose").length;
+  const battles=history.length;
+  const avSrc=profile.avatarUrl||face(20,"R");
+  const actives=myPhotos.filter(p=>ACTIVE_STATUSES.has(p.status));
+  const archived=myPhotos.filter(p=>p.status==="completed"||p.status==="cancelled");
+  const dispName=esc(profile.name||"Вы");
+  const dispHandle=esc(profile.handle||"user");
+
+  let activeHtml="";
+  if(actives.length){
+    activeHtml=`<h2>${t("prActive")}</h2><div class="my-photos">${actives.map(p=>`
+      <div class="ph-card ${p.side?`frame-${p.side}`:""}"><img data-photo-path="${esc(p.objectPath||"")}" src="${p.dataUrl}" alt=""></div>`).join("")}</div>`;
+  }
+
+  let archHtml="";
+  if(archived.length){
+    archHtml=`<h2>${t("prArchived")}</h2><div class="my-photos">${archived.map(p=>`
+      <div class="ph-card"><img data-photo-path="${esc(p.objectPath||"")}" src="${p.dataUrl}" alt="">
+        <button class="rm" data-id="${p.id}" title="Удалить из архива">×</button>
+      </div>`).join("")}</div>
+      <p class="limit-note">Удаление архивного фото не стирает запись в истории</p>`;
+  }
+
+  let histHtml="";
+  if(history.length){
+    histHtml=`<h2>${t("prHist")}</h2><div class="hist">`+history.map((h,i)=>`
+      <div class="hist-item" data-result="${esc(historyResultKey(h,i))}">
+        <div class="sides">
+          <img data-photo-path="${esc(h.myPhotoPath||"")}" src="${h.myImg||face(1,"R")}" alt="">
+          <span class="vs-s">VS</span>
+          <img data-photo-path="${esc(h.opponentPhotoPath||"")}" src="${h.opponentImg||face(2,"B")}" alt="">
+        </div>
+        <div style="text-align:right">
+          <div class="res ${h.result}">${t(h.result==="win"?"prWin":h.result==="lose"?"prLose":"prDraw")}</div>
+          <div style="font-size:11px;color:var(--mu);margin-top:2px">${h.myVotes} : ${h.oppVotes}</div>
+        </div>
+      </div>`).join("")+`</div>`;
+  } else histHtml=`<div class="empty-box"><p>${t("prEmptyHist")}</p></div>`;
+
+  const profileHtml=`
+    ${hdrHTML()}
+    <h1 class="sec-h">${t("prTitle")}</h1>
+    <p class="sec-lead">${t("prLead")}</p>
+<div class="pr-head">
+      <div class="pr-av"><img data-avatar-path="${esc(profile.avatarPath||"")}" data-photo-path="${esc(profile.avatarPath||"")}" src="${avSrc}" alt="Аватар профиля"></div>
+      <div>
+        <div class="pr-name">${dispName}${verifiedBadge(profile.isVerified)}</div>
+        <div class="pr-handle">@${dispHandle}</div>
+      </div>
+    </div>
+    <div class="pr-stats">
+      <div class="stat"><b>${wins}</b><span>${t("prWins")}</span></div>
+      <div class="stat"><b>${losses}</b><span>${t("prLosses")}</span></div>
+      <div class="stat"><b>${battles}</b><span>${t("prBattles")}</span></div>
+    </div>
+    ${(()=>{
+      const mine=Object.values(participantStats).filter(x=>x.ownerId===window.FaceArenaSync?.getUser()?.id);
+      const def=mine.reduce((s,x)=>s+(x.defenses||0),0);
+      const champ=mine.some(x=>x.isChampion);
+      return `<div class="pr-stats" style="margin-top:8px">
+        <div class="stat"><b>${champ?"👑":"—"}</b><span>Статус</span></div>
+        <div class="stat"><b>${def}</b><span>Защит титула</span></div>
+        <div class="stat"><b>${mine.reduce((s,x)=>s+(x.bestStreak||0),0)}</b><span>Лучшая серия</span></div>
+      </div>`;
+    })()}
+    ${activeHtml}
+    ${histHtml}
+    ${archHtml}`;
+  if(!setViewHTML($("pv"),profileHtml))return;
+
+  const ownAvatar=$("pv").querySelector("[data-avatar-path]");
+  if(ownAvatar&&ownAvatar.dataset.avatarPath){
+    ownAvatar.onerror=async()=>{
+      if(ownAvatar.dataset.avatarRetried){ownAvatar.src=face(20,"R");return}
+      ownAvatar.dataset.avatarRetried="1";
+      try{
+        const urls=await window.FaceArenaSync.getPhotoSignedUrls([ownAvatar.dataset.avatarPath]);
+        ownAvatar.src=urls.get(ownAvatar.dataset.avatarPath)||face(20,"R");
+      }catch(error){console.warn("[FACE ARENA profile avatar retry]",error);ownAvatar.src=face(20,"R")}
+    };
+  }
+  $("pv").querySelectorAll(".hist-item").forEach(el=>{
+    el.onclick=()=>{location.hash="result-"+encodeURIComponent(el.dataset.result)};
+  });
+  $("pv").querySelectorAll(".rm").forEach(b=>b.onclick=()=>{
+    const id=b.dataset.id;
+    if(window.FaceArenaSync?.isOnline()){
+      window.FaceArenaSync.deletePhoto(id).then(()=>toast("Фото удалено из архива (история сохранена)")).catch(error=>toast(window.FaceArenaErrors.message(error,"Не удалось удалить фотографию. Попробуйте ещё раз.")));
+      return;
+    }
+    photos=photos.filter(x=>String(x.id)!==String(id));
+    saveState();
+    toast("Фото удалено из архива (история сохранена)");
+    renderProfile();
+  });
+}
+
+async function renderPublicProfile(userId){
+  const renderToken=(renderPublicProfile._requestId||0)+1;
+  renderPublicProfile._requestId=renderToken;
+  const host=$("pv");
+  setViewHTML(host,`${hdrHTML()}<h1 class="sec-h">Профиль участника</h1><div class="profile-loading">Загружаем профиль…</div>`);
+  if(!window.FaceArenaSync?.isOnline?.()){
+    host.querySelector(".profile-loading").textContent="Войдите в аккаунт, чтобы просматривать профили участников.";
+    return;
+  }
+  try{
+    const data=await window.FaceArenaSync.getPublicProfile(userId);
+    if(renderPublicProfile._requestId!==renderToken||location.hash.slice(1)!=="profile-"+encodeURIComponent(userId))return;
+    if(!data){
+      if(setViewHTML(host,`${hdrHTML()}<h1 class="sec-h">Профиль закрыт</h1><div class="empty-box"><p>Владелец отключил публичный профиль. Его фотографии и данные профиля недоступны.</p><button class="btn" id="publicProfileBack" type="button">Вернуться к баттлам</button></div>`))$("publicProfileBack").onclick=()=>location.hash="";
+      return;
+    }
+    const photosList=Array.isArray(data.photos)?data.photos:[];
+    const signedPhotoUrls=await window.FaceArenaSync.getPhotoSignedUrls([...photosList.map(p=>p.object_path),data.avatar_path].filter(Boolean));
+    if(renderPublicProfile._requestId!==renderToken||location.hash.slice(1)!=="profile-"+encodeURIComponent(userId))return;
+    const photoUrl=p=>signedPhotoUrls.get(p.object_path)||"";
+    const avatarUrl=data.avatar_path?signedPhotoUrls.get(data.avatar_path)||"":"";
+    const photoCards=photosList.length?photosList.map(p=>`<div class="ph-card"><img data-photo-path="${esc(p.object_path)}" src="${esc(photoUrl(p))}" alt="Фото участника"></div>`).join(""):`<div class="empty-box"><p>У участника пока нет опубликованных фотографий.</p></div>`;
+    const publicProfileHtml=`
+      ${hdrHTML()}<h1 class="sec-h">Профиль участника</h1><p class="sec-lead">Публичный профиль FACE ARENA</p>
+      <div class="pr-head"><div class="pr-av">${avatarUrl?`<img data-avatar-path="${esc(data.avatar_path)}" data-photo-path="${esc(data.avatar_path)}" src="${esc(avatarUrl)}" alt="Аватар участника">`:""}</div>
+      <div><div class="pr-name">${esc(data.display_name||"Участник")}${verifiedBadge(data.is_verified)}</div><div class="pr-handle">@${esc(data.handle||"user")}</div></div></div>
+      <div class="pr-stats"><div class="stat"><b>${photosList.length}</b><span>Фото в профиле</span></div>
+      <div class="stat"><b>${photosList.filter(p=>p.status==="completed"||p.status==="cancelled").length}</b><span>В архиве</span></div>
+      <div class="stat"><b>${photosList.filter(p=>["queued","matched","confirmed","voting","champion"].includes(p.status)).length}</b><span>Активные</span></div></div>
+      <h2>Фотографии</h2><div class="public-profile-photos">${photoCards}</div>`;
+    const publicProfileChanged=setViewHTML(host,publicProfileHtml);
+    if(publicProfileChanged){
+    const publicAvatar=host.querySelector("[data-avatar-path]");
+    if(publicAvatar)publicAvatar.onerror=async()=>{
+      if(publicAvatar.dataset.avatarRetried){publicAvatar.removeAttribute("src");return}
+      publicAvatar.dataset.avatarRetried="1";
+      try{
+        const urls=await window.FaceArenaSync.getPhotoSignedUrls([publicAvatar.dataset.avatarPath]);
+        const fresh=urls.get(publicAvatar.dataset.avatarPath);
+        if(fresh)publicAvatar.src=fresh;else publicAvatar.removeAttribute("src");
+      }catch(error){console.warn("[FACE ARENA public avatar retry]",error);publicAvatar.removeAttribute("src")}
+    };
+    }
+  }catch(error){
+    if(renderPublicProfile._requestId!==renderToken||location.hash.slice(1)!=="profile-"+encodeURIComponent(userId))return;
+    if(setViewHTML(host,`${hdrHTML()}<h1 class="sec-h">Не удалось открыть профиль</h1><div class="empty-box"><p>${esc(window.FaceArenaErrors.message(error,"Не удалось загрузить профиль. Попробуйте позже."))}</p><button class="btn" id="publicProfileBack" type="button">Назад</button></div>`))$("publicProfileBack").onclick=()=>history.back();
+  }
+}
+
+function renderSettings(){
+  const dispName=esc(profile.name||"Вы");
+  const dispHandle=esc(profile.handle||"user");
+  $("sv").classList.add("settings-menu");
+  $("sv").innerHTML=`
+    <header>
+      <div class="logo"><img class="fa-brand-logo-image" src="https://face-arena-cloudflare.pages.dev/IMG_9559.png?v=1" alt="" aria-hidden="true">FACE ARENA</div>
+      <div class="hdr-right">
+        <button type="button" class="btn-settings-close" aria-label="Закрыть" id="setCloseX" style="color:#fff">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <div id="setMain">
+      <ul class="settings-menu-list">
+        <li><button type="button" class="menu-item" data-go="profile">Аккаунт и профиль</button></li>
+        <li><button type="button" class="menu-item" data-go="appearance">Внешний вид</button></li>
+        <li><button type="button" class="menu-item" data-go="sound">Звук</button></li>
+        <li><button type="button" class="menu-item" data-go="notifications">Уведомления</button></li>
+        <li><button type="button" class="menu-item" data-go="privacy">Приватность и безопасность</button></li>
+        <li><button type="button" class="menu-item" data-go="data">Данные</button></li>
+        <li><button type="button" class="menu-item" data-go="about">О нас</button></li>
+        <li><button type="button" class="menu-item danger" data-go="signout">Выйти из аккаунта</button></li>
+      </ul>
+      <div class="settings-menu-sep"></div>
+      <div class="settings-menu-foot">
+        <button type="button" class="menu-exit" id="setExit">Закрыть</button>
+      </div>
+    </div>
+
+    <div id="setSubProfile" class="settings-sub">
+      <button type="button" class="settings-back" id="backFromProfile">← Назад</button>
+      <h2 class="sec-h" style="margin-top:4px">Профиль</h2>
+      <div class="profile-avatar-tools">
+        <div class="profile-avatar-preview"><img id="profileAvatarPreview" data-photo-path="${esc(profile.avatarPath||"")}" src="${esc(profile.avatarUrl||"")}" alt="Аватар профиля" ${profile.avatarUrl?"":"hidden"}></div>
+        <div style="flex:1;min-width:0"><div class="lbl">Фотография профиля</div><div class="sub">Отдельно от фотографий для баттлов · JPEG, PNG или WebP до 5 МБ</div>
+          <input type="file" id="profileAvatarFile" accept="image/jpeg,image/png,image/webp" style="display:none">
+          <button type="button" class="btn-ghost" id="chooseProfileAvatar" style="margin-top:8px">Добавить фото</button>
+        </div>
+      </div>
+      <div class="set-row">
+        <div><div class="lbl">Имя</div><div class="sub">Отображается в баттлах</div></div>
+        <input type="text" id="setName" maxlength="24" value="${dispName}" placeholder="Имя">
+      </div>
+      <div class="set-row">
+        <div><div class="lbl">Никнейм</div><div class="sub">@handle</div></div>
+        <input type="text" id="setHandle" maxlength="20" value="${dispHandle}" placeholder="handle">
+      </div>
+      <button class="btn-main" id="saveProfile">Сохранить</button>
+    </div>
+
+    <div id="setSubAnim" class="settings-sub">
+      <button type="button" class="settings-back" id="backFromAnim">← Назад</button>
+      <h2 class="sec-h" style="margin-top:4px">Внешний вид</h2>
+      <div class="set-row">
+        <div><div class="lbl">Анимации интерфейса</div><div class="sub">Отключение ускоряет интерфейс</div></div>
+        <button type="button" class="set-toggle ${prefAnim?"on":""}" id="togAnim" aria-pressed="${prefAnim}"></button>
+      </div>
+    </div>
+
+    <div id="setSubSound" class="settings-sub">
+      <button type="button" class="settings-back" id="backFromSound">← Назад</button>
+      <h2 class="sec-h" style="margin-top:4px">Звук</h2>
+      <div class="set-row">
+        <div><div class="lbl">Игровые звуки</div><div class="sub">Только победы, чемпионские титулы и поражения</div></div>
+        <button type="button" class="set-toggle" id="togSound" aria-label="Звуковые эффекты" aria-pressed="true"></button>
+      </div>
+      <div class="set-row" style="display:block">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
+          <div><div class="lbl">Громкость</div><div class="sub">Громкость игровых эффектов</div></div>
+          <strong id="soundVolumeValue" style="font-variant-numeric:tabular-nums">65%</strong>
+        </div>
+        <input id="soundVolume" type="range" min="0" max="100" step="5" value="65" aria-label="Громкость звуковых эффектов" style="width:100%;margin:14px 0 4px;accent-color:var(--blue);touch-action:pan-y">
+      </div>
+      <div class="set-row">
+        <div><div class="lbl">Проверка звука</div><div class="sub">Прослушать главный эффект победы</div></div>
+        <button type="button" class="menu-item" id="soundPreview" style="width:auto;min-width:100px;padding:10px 14px;border:1px solid #292929;border-radius:10px">Прослушать</button>
+      </div>
+      <p class="set-info">Звуки интерфейса отключены. Акцент — на победе и чемпионских моментах. На iPhone звук активируется после первого нажатия.</p>
+    </div>
+
+    <div id="setSubNotifications" class="settings-sub">
+      <button type="button" class="settings-back" id="backFromNotifications">← Назад</button>
+      <h2 class="sec-h" style="margin-top:4px">Уведомления</h2>
+      <div class="set-row"><div><div class="lbl">Уведомления о баттлах</div><div class="sub">Начало баттла, победа, поражение и чемпионский титул</div></div><button type="button" class="set-toggle" id="battleNotificationsToggle" aria-label="Уведомления о баттлах"></button></div>
+      <div class="set-row" style="margin-top:12px">
+        <div><div class="lbl">Push на телефон</div><div class="sub" id="pushNotificationStatus">Проверяем поддержку…</div></div>
+        <button type="button" class="menu-item" id="pushNotificationsButton" style="width:auto;min-width:108px;padding:10px 12px;border:1px solid #292929;border-radius:10px">Включить</button>
+      </div>
+      <p class="set-info">На iPhone сначала добавьте FACE ARENA на экран «Домой» через меню «Поделиться», затем откройте приложение с его значка и нажмите «Включить».</p>
+      <button type="button" class="menu-item" id="openNotificationsInbox" style="padding:10px 0;color:#9bbcff">Открыть все уведомления</button>
+    </div>
+
+    <div id="setSubPrivacy" class="settings-sub">
+      <button type="button" class="settings-back" id="backFromPrivacy">← Назад</button>
+      <h2 class="sec-h" style="margin-top:4px">Приватность и безопасность</h2>
+      <div class="set-row">
+        <div><div class="lbl">Публичный профиль</div><div class="sub">Разрешить другим участникам видеть имя и никнейм</div></div>
+        <button type="button" class="set-toggle" id="privacyProfileToggle" aria-label="Публичный профиль"></button>
+      </div>
+      <div class="set-row">
+        <div><div class="lbl">Публичная история боёв</div><div class="sub">Разрешить просмотр истории другим участникам</div></div>
+        <button type="button" class="set-toggle" id="privacyHistoryToggle" aria-label="Публичная история боёв"></button>
+      </div>
+      <div class="set-row">
+        <div><div class="lbl">Уведомления о безопасности</div><div class="sub">Настройка сохраняется на сервере; доставка уведомлений подключается отдельно</div></div>
+        <button type="button" class="set-toggle" id="privacySecurityToggle" aria-label="Уведомления о безопасности"></button>
+      </div>
+      <div class="set-row" style="display:block">
+        <div class="lbl">Активные сеансы</div>
+        <div class="sub" id="currentSessionInfo">Загрузка списка сеансов…</div>
+        <div id="activeSessionsList" aria-live="polite" style="display:grid;gap:8px;margin-top:10px"></div>
+        <button type="button" class="menu-item" id="revokeOtherSessions" style="margin-top:8px;padding:10px 0;color:#fff">Завершить другие сеансы</button>
+      </div>
+      <div class="set-row" style="display:block">
+        <div class="lbl">Удаление аккаунта</div>
+        <div class="sub">Удаление аккаунта и фотографий требует отдельной процедуры, чтобы не повредить сохранённые результаты боёв.</div>
+        <button type="button" class="menu-item danger" id="accountDeletionInfo" style="padding:10px 0">Подробнее</button>
+      </div>
+    </div>
+
+    <div id="setSubData" class="settings-sub">
+      <button type="button" class="settings-back" id="backFromData">← Назад</button>
+      <h2 class="sec-h" style="margin-top:4px">Данные</h2>
+      <p class="set-info">Аккаунт, фотографии, очередь, голоса и результаты хранятся на сервере и синхронизируются между устройствами.</p>
+      <p class="set-info">Очистка локального кэша не удаляет серверные фотографии и историю.</p>
+      <button type="button" class="menu-item danger" id="setResetBtn">Очистить локальный кэш</button>
+    </div>
+
+    <div id="setSubAbout" class="settings-sub">
+      <button type="button" class="settings-back" id="backFromAbout">← Назад</button>
+      <h2 class="sec-h" style="margin-top:4px">О нас</h2>
+      <p class="set-info"><strong>FACE ARENA</strong> — платформа соревновательных фотобаттлов.</p>
+      <p class="set-info">Участники выходят на арену в парных поединках, а сообщество голосует и оставляет комментарии. Победитель продолжает борьбу и защищает титул.</p>
+      <p class="set-info">Результаты боёв, достижения и история участия сохраняются в профиле.</p>
+      <a href="https://t.me/Facearenan" target="_blank" rel="noopener noreferrer" aria-label="Открыть Telegram-канал FACE ARENA" style="display:flex;align-items:center;gap:13px;margin-top:18px;padding:14px;border:1px solid transparent;border-radius:14px;background:transparent;color:#fff;text-decoration:none">
+        <span aria-hidden="true" style="width:42px;height:42px;flex:0 0 42px;display:grid;place-items:center;border-radius:50%;background:#229ED9">
+          <svg viewBox="0 0 24 24" width="23" height="23" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20.66 4.35 17.6 19.1c-.23 1.04-.84 1.3-1.7.8l-4.7-3.46-2.27 2.18c-.25.25-.46.46-.94.46l.34-4.78 8.7-7.86c.38-.34-.08-.53-.58-.19L5.7 13.15l-4.63-1.45c-1-.31-1.02-1 .21-1.48L19.4 3.16c.86-.31 1.61.2 1.26 1.19Z" fill="white"/></svg>
+        </span>
+        <span style="display:block;min-width:0">
+          <strong style="display:block;font-size:14px;line-height:1.35">Telegram — FACE ARENA</strong>
+          <span style="display:block;margin-top:3px;color:var(--mu);font-size:12px;line-height:1.45">Новости, обновления и важные события арены. Подписывайся на наш официальный канал.</span>
+          <span style="display:block;margin-top:6px;color:#39aeea;font-size:12px;font-weight:700">Перейти в Telegram ↗</span>
+        </span>
+      </a>
+    </div>
+  `;
+
+  const showSub=(id)=>{
+    $("setMain").style.display="none";
+    ["setSubProfile","setSubAnim","setSubSound","setSubNotifications","setSubPrivacy","setSubData","setSubAbout"].forEach(k=>{
+      const el=$(k);if(el)el.classList.toggle("on",k===id);
+    });
+  };
+  const showMain=()=>{
+    $("setMain").style.display="";
+    ["setSubProfile","setSubAnim","setSubSound","setSubNotifications","setSubPrivacy","setSubData","setSubAbout"].forEach(k=>{
+      const el=$(k);if(el)el.classList.remove("on");
+    });
+  };
+
+  $("sv").querySelectorAll("[data-go]").forEach(btn=>{
+    btn.onclick=()=>{
+      const go=btn.dataset.go;
+      if(go==="profile")showSub("setSubProfile");
+      else if(go==="appearance")showSub("setSubAnim");
+      else if(go==="sound")showSub("setSubSound");
+      else if(go==="notifications")showSub("setSubNotifications");
+      else if(go==="privacy")showSub("setSubPrivacy");
+      else if(go==="data")showSub("setSubData");
+      else if(go==="about")showSub("setSubAbout");
+      else if(go==="signout")window.FaceArenaSync?.signOut();
+    };
+  });
+
+  ["backFromProfile","backFromAnim","backFromSound","backFromNotifications","backFromPrivacy","backFromData","backFromAbout"].forEach(id=>{
+    const el=$(id);if(el)el.onclick=showMain;
+  });
+
+  const closeSettings=()=>{location.hash=""};
+  const cx=$("setCloseX");if(cx)cx.onclick=closeSettings;
+  const ex=$("setExit");if(ex)ex.onclick=closeSettings;
+
+  const resetBtn=$("setResetBtn");
+  if(resetBtn)resetBtn.onclick=resetData;
+
+  const audio=window.FaceArenaAudio;
+  if(audio){
+    const togSound=$("togSound"),soundVolume=$("soundVolume"),soundValue=$("soundVolumeValue"),soundPreview=$("soundPreview");
+    const syncSound=()=>{
+      const current=audio.getSettings();
+      if(togSound){
+        togSound.classList.toggle("on",!!current.enabled);
+        togSound.setAttribute("aria-pressed",String(!!current.enabled));
+        togSound.dataset.enabled=String(!!current.enabled);
+      }
+      if(soundVolume)soundVolume.value=String(current.volume);
+      if(soundValue)soundValue.textContent=current.volume+"%";
+    };
+    syncSound();
+    if(togSound){
+      togSound.addEventListener("click",()=>{
+        const next=!audio.getSettings().enabled;
+        try{
+          const result=audio.setEnabled(next);
+          syncSound();
+          // Audio permission can fail independently; the user's preference remains saved.
+          Promise.resolve(result).catch(()=>{}).finally(syncSound);
+        }catch(error){
+          syncSound();
+          toast("Не удалось изменить настройку звука");
+        }
+      });
+    }
+    const updateSoundVolume=(event)=>{
+      const target=event.target;
+      if(!target||target.id!=="soundVolume")return;
+      const value=Number(target.value);
+      if(soundValue)soundValue.textContent=value+"%";
+      try{audio.setVolume(value);}catch(error){console.error("FACE ARENA: volume update failed",error);}
+    };
+    // Delegation survives settings-panel re-renders and works with iOS range input.
+    document.addEventListener("input",updateSoundVolume);
+    document.addEventListener("change",updateSoundVolume);
+    if(soundPreview)soundPreview.onclick=()=>{
+      soundPreview.disabled=true;
+      const originalLabel="Прослушать";
+      audio.preview().then(ok=>{
+        soundPreview.disabled=false;
+        soundPreview.textContent=ok?originalLabel:"Звук недоступен";
+        if(!ok)setTimeout(()=>{soundPreview.textContent=originalLabel;},1800);
+      }).catch(()=>{
+        soundPreview.disabled=false;
+        soundPreview.textContent="Звук недоступен";
+        setTimeout(()=>{soundPreview.textContent=originalLabel;},1800);
+      });
+    };
+  }
+
+  const ta=$("togAnim");
+  if(ta)ta.onclick=()=>{
+    prefAnim=!prefAnim;
+    applyAnimPref();
+    try{localStorage.setItem(ANIM_PREF_KEY,String(prefAnim))}catch(error){console.warn("[FACE ARENA animation preference]",error)}
+    saveState();
+    ta.classList.toggle("on",prefAnim);
+    ta.setAttribute("aria-pressed",String(prefAnim));
+    toast(prefAnim?"Анимации включены":"Анимации отключены");
+  };
+
+  let pushIsSubscribed=false;
+  const pushButton=$("pushNotificationsButton");
+  const pushStatus=$("pushNotificationStatus");
+  const refreshPushControl=async()=>{
+    if(!pushButton||!pushStatus)return;
+    const sync=window.FaceArenaSync;
+    if(!sync?.isOnline?.()){
+      pushStatus.textContent="Войдите в аккаунт, чтобы включить Push.";
+      pushButton.disabled=true;
+      return;
+    }
+    try{
+      const status=await sync.getPushStatus();
+      pushIsSubscribed=!!status.subscribed;
+      pushButton.textContent=pushIsSubscribed?"Отключить":"Включить";
+      pushButton.disabled=!status.supported;
+      pushStatus.textContent=!status.supported
+        ?"Этот браузер не поддерживает Push-уведомления."
+        :pushIsSubscribed
+          ?"Push включены на этом устройстве."
+          :status.permission==="denied"
+            ?"Разрешение запрещено в настройках браузера."
+            :"Push отключены на этом устройстве.";
+    }catch(error){
+      pushStatus.textContent="Не удалось проверить состояние Push.";
+      pushButton.disabled=false;
+    }
+  };
+  if(pushButton)pushButton.onclick=async()=>{
+    const sync=window.FaceArenaSync;
+    if(!sync?.isOnline?.()){toast("Сначала войдите в аккаунт");return;}
+    pushButton.disabled=true;
+    try{
+      if(pushIsSubscribed){
+        await sync.disablePush();
+        toast("Push отключены на этом устройстве");
+      }else{
+        await sync.enablePush();
+        toast("Push-уведомления включены");
+      }
+      await refreshPushControl();
+    }catch(error){
+      toast(window.FaceArenaErrors.message(error,"Не удалось настроить Push-уведомления."));
+      await refreshPushControl();
+    }finally{
+      pushButton.disabled=false;
+    }
+  };
+  refreshPushControl();
+  window.addEventListener("face-arena-authenticated-boot-start",refreshPushControl);
+  window.addEventListener("face-arena-snapshot",refreshPushControl);
+
+  const privacyKeys=[
+    ["privacyProfileToggle","profile_public"],
+    ["privacyHistoryToggle","history_public"],
+    ["privacySecurityToggle","security_notifications"],
+    ["battleNotificationsToggle","battle_notifications"]
+  ];
+  const privacyOptimistic={};
+  const privacyConfirmed={};
+  const privacyWrites=new Map();
+  const privacyVersions=new Map();
+  let privacyOwnerId=null;
+  const syncPrivacy=()=>{
+    const sync=window.FaceArenaSync;
+    const userId=sync?.getUser?.()?.id||null;
+    if(privacyOwnerId!==userId){
+      privacyOwnerId=userId;
+      for(const [,key] of privacyKeys){
+        delete privacyOptimistic[key];
+        delete privacyConfirmed[key];
+        privacyWrites.delete(key);
+        privacyVersions.delete(key);
+      }
+    }
+    const online=!!sync?.isOnline?.();
+    const settings=sync?.lastSnapshot?.settings||{};
+    for(const [id,key] of privacyKeys){
+      const el=$(id);if(!el)continue;
+      const serverValue=settings[key]!==false;
+      if(!Object.prototype.hasOwnProperty.call(privacyOptimistic,key)&&!privacyWrites.has(key))privacyConfirmed[key]=serverValue;
+      else if(!Object.prototype.hasOwnProperty.call(privacyConfirmed,key))privacyConfirmed[key]=serverValue;
+      const value=Object.prototype.hasOwnProperty.call(privacyOptimistic,key)?privacyOptimistic[key]:serverValue;
+      el.classList.toggle("on",value);
+      el.setAttribute("aria-pressed",String(value));
+      // Do not disable an authenticated toggle while its server write is pending.
+      el.disabled=!online;
+      el.setAttribute("aria-disabled",String(!online));
+    }
+  };
+  // Settings may open before Supabase restores the session.
+  if(window._faPrivacySnapshotHandler)window.removeEventListener("face-arena-snapshot",window._faPrivacySnapshotHandler);
+  window._faPrivacySnapshotHandler=()=>syncPrivacy();
+  window.addEventListener("face-arena-snapshot",window._faPrivacySnapshotHandler);
+  syncPrivacy();
+  for(const [id,key] of privacyKeys){
+    const el=$(id);if(!el)continue;
+    el.onclick=()=>{
+      const sync=window.FaceArenaSync;
+      if(!sync?.isOnline?.()){toast("Сначала войдите в аккаунт");return;}
+      const userId=sync.getUser?.()?.id;
+      if(!userId){toast("Сначала войдите в аккаунт");return;}
+      const current=Object.prototype.hasOwnProperty.call(privacyOptimistic,key)
+        ?privacyOptimistic[key]
+        :(sync.lastSnapshot?.settings?.[key]!==false);
+      const next=!current;
+      const version=(privacyVersions.get(key)||0)+1;
+      privacyVersions.set(key,version);
+      privacyOptimistic[key]=next;
+      el.classList.toggle("on",next);
+      el.setAttribute("aria-pressed",String(next));
+      // Queue writes per setting so rapid taps cannot arrive out of order.
+      const previous=privacyWrites.get(key)||Promise.resolve();
+      const write=previous.catch(()=>{}).then(()=>{
+        if(sync.getUser?.()?.id!==userId)throw new Error("Аккаунт изменился. Повторите действие.");
+        return sync.updatePrivacySettings({[key]:next});
+      });
+      privacyWrites.set(key,write);
+      write.then(()=>{
+        if(sync.getUser?.()?.id!==userId)return;
+        privacyConfirmed[key]=next;
+        if(privacyVersions.get(key)===version){
+          delete privacyOptimistic[key];
+          syncPrivacy();
+          toast("Настройка сохранена");
+        }
+      }).catch(error=>{
+        if(sync.getUser?.()?.id!==userId)return;
+        if(privacyVersions.get(key)===version){
+          privacyOptimistic[key]=privacyConfirmed[key]??(sync.lastSnapshot?.settings?.[key]!==false);
+          syncPrivacy();
+          delete privacyOptimistic[key];
+          syncPrivacy();
+          toast(window.FaceArenaErrors.message(error,"Не удалось сохранить настройку. Попробуйте ещё раз."));
+        }
+      }).finally(()=>{
+        if(privacyWrites.get(key)===write)privacyWrites.delete(key);
+      });
+    };
+  }
+  const sessionInfo=$("currentSessionInfo");
+  const sessionsList=$("activeSessionsList");
+  const sessionDeviceLabel=ua=>/iPhone|iPad|iPod/.test(ua||"")?"Apple · iPhone/iPad":/Android/.test(ua||"")?"Android":/Macintosh|Mac OS/.test(ua||"")?"Mac":/Windows/.test(ua||"")?"Windows":/Linux/.test(ua||"")?"Linux":(ua||"Неизвестное устройство").slice(0,72);
+  const loadActiveSessions=async()=>{
+    if(!sessionsList||!window.FaceArenaSync?.isOnline?.())return;
+    sessionsList.textContent="Загрузка…";
+    try{
+      const sessions=await window.FaceArenaSync.listSessions();
+      if(!sessions.length){sessionsList.textContent="Активные сеансы не найдены";return;}
+      sessionsList.innerHTML=sessions.map(session=>{
+        const last=session.refreshed_at||session.created_at;
+        const when=last?new Date(last).toLocaleString():"";
+        const current=!!session.is_current;
+        return '<div style="padding:10px 11px;background:#101010;border-radius:10px;display:flex;justify-content:space-between;gap:10px;align-items:center"><span style="min-width:0"><strong style="display:block;font-size:12px">'+esc(sessionDeviceLabel(session.user_agent))+'</strong><span style="display:block;color:var(--mu);font-size:10px;margin-top:3px">'+esc(when)+'</span></span><span style="flex:none;color:'+(current?'#fff':'var(--mu)')+';font-size:10px;font-weight:700">'+(current?'ТЕКУЩИЙ':'АКТИВЕН')+'</span></div>';
+      }).join("");
+      if(sessionInfo)sessionInfo.textContent="Сеансы этого аккаунта · список получен с сервера";
+    }catch(error){
+      sessionsList.textContent=window.FaceArenaErrors.message(error,"Не удалось загрузить список сеансов. Попробуйте позже.");
+      if(sessionInfo)sessionInfo.textContent="Не удалось получить список сеансов";
+    }
+  };
+  const openInbox=$("openNotificationsInbox");
+  if(openInbox)openInbox.onclick=()=>{location.hash="notifications"};
+  loadActiveSessions();
+  const revokeBtn=$("revokeOtherSessions");
+  if(revokeBtn)revokeBtn.onclick=async()=>{
+    if(!confirm("Завершить все остальные сеансы FACE ARENA? Текущий сеанс останется активным."))return;
+    revokeBtn.disabled=true;
+    try{await window.FaceArenaSync.revokeOtherSessions();toast("Обновление токенов других сеансов отозвано");}
+    catch(error){toast(window.FaceArenaErrors.message(error,"Не удалось завершить другие сеансы. Попробуйте позже."));}
+    finally{revokeBtn.disabled=false;}
+  };
+  const deletionInfo=$("accountDeletionInfo");
+  if(deletionInfo)deletionInfo.onclick=()=>toast("Удаление будет включено после безопасного переноса исторических результатов в обезличенный архив");
+
+  const avatarInput=$("profileAvatarFile"),avatarChoose=$("chooseProfileAvatar"),avatarPreview=$("profileAvatarPreview");
+  if(avatarChoose&&avatarInput)avatarChoose.onclick=()=>avatarInput.click();
+  const prepareAvatarImage=file=>new Promise((resolve,reject)=>{
+    const reader=new FileReader();
+    reader.onerror=()=>reject(new Error("Не удалось прочитать фотографию"));
+    reader.onload=()=>{
+      const img=new Image();
+      img.onerror=()=>reject(new Error("Файл не является корректной фотографией"));
+      img.onload=()=>{
+        if(!img.naturalWidth||!img.naturalHeight)return reject(new Error("Файл не является корректной фотографией"));
+        const scale=Math.min(1,1200/Math.max(img.naturalWidth,img.naturalHeight));
+        const canvas=document.createElement("canvas");
+        canvas.width=Math.max(1,Math.round(img.naturalWidth*scale));
+        canvas.height=Math.max(1,Math.round(img.naturalHeight*scale));
+        const ctx=canvas.getContext("2d");
+        if(!ctx)return reject(new Error("Не удалось обработать фотографию"));
+        ctx.drawImage(img,0,0,canvas.width,canvas.height);
+        canvas.toBlob(blob=>{
+          if(!blob)return reject(new Error("Не удалось обработать фотографию"));
+          const base=(file.name||"avatar").replace(/\\.[^.]+$/,"");
+          resolve(new File([blob],base+".jpg",{type:"image/jpeg",lastModified:Date.now()}));
+        },"image/jpeg",0.88);
+      };
+      img.src=reader.result;
+    };
+    reader.readAsDataURL(file);
+  });
+  if(avatarInput)avatarInput.onchange=async()=>{
+    const file=avatarInput.files?.[0];avatarInput.value="";
+    if(!file)return;
+    if(!window.FaceArenaSync?.isOnline?.()){toast("Войдите в аккаунт, чтобы добавить фото профиля");return}
+    if(!["image/jpeg","image/png","image/webp"].includes(file.type)){toast("Можно загрузить только фотографию JPEG, PNG или WebP");return}
+    if(file.size>5*1024*1024){toast("Размер фотографии не должен превышать 5 МБ");return}
+    avatarChoose.disabled=true;avatarChoose.textContent="Проверяем фото…";
+    try{
+      const photo=await prepareAvatarImage(file);
+      avatarChoose.textContent="Загружаем…";
+      await window.FaceArenaSync.uploadProfileAvatar(photo);
+      profile=window.FaceArenaSync.lastSnapshot?.profile||profile;
+      if(avatarPreview){
+        avatarPreview.dataset.photoPath=profile.avatarPath||"";
+        avatarPreview.src=profile.avatarUrl||"";
+        avatarPreview.hidden=!profile.avatarUrl;
+      }
+      toast("Фотография профиля обновлена");
+      renderProfile();
+    }catch(error){toast(window.FaceArenaErrors.message(error,"Не удалось загрузить фотографию профиля. Попробуйте ещё раз."))}
+    finally{avatarChoose.disabled=false;avatarChoose.textContent=profile.avatarPath?"Изменить фото":"Добавить фото"}
+  };
+
+  const sp=$("saveProfile");
+  if(sp)sp.onclick=async()=>{
+    const name=($("setName").value||"").trim().slice(0,24);
+    const handle=($("setHandle").value||"").trim().replace(/^@/,"").replace(/[^\w.]/g,"").slice(0,20);
+    if(!name){toast("Укажите имя");return}
+    if(!handle){toast("Укажите никнейм");return}
+    if(window.FaceArenaSync?.isOnline()){
+      try{await window.FaceArenaSync.updateProfile(name,handle)}catch(error){toast(window.FaceArenaErrors.message(error,"Не удалось сохранить профиль. Проверьте подключение и попробуйте снова."));return}
+    }
+    profile={...profile,name,handle};
+    saveState();
+    toast("Профиль сохранён");
+    showMain();
+  };
+}
+
+function renderNotifications(refresh=true){
+  const host=$("nv");
+  const sync=window.FaceArenaSync;
+  const rows=sync?.notifications||[];
+  const unread=rows.filter(row=>!row.read_at).length;
+  const content=rows.length
+    ? '<div class="notification-list">'+rows.map(row=>
+      '<button type="button" class="notification-item '+(row.read_at?"read":"unread")+'" data-notification-id="'+esc(row.id)+'">'+
+      '<span class="notification-dot" aria-hidden="true"></span><span><strong>'+esc(row.title)+'</strong><p>'+esc(row.body)+'</p><time>'+new Date(row.created_at).toLocaleString("ru")+'</time></span></button>').join("")+'</div>'
+    : '<div class="empty-box"><p>Пока нет уведомлений. Здесь появятся сообщения о начале баттлов и их результатах.</p></div>';
+  host.innerHTML=hdrHTML()+'<h1 class="sec-h">Уведомления</h1><p class="sec-lead">События твоих фотографий и чемпионских баттлов.</p>'+
+    (unread?'<button type="button" class="menu-item" id="markAllNotificationsRead" style="padding:8px 0;color:#9bbcff">Отметить всё прочитанным</button>':"")+content;
+  const markAll=$("markAllNotificationsRead");
+  if(markAll)markAll.onclick=async()=>{
+    markAll.disabled=true;
+    try{await sync.markAllNotificationsRead();renderNotifications(false);}
+    catch(error){markAll.disabled=false;toast(window.FaceArenaErrors.message(error,"Не удалось обновить уведомления."));}
+  };
+  host.querySelectorAll("[data-notification-id]").forEach(button=>{
+    button.onclick=async()=>{
+      const row=rows.find(item=>item.id===button.dataset.notificationId);
+      if(!row)return;
+      button.disabled=true;
+      try{
+        if(!row.read_at)await sync.markNotificationRead(row.id);
+        const payload=row.payload||{};
+        if(payload.result_id)location.hash="result-"+encodeURIComponent(payload.result_id);
+        else if(payload.lane_id)location.hash="battle-"+Number(payload.lane_id);
+        else location.hash="";
+      }catch(error){button.disabled=false;toast(window.FaceArenaErrors.message(error,"Не удалось открыть уведомление."));}
+    };
+  });
+  updateNotificationBadges();
+  if(refresh&&sync?.isOnline?.())sync.refreshNotifications().catch(error=>console.warn("[FACE ARENA notifications]",error));
+}
+
+function historyResultKey(h,index){
+  return String(h.resultId||(h.battleUid?String(h.battleUid)+":"+String(h.photoId):String(h.photoId)+":"+String(h.completedAt||index)));
+}
+function renderResults(){
+  const rows=(arenaResults.length?arenaResults:history).map((h,i)=>({...h,_resultKey:historyResultKey(h,i)}));
+  const content=rows.length?'<div class="hist">'+rows.map(h=>`
+    <div class="hist-item" role="button" tabindex="0" data-result="${esc(h._resultKey)}">
+      <div class="sides">
+        <img data-photo-path="${esc(h.myPhotoPath||"")}" src="${h.myImg||face(1,"R")}" alt="">
+        <span class="vs-s">VS</span>
+        <img data-photo-path="${esc(h.opponentPhotoPath||"")}" src="${h.opponentImg||face(2,"B")}" alt="">
+      </div>
+      <div style="text-align:right">
+        <div class="res ${esc(h.result)}">${h.result==="red"?"Победа RED":h.result==="blue"?"Победа BLUE":h.result==="win"?t("prWin"):h.result==="lose"?t("prLose"):h.result==="no-contest"?"Бой не засчитан":"Ничья"}</div>
+        <div style="font-size:11px;color:var(--mu);margin-top:2px">${Number(h.myVotes)||0} : ${Number(h.oppVotes)||0}</div>
+        <div style="font-size:10px;color:var(--mu);margin-top:3px">Баттл №${esc(h.battleId||h.laneId||"—")}</div>
+      </div>
+    </div>`).join("")+'</div>':'<div class="empty-box"><p>Завершённые баттлы появятся здесь.</p></div>';
+  const resultsHtml=`
+    ${hdrHTML()}
+    <h1 class="sec-h">Итоги</h1>
+    <p class="sec-lead">Результаты завершённых баттлов. Записи остаются здесь после освобождения активных слотов.</p>
+    ${content}`;
+  if(!setViewHTML($("iv"),resultsHtml))return;
+  $("iv").querySelectorAll("[data-result]").forEach(el=>{
+    const open=()=>{location.hash="result-"+encodeURIComponent(el.dataset.result)};
+    el.onclick=open;
+    el.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();open()}};
+  });
+}
+
+function renderResult(photoId){
+  const h=(arenaResults||[]).find((x,i)=>historyResultKey(x,i)===String(photoId))||history.find((x,i)=>historyResultKey(x,i)===String(photoId))||history.find(x=>String(x.photoId)===String(photoId));
+  if(!h){location.hash="profile";return}
+  const resultDetailHtml=`
+    ${hdrHTML()}
+    <button class="back" id="bkR">← ${t("resBack")}</button>
+    <h1 class="sec-h">${t("resTitle")}</h1>
+<div class="result-detail">
+      <div class="match-duel">
+        <div><img data-photo-path="${esc(h.myPhotoPath||"")}" src="${h.myImg}" alt=""><div style="font-size:12px;margin-top:6px">RED · ${esc(h.myName||"Участник")}</div></div>
+        <div><img data-photo-path="${esc(h.opponentPhotoPath||"")}" src="${h.opponentImg}" alt=""><div style="font-size:12px;margin-top:6px">BLUE · ${esc(h.opponentName||"Участник")}</div></div>
+      </div>
+      <div class="score" style="color:${h.result==="red"?"var(--red)":h.result==="blue"?"var(--blue)":h.result==="win"?"#4ade80":h.result==="lose"?"var(--red)":"var(--mu)"}">${h.result==="no-contest"?"Бой не засчитан":h.result==="red"?"Победа RED":h.result==="blue"?"Победа BLUE":"Ничья"}</div>
+      <div style="text-align:center;font:800 20px var(--hd)">${h.myVotes} : ${h.oppVotes}</div>
+      <p class="note" style="text-align:center">Баттл №${h.battleId} · ${new Date(h.completedAt).toLocaleString("ru")}</p>
+    </div>`;
+  if(!setViewHTML($("rv"),resultDetailHtml))return;
+  $("bkR").onclick=()=>{location.hash="profile"};
+}
+
+const views={av:$("av"),bv:$("bv"),qv:$("qv"),uv:$("uv"),pv:$("pv"),sv:$("sv"),mv:$("mv"),rv:$("rv"),iv:$("iv"),nv:$("nv"),nfv:$("nfv")};
+function hideAll(){Object.values(views).forEach(v=>{if(v){v.hidden=true;v.classList.remove("is-on","is-leave","settings-menu")}})}
+function setTab(i){
+  document.querySelectorAll(".tabs button").forEach((b,j)=>b.classList.toggle("on",j===i));
+  $("ind").style.transform=`translateX(${i*100}%)`;
+  $("ind").style.width="20%";
+}
+function showView(el){
+  if(!el)return;
+  el.hidden=false;
+  el.classList.remove("is-leave");
+  el.classList.add("is-on");
+}
+let _navLock=false;
+function renderNotFound(){
+  $("nfv").innerHTML=`
+    <section class="not-found" role="main" aria-labelledby="notFoundTitle">
+      <div class="not-found-inner">
+        <div class="not-found-mark"><img class="fa-brand-logo-image" src="https://face-arena-cloudflare.pages.dev/IMG_9559.png?v=1" alt="" aria-hidden="true">FACE ARENA</div>
+        <p class="not-found-code" aria-label="404">404</p>
+        <h1 class="not-found-title" id="notFoundTitle">Арена не найдена</h1>
+        <p class="not-found-copy">Похоже, ты забрёл за пределы арены. Такой страницы здесь нет.</p>
+        <div class="not-found-actions">
+          <a class="not-found-home" href="/">На главную</a>
+          <button class="not-found-back" id="notFoundBack" type="button">Назад</button>
+        </div>
+      </div>
+    </section>`;
+  const back=$("notFoundBack");
+  if(back)back.onclick=()=>{if(history.length>1)history.back();else location.href="/"};
+}
+const _tabScrollPositions=new Map();
+let _activeScrollKey=null;
+function readPageScrollTop(){return $("appScroll").scrollTop}
+function writePageScrollTop(top){$("appScroll").scrollTop=Math.max(0,Number(top)||0)}
+const appScroll=$("appScroll");
+if(appScroll)appScroll.addEventListener("scroll",()=>{
+  if(_activeScrollKey&&scrollKeyForRoute(location.hash.slice(1))===_activeScrollKey){
+    _tabScrollPositions.set(_activeScrollKey,readPageScrollTop());
+  }
+},{passive:true});
+function saveActiveTabScroll(){if(_activeScrollKey)_tabScrollPositions.set(_activeScrollKey,readPageScrollTop())}
+function restoreActiveTabScroll(){if(!_activeScrollKey)return;const saved=_tabScrollPositions.get(_activeScrollKey);if(Number.isFinite(saved))writePageScrollTop(saved)}
+window.addEventListener("pagehide",saveActiveTabScroll);
+window.addEventListener("pageshow",restoreActiveTabScroll);
+document.addEventListener("visibilitychange",()=>{if(document.hidden)saveActiveTabScroll();else restoreActiveTabScroll()});
+function scrollKeyForRoute(hash){
+  if(hash===""||/^battle-\d+$/.test(hash))return "arena";
+  if(hash==="queue"||hash.startsWith("match-"))return "queue";
+  if(hash==="upload")return "upload";
+  if(hash==="profile"||/^profile-[0-9a-f-]{36}$/i.test(hash))return "profile";
+  if(hash==="results"||hash.startsWith("result-"))return "results";
+  if(hash==="settings")return "settings";
+  if(hash==="notifications")return "notifications";
+  return hash||"arena";
+}
+function show(){
+  if(_navLock)return;
+  const hash=location.hash.slice(1)||"";
+  const nextScrollKey=scrollKeyForRoute(hash);
+  const previousScrollKey=_activeScrollKey;
+  const changingScrollTab=previousScrollKey!==null&&previousScrollKey!==nextScrollKey;
+  // The previous tab position is captured continuously by the scroll listener.
+  // Do not read it here: iOS may already have applied the new hash scroll.
+  const restoreScrollY=changingScrollTab?(_tabScrollPositions.get(nextScrollKey)||0):readPageScrollTop();
+  // Supabase Google OAuth implicit-flow callback temporarily occupies the hash.
+  // It is not an application route; let Supabase validate the tokens and restore
+  // the session before the router decides which view to display.
+  if(/^(?:access_token|refresh_token|token_type|expires_in|provider_token|error|error_description)=/.test(hash))return;
+  closeV();
+  // Match timer cleared inside renderMatch / when leaving match; avoid double-clear race
+  const reduce=!prefAnim||document.documentElement.classList.contains("no-anim")||window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const current=Object.values(views).find(v=>v&&!v.hidden&&v.classList.contains("is-on"));
+  const go=()=>{
+    hideAll();
+    let target=null;
+    if(/^battle-(\d+)$/.test(hash)){
+      const n=+RegExp.$1;
+      if(n>=1&&n<=arenaBattles.length){bview(n);target=views.bv;setTab(0);tick2()}
+    } else if(/^match-(.+)$/.test(hash)){
+      renderMatch(decodeURIComponent(RegExp.$1));target=views.mv;setTab(1);
+    } else if(/^result-(.+)$/.test(hash)){
+      renderResult(decodeURIComponent(RegExp.$1));target=views.rv;setTab(3);
+    } else if(hash==="queue"){renderQueue();target=views.qv;setTab(1)}
+    else if(hash==="upload"){renderUpload();target=views.uv;setTab(2)}
+    else if(/^profile-[0-9a-f-]{36}$/i.test(hash)){renderPublicProfile(decodeURIComponent(hash.slice(8)));target=views.pv;setTab(3)}
+    else if(hash==="profile"){renderProfile();target=views.pv;setTab(3)}
+    else if(hash==="results"){renderResults();target=views.iv;setTab(4)}
+    else if(hash==="notifications"){renderNotifications();target=views.nv;setTab(3)}
+    else if(hash==="settings"){renderSettings();target=views.sv;setTab(3)}
+    else if(hash===""){renderArenaGrid();target=views.av;setTab(0)}
+    else {renderNotFound();target=views.nfv;setTab(0)}
+    if(target!==views.mv)clearInterval(matchTimerId);
+    if(target)showView(target);
+    // Hide bottom nav on settings (full-screen menu)
+    const navEl=document.querySelector("nav");
+    if(navEl)navEl.style.display=(hash==="settings"||target===views.nfv)?"none":"";
+    bindGear();
+    _activeScrollKey=nextScrollKey;
+    if(changingScrollTab)writePageScrollTop(restoreScrollY);
+    _navLock=false;
+  };
+  // Instant switch — CSS handles the short fade, no artificial delay
+  go();
+}
+
+const faBootLoader=document.getElementById("fa-boot-loader");
+const faBootCaption=document.getElementById("fa-boot-caption");
+let faBootFinished=true,faBootStartedAt=0,faBootMinTimer=null,faBootFallbackTimer=null;
+function startFaBoot(){
+  if(!faBootLoader)return;
+  if(faBootFallbackTimer)clearTimeout(faBootFallbackTimer);
+  if(faBootMinTimer)clearTimeout(faBootMinTimer);
+  faBootFinished=false;faBootStartedAt=Date.now();faBootMinTimer=null;
+  faBootLoader.classList.remove("is-hidden");
+  faBootLoader.classList.add("is-active");
+  setFaBootProgress(0.08,"Загружаем арену");
+  faBootFallbackTimer=setTimeout(()=>{
+    if(!faBootFinished){setFaBootProgress(1,"Открываем арену");finishFaBoot();}
+  },30000);
+}
+function hideFaBoot(){
+  if(faBootFallbackTimer)clearTimeout(faBootFallbackTimer);
+  if(faBootMinTimer)clearTimeout(faBootMinTimer);
+  faBootFallbackTimer=null;faBootMinTimer=null;faBootFinished=true;
+  faBootLoader?.classList.remove("is-active");
+  faBootLoader?.classList.add("is-hidden");
+}
+function setFaBootProgress(progress,status){
+  if(faBootFinished||!faBootLoader)return;
+  const value=Math.max(0,Math.min(1,Number(progress)||0));
+  faBootLoader.style.setProperty("--fa-progress",value.toFixed(3));
+  if(status&&faBootCaption)faBootCaption.textContent=status;
+}
+window.addEventListener("face-arena-authenticated-boot-start",startFaBoot);
+window.addEventListener("face-arena-authenticated-boot-stop",hideFaBoot);
+window.addEventListener("face-arena-loader-progress",event=>{
+  const detail=event.detail||{};
+  setFaBootProgress(detail.progress,detail.status);
+});
+function finishFaBoot(){
+  if(faBootFinished)return;
+  const elapsed=Date.now()-faBootStartedAt;
+  const wait=Math.max(0,1250-elapsed);
+  if(faBootMinTimer)return;
+  faBootMinTimer=setTimeout(()=>{
+    if(faBootFinished)return;
+    setFaBootProgress(1,"Арена готова");
+    faBootFinished=true;
+    setTimeout(()=>{
+      faBootLoader?.classList.remove("is-active");
+      faBootLoader?.classList.add("is-hidden");
+    },260);
+  },wait);
+}
+window.addEventListener("face-arena-sync-failed",finishFaBoot);
+window.addEventListener("face-arena-critical-images-ready",finishFaBoot);
+// Tab changes use the History API instead of native hash navigation.
+ // Native fragment navigation can reset document scroll in iOS Home Screen apps.
+ try{window.history.scrollRestoration="manual"}catch(_){}
+ function navigateTab(route){
+   const nextHash=route?"#"+route:"";
+   if(_activeScrollKey)_tabScrollPositions.set(_activeScrollKey,readPageScrollTop());
+   if(location.hash===nextHash){show();return}
+   window.history.pushState(null,"",location.pathname+location.search+nextHash);
+   show();
+ }
+ addEventListener("hashchange",show);
+ addEventListener("popstate",show);
+window.addEventListener("face-arena-photo-urls-refreshed",event=>{
+  const urls=event.detail?.urls||{};
+  document.querySelectorAll("img[data-photo-path]").forEach(img=>{
+    const next=urls[img.dataset.photoPath];
+    if(next&&img.src!==next)img.src=next;
+  });
+});
+window.addEventListener("face-arena-snapshot",event=>{
+  const snapshot=event.detail;
+  if(!snapshot){
+    photos=[];history=[];arenaResults=[];VOTED=new Set();MY={};participantStats={};
+    arenaBattles=createDefaultArena();profile={name:"Вы",handle:"user",isVerified:false,role:"user"};
+    updateArenaStats();
+    const activeHash=location.hash.slice(1);
+    // Re-render the current route after an account change so private DOM and
+    // in-flight profile requests from the previous account cannot remain visible.
+    if(/^profile-[0-9a-f-]{36}$/i.test(activeHash))renderPublicProfile(decodeURIComponent(activeHash.slice(8)));
+    else if(activeHash.startsWith("match-"))location.hash="queue";
+    else if(/^battle-\d+$/.test(activeHash)){
+      $("bv").innerHTML=`<div class="big"><p class="note">${window.FaceArenaSync?.isOnline?.()?"Загружаем бой…":"Войдите в аккаунт, чтобы открыть бой."}</p></div>`;
+    }
+    else if(activeHash.startsWith("result-"))renderResult(decodeURIComponent(activeHash.slice(7)));
+    else if(activeHash==="results")renderResults();
+    else if(activeHash==="notifications")renderNotifications();
+    else if(activeHash==="queue")renderQueue();
+    else if(activeHash==="profile")renderProfile();
+    else if(activeHash==="settings")renderSettings();
+    else if(activeHash==="upload")renderUpload();
+    else if(activeHash==="")renderArenaGrid();
+    return;
+  }
+  photos=snapshot.photos||[];
+  arenaBattles=snapshot.arenaBattles||createDefaultArena();
+  history=snapshot.history||[];
+  arenaResults=snapshot.arenaResults||[];
+  VOTED=snapshot.VOTED||new Set();
+  MY=snapshot.MY||{};
+  profile=snapshot.profile||profile;
+  participantStats=snapshot.participantStats||{};
+  topArenaRanking=Array.isArray(snapshot.topArenaRanking)?snapshot.topArenaRanking:null;
+  if(location.hash.slice(1)==="settings"){
+    const preview=$("profileAvatarPreview");
+    if(preview){
+      preview.dataset.photoPath=profile.avatarPath||"";
+      preview.src=profile.avatarUrl||"";
+      preview.hidden=!profile.avatarUrl;
+    }
+    const avatarButton=$("chooseProfileAvatar");
+    if(avatarButton)avatarButton.textContent=profile.avatarPath?"Изменить фото":"Добавить фото";
+  }
+  updateArenaStats();
+  const hash=location.hash.slice(1);
+  if(hash==="results")renderResults();
+  else if(hash==="notifications")renderNotifications();
+  else if(hash.startsWith("result-"))renderResult(decodeURIComponent(hash.slice(7)));
+  else if(/^battle-\d+$/.test(hash)){
+    const battleId=Number(hash.slice(7));
+    const battle=arenaBattles.find(item=>item.id===battleId);
+    if(battle?.battleUid)bview(battleId);
+    else {location.hash="";renderArenaGrid();}
+  }
+  else if(hash==="queue")renderQueue();
+  else if(/^profile-[0-9a-f-]{36}$/i.test(hash))renderPublicProfile(decodeURIComponent(hash.slice(8)));
+  else if(hash==="profile")renderProfile();
+  else if(hash==="upload")renderUpload();
+  else if(hash==="")renderArenaGrid();
+  // The boot screen is dismissed by face-arena-critical-images-ready after
+  // the first screen's battle photos have loaded and decoded.
+  // Settings has its own focused snapshot listener; do not rebuild it on every arena update.
+});
+renderArenaGrid();
+show();
+updateNotificationBadges();
+setInterval(()=>{tickArena();tick2();tickQueueWaits()},1000);
+
+const IC={
+  results:'<path d="M4 5h16M4 12h16M4 19h16"/>',
+  arena:'<path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"/>',
+  q:'<path d="M4 6h16M4 12h16M4 18h10"/>',
+  up:'<path d="M12 5v14M5 12h14"/>',
+  pr:'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>'
+};
+["arena","q","up","pr","results"].forEach((k,i)=>{
+  const b=document.createElement("button");
+  if(!i)b.className="on";
+  b.innerHTML=`<svg viewBox="0 0 24 24">${IC[k]}</svg>${t(k)}`;
+  b.onclick=()=>{
+    if(i===0)navigateTab("");
+    else if(i===1)navigateTab("queue");
+    else if(i===2)navigateTab("upload");
+    else if(i===3)navigateTab("profile");
+    else navigateTab("results");
+  };
+  $("tabs").appendChild(b);
+});
+// Restore FIFO progression for queued photos from an existing LocalStorage session.
+tryFillSlots();
+saveState();
+</script>
+
+<script>
+(() => {
+  const SUPABASE_URL = "https://nvvkmjeobnnxlrpiuisf.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_-a7Qjy5NL3ZUaKfLpIi4Dg_x2hzmNKE";
+  const escAdmin = value => String(value ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const ADMIN_USER_ID = "ac86c2a7-9ec6-4016-a0d5-a6810578fd2c";
+  let adminClient = null;
+  let adminBusy = false;
+  function isAdmin() {
+    // UI visibility is tied to the already verified Google-linked account.
+    // Every privileged operation is still authorized by the Edge Function.
+    return window.FaceArenaSync?.getUser?.()?.id === ADMIN_USER_ID;
+  }
+  function client() {
+    if (!adminClient) adminClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    return adminClient;
+  }
+  async function invoke(action, payload = {}) {
+    const { data, error } = await client().functions.invoke("admin-photos", { body: { action, ...payload } });
+    if (error) {
+      let message = error.message || "Ошибка серверной функции";
+      try { const body = await error.context?.json?.(); if (body?.error) message = body.error; } catch (_) {}
+      throw new Error(message);
+    }
+    if (data?.error) throw new Error(data.error);
+    return data;
+  }
+  async function showAdminPanel() {
+    if (!isAdmin()) return;
+    const host = document.getElementById("sv");
+    if (!host) return;
+    document.getElementById("setMain").style.display = "none";
+    host.querySelectorAll(".settings-sub").forEach(el => el.classList.remove("on"));
+    let panel = document.getElementById("faAdminPanel");
+    if (!panel) {
+      panel = document.createElement("section");
+      panel.id = "faAdminPanel";
+      panel.className = "settings-sub on";
+      panel.style.cssText = "display:block;padding-bottom:32px";
+      panel.innerHTML = `
+        <button type="button" class="settings-back" id="faAdminBack">← Назад</button>
+        <h2 class="sec-h" style="margin-top:4px">Администрирование</h2>
+        <p class="set-info">Управление фотографиями участников FACE ARENA. Удаление файлов необратимо.</p>
+        <section style="margin:16px 0;padding:14px;border:1px solid #353535;border-radius:14px;background:#101010">
+          <h3 style="font:800 13px Unbounded,Arial,sans-serif;margin:0 0 10px">Режим обслуживания</h3>
+          <label style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;color:#fff;font-size:13px">
+            <span><strong>Остановить все баттлы</strong><small style="display:block;color:var(--mu);font-size:11px;margin-top:4px">Текущие матчи будут отменены без результата</small></span>
+            <input id="faAdminBattlesPaused" type="checkbox" style="width:22px;height:22px;accent-color:#ff3434">
+          </label>
+          <label style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;color:#fff;font-size:13px;border-top:1px solid #252525">
+            <span><strong>Запретить публикации</strong><small style="display:block;color:var(--mu);font-size:11px;margin-top:4px">Новые фотографии нельзя будет загрузить</small></span>
+            <input id="faAdminPublicationsBlocked" type="checkbox" style="width:22px;height:22px;accent-color:#ff3434">
+          </label>
+          <button type="button" id="faAdminSaveControls" class="menu-item" style="width:100%;padding:12px;border:1px solid #555;border-radius:10px;background:#1a1a1a;color:#fff;font-weight:800">Сохранить настройки</button>
+          <div id="faAdminControlsStatus" class="set-info" aria-live="polite" style="margin-top:8px"></div>
+        </section>
+        <h3 style="font:800 13px Unbounded,Arial,sans-serif;margin:18px 0 8px">Фото ожидают проверки</h3>
+        <div id="faModerationStats" class="set-info">Загружаем список…</div>
+        <div id="faModerationPhotos" style="display:grid;gap:10px;margin:10px 0 18px"></div>
+        <div id="faAdminStats" class="set-info">Загружаем фотографии…</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin:12px 0">
+          <button type="button" class="menu-item" id="faAdminRefresh" style="padding:10px 14px;border:1px solid #333;border-radius:10px">Обновить список</button>
+          <button type="button" class="menu-item danger" id="faAdminDeleteAll" style="padding:10px 14px;border:1px solid #5a2424;border-radius:10px">Удалить все фото</button>
+        </div>
+        <div id="faAdminNotice" class="set-info" aria-live="polite"></div>
+        <div id="faAdminPhotos" style="display:grid;gap:10px"></div>`;
+      host.appendChild(panel);
+      document.getElementById("faAdminBack").onclick = () => {
+        panel.classList.remove("on");
+        document.getElementById("setMain").style.display = "";
+      };
+      document.getElementById("faAdminRefresh").onclick = loadPhotos;
+      document.getElementById("faAdminDeleteAll").onclick = deleteAllPhotos;
+      document.getElementById("faAdminSaveControls").onclick = savePlatformControls;
+    } else {
+      panel.classList.add("on");
+    }
+    loadPhotos();
+    loadPlatformControls();
+  }
+  async function loadPlatformControls() {
+    const status = document.getElementById("faAdminControlsStatus");
+    try {
+      const result = await invoke("get_platform_controls");
+      const controls = result.controls || {};
+      document.getElementById("faAdminBattlesPaused").checked = controls.battles_paused === true;
+      document.getElementById("faAdminPublicationsBlocked").checked = controls.publications_blocked === true;
+      if (status) status.textContent = "Текущие настройки загружены.";
+    } catch (error) {
+      if (status) status.textContent = "Не удалось загрузить настройки обслуживания.";
+      console.error("[FACE ARENA platform controls]", error);
+    }
+  }
+  async function savePlatformControls() {
+    if (adminBusy || !isAdmin()) return;
+    const battlesPaused = document.getElementById("faAdminBattlesPaused").checked;
+    const publicationsBlocked = document.getElementById("faAdminPublicationsBlocked").checked;
+    if (battlesPaused && !confirm("Остановить все текущие баттлы? Незавершённые матчи будут отменены без победителя и без изменения рейтинга.")) return;
+    const button = document.getElementById("faAdminSaveControls");
+    const status = document.getElementById("faAdminControlsStatus");
+    adminBusy = true;
+    if (button) button.disabled = true;
+    if (status) status.textContent = "Применяем настройки…";
+    try {
+      const result = await invoke("set_platform_controls", { battles_paused: battlesPaused, publications_blocked: publicationsBlocked });
+      const cancelled = Number(result.result?.cancelled_battles || 0);
+      if (status) status.textContent = "Сохранено. Отменено текущих баттлов: " + cancelled + ". Настройки применяются для всех пользователей.";
+      window.FaceArenaSync?.loadSnapshot?.().catch(() => {});
+    } catch (error) {
+      console.error("[FACE ARENA save platform controls]", error);
+      if (status) status.textContent = "Не удалось применить настройки. Ничего не изменено: " + (error.message || "ошибка сервера");
+      await loadPlatformControls();
+    } finally {
+      adminBusy = false;
+      if (button) button.disabled = false;
+    }
+  }
+  async function loadModerationPhotos() {
+    const stats = document.getElementById("faModerationStats");
+    const list = document.getElementById("faModerationPhotos");
+    if (!stats || !list) return;
+    stats.textContent = "Загружаем список…";
+    try {
+      const result = await invoke("list_moderation");
+      const photos = result.photos || [];
+      stats.textContent = photos.length ? "Ожидают решения: " + photos.length : "Нет фотографий, ожидающих проверки.";
+      if (!photos.length) {
+        list.innerHTML = "";
+        return;
+      }
+      list.innerHTML = photos.map(photo => `
+        <article style="display:grid;grid-template-columns:76px minmax(0,1fr);gap:10px;align-items:start;padding:10px;border:1px solid #4a3b20;border-radius:13px;background:#15130f">
+          ${photo.image_url ? `<img src="${escAdmin(photo.image_url)}" alt="" loading="lazy" style="width:76px;height:88px;object-fit:cover;border-radius:9px;background:#050505">` : '<div style="width:76px;height:88px;border-radius:9px;background:#191919;display:grid;place-items:center;color:#777;font-size:11px">Нет файла</div>'}
+          <div style="min-width:0">
+            <strong style="display:block;font-size:13px;overflow-wrap:anywhere">${escAdmin(photo.display_name)} · @${escAdmin(photo.handle)}</strong>
+            <span style="display:block;color:var(--mu);font-size:11px;margin-top:5px">${escAdmin(photo.reason || "Требуется ручная проверка")}</span>
+            <span style="display:block;color:var(--mu);font-size:10px;margin-top:4px">${escAdmin((photo.categories || []).join(", "))} · уверенность ${Math.round((Number(photo.confidence) || 0) * 100)}%</span>
+            <div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:9px">
+              <button type="button" data-review-approve="${escAdmin(photo.id)}" class="menu-item" style="padding:8px 10px;border:1px solid #315b3b;border-radius:9px;color:#8cdb9b;font-size:11px">Одобрить</button>
+              <button type="button" data-review-reject="${escAdmin(photo.id)}" class="menu-item danger" style="padding:8px 10px;border:1px solid #542525;border-radius:9px;font-size:11px">Отклонить</button>
+            </div>
+          </div>
+        </article>`).join("");
+      list.querySelectorAll("[data-review-approve]").forEach(button => {
+        button.onclick = () => moderatePendingPhoto(button.dataset.reviewApprove, "approve_moderation");
+      });
+      list.querySelectorAll("[data-review-reject]").forEach(button => {
+        button.onclick = () => moderatePendingPhoto(button.dataset.reviewReject, "reject_moderation");
+      });
+    } catch (error) {
+      stats.textContent = "Не удалось загрузить очередь ручной проверки.";
+      console.error("[FACE ARENA admin moderation list]", error);
+    }
+  }
+  async function moderatePendingPhoto(moderationId, action) {
+    if (adminBusy || !isAdmin()) return;
+    if (action === "reject_moderation" && !confirm("Отклонить фотографию и удалить её из закрытого хранилища?")) return;
+    adminBusy = true;
+    const notice = document.getElementById("faAdminNotice");
+    try {
+      await invoke(action, { moderation_id: moderationId });
+      if (notice) notice.textContent = action === "approve_moderation"
+        ? "Фото одобрено и добавлено в очередь."
+        : "Фото отклонено и удалено из закрытого хранилища.";
+      await loadPhotos();
+      await loadModerationPhotos();
+      window.FaceArenaSync?.loadSnapshot?.().catch(() => {});
+    } catch (error) {
+      console.error("[FACE ARENA admin moderation action]", error);
+      if (notice) notice.textContent = "Не удалось обработать фотографию. Обновите список и попробуйте ещё раз.";
+      await loadModerationPhotos();
+    } finally {
+      adminBusy = false;
+    }
+  }
+  async function loadPhotos() {
+    const stats = document.getElementById("faAdminStats");
+    const list = document.getElementById("faAdminPhotos");
+    const notice = document.getElementById("faAdminNotice");
+    if (!stats || !list) return;
+    loadModerationPhotos();
+    stats.textContent = "Загружаем фотографии…";
+    list.innerHTML = "";
+    try {
+      const result = await invoke("list");
+      const photos = result.photos || [];
+      const active = photos.filter(p => p.status !== "removed").length;
+      stats.textContent = "Всего записей: " + photos.length + " · Файлов, помеченных активными: " + active;
+      if (!photos.length) {
+        list.innerHTML = '<div class="empty-box"><p>Фотографий в базе нет.</p></div>';
+        return;
+      }
+      list.innerHTML = photos.map(photo => `
+        <article style="display:grid;grid-template-columns:76px minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px;border:1px solid #252525;border-radius:13px;background:#101010">
+          ${photo.image_url ? `<img src="${escAdmin(photo.image_url)}" alt="" loading="lazy" style="width:76px;height:88px;object-fit:cover;border-radius:9px;background:#050505">` : '<div style="width:76px;height:88px;border-radius:9px;background:#191919;display:grid;place-items:center;color:#777;font-size:11px;text-align:center">Нет<br>файла</div>'}
+          <div style="min-width:0">
+            <strong style="display:block;font-size:13px;overflow-wrap:anywhere">${escAdmin(photo.display_name)} · @${escAdmin(photo.handle)}</strong>
+            <span style="display:block;color:var(--mu);font-size:11px;margin-top:5px">${escAdmin(photo.status)} · ${escAdmin(new Date(photo.created_at).toLocaleString("ru-RU"))}</span>
+            <span style="display:block;color:var(--mu);font-size:10px;margin-top:4px;overflow-wrap:anywhere">${escAdmin(photo.id)}</span>
+          </div>
+          <button type="button" data-admin-delete="${escAdmin(photo.id)}" class="menu-item danger" style="padding:9px 7px;border:1px solid #542525;border-radius:9px;font-size:11px">Удалить</button>
+        </article>`).join("");
+      list.querySelectorAll("[data-admin-delete]").forEach(button => {
+        button.onclick = () => deleteOnePhoto(button.dataset.adminDelete);
+      });
+      if (notice) notice.textContent = "";
+    } catch (error) {
+      stats.textContent = "Не удалось загрузить список.";
+      console.error("[FACE ARENA admin list photos]", error); if (notice) notice.textContent = "Не удалось загрузить фотографии. Попробуйте обновить список.";
+    }
+  }
+  async function deleteOnePhoto(photoId) {
+    if (adminBusy || !isAdmin()) return;
+    if (!confirm("Удалить этот файл фотографии навсегда? Запись и результаты баттлов останутся в базе.")) return;
+    adminBusy = true;
+    try {
+      await invoke("delete_one", { photo_id: photoId });
+      document.getElementById("faAdminNotice").textContent = "Файл удалён без возможности восстановления.";
+      await loadPhotos();
+      window.FaceArenaSync?.loadSnapshot?.().catch(() => {});
+    } catch (error) {
+      console.error("[FACE ARENA admin delete photo]", error); document.getElementById("faAdminNotice").textContent = "Не удалось удалить фотографию. Попробуйте ещё раз.";
+    } finally { adminBusy = false; }
+  }
+  async function deleteAllPhotos() {
+    if (adminBusy || !isAdmin()) return;
+    if (!confirm("ВНИМАНИЕ: будут безвозвратно удалены все файлы фотографий, включая фото активных баттлов и чемпионов. История и записи результатов сохранятся, но изображения восстановить нельзя. Продолжить?")) return;
+    const phrase = prompt("Для подтверждения введи точно: УДАЛИТЬ ВСЕ ФОТО");
+    if (phrase !== "УДАЛИТЬ ВСЕ ФОТО") return;
+    adminBusy = true;
+    const button = document.getElementById("faAdminDeleteAll");
+    if (button) button.disabled = true;
+    const notice = document.getElementById("faAdminNotice");
+    try {
+      const result = await invoke("delete_all", { confirmation: "DELETE_ALL_ARENA_PHOTOS" });
+      notice.textContent = "Удалено файловых записей: " + result.deleted + " из " + result.total + ". Изображения удалены из Storage; история сохранена.";
+      await loadPhotos();
+      window.FaceArenaSync?.loadSnapshot?.().catch(() => {});
+    } catch (error) {
+      console.error("[FACE ARENA admin delete all photos]", error); notice.textContent = "Не удалось завершить удаление всех фотографий. Обновите список и проверьте результат.";
+      await loadPhotos();
+    } finally {
+      adminBusy = false;
+      if (button) button.disabled = false;
+    }
+  }
+  let adminMenuCheck = null;
+  async function injectAdminEntry() {
+    const host = document.getElementById("sv");
+    const menu = host?.querySelector(".settings-menu-list");
+    if (!host || !menu) return;
+    const existing = menu.querySelector("[data-fa-admin-entry]");
+    const localUserId = window.FaceArenaSync?.getUser?.()?.id;
+    if (localUserId === ADMIN_USER_ID) {
+      if (existing) return;
+      addAdminMenuItem(menu);
+      return;
+    }
+    if (existing) existing.remove();
+    const sync = window.FaceArenaSync;
+    if (!sync?.client?.auth?.getUser || adminMenuCheck) return;
+    adminMenuCheck = (async () => {
+      try {
+        const { data, error } = await sync.client.auth.getUser();
+        if (error) throw error;
+        const currentMenu = document.querySelector("#sv .settings-menu-list");
+        if (data?.user?.id === ADMIN_USER_ID && currentMenu) {
+          addAdminMenuItem(currentMenu);
+        }
+      } catch (error) {
+        console.warn("[FACE ARENA admin menu check]", error);
+      } finally {
+        adminMenuCheck = null;
+      }
+    })();
+    return adminMenuCheck;
+  }
+  function addAdminMenuItem(menu) {
+    if (menu.querySelector("[data-fa-admin-entry]")) return;
+    const item = document.createElement("li");
+    item.dataset.faAdminEntry = "true";
+    item.innerHTML = '<button type="button" class="menu-item" style="color:#65a4ff" data-fa-admin-open>Администрирование</button>';
+    menu.insertBefore(item, menu.querySelector('[data-go="signout"]') || null);
+    item.querySelector("button").onclick = showAdminPanel;
+  }
+  function start() {
+    const host = document.getElementById("sv");
+    if (!host) return;
+    const observer = new MutationObserver(injectAdminEntry);
+    observer.observe(host, { childList: true, subtree: true });
+    window.addEventListener("face-arena-snapshot", injectAdminEntry);
+    window.addEventListener("face-arena-authenticated-boot-start", injectAdminEntry);
+    window.addEventListener("face-arena-authenticated-boot-stop", injectAdminEntry);
+    injectAdminEntry();
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start, { once: true });
+  else start();
+})();
+</script>
+
+
+<script id="fa-push-onboarding-script">
+(()=>{
+  const overlay=document.getElementById("fa-push-onboarding");
+  const enable=document.getElementById("fa-push-onboarding-enable");
+  const later=document.getElementById("fa-push-onboarding-later");
+  const loader=document.getElementById("fa-boot-loader");
+  if(!overlay||!enable||!later)return;
+  let checked=false,shown=false;
+  const dismissedKey=userId=>"fa_push_prompt_dismissed_v1:"+userId;
+  const dismiss=()=>{
+    const userId=window.FaceArenaSync?.getUser?.()?.id;
+    if(userId){try{localStorage.setItem(dismissedKey(userId),"1")}catch(_){}}
+    overlay.classList.remove("is-visible");
+  };
+  later.addEventListener("click",dismiss);
+  overlay.addEventListener("click",event=>{if(event.target===overlay)dismiss()});
+  const maybeShow=async()=>{
+    if(checked||shown)return;
+    if(loader&&!loader.classList.contains("is-hidden"))return;
+    const sync=window.FaceArenaSync;
+    const user=sync?.getUser?.();
+    if(!user?.id||!sync?.isOnline?.())return;
+    checked=true;
+    try{
+      const status=await sync.getPushStatus();
+      if(!status.supported||status.subscribed||status.permission!=="default")return;
+      try{if(localStorage.getItem(dismissedKey(user.id))==="1")return}catch(_){}
+      const isIOS=/iPhone|iPad|iPod/i.test(navigator.userAgent)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);
+      const standalone=window.matchMedia("(display-mode: standalone)").matches||navigator.standalone===true;
+      if(isIOS&&!standalone){
+        document.getElementById("fa-push-onboarding-description").textContent="Сначала добавь FACE ARENA на экран «Домой» через меню «Поделиться», затем открой приложение с его значка и включи уведомления в настройках.";
+        enable.textContent="Понятно";
+        enable.onclick=dismiss;
+      }else{
+        enable.onclick=async()=>{
+          enable.disabled=true;
+          enable.textContent="Подключаем…";
+          try{
+            await sync.enablePush();
+            overlay.classList.remove("is-visible");
+            if(typeof toast==="function")toast("Push-уведомления включены");
+          }catch(error){
+            if(typeof toast==="function")toast(window.FaceArenaErrors?.message?.(error,"Не удалось включить уведомления.")||"Не удалось включить уведомления.");
+            enable.disabled=false;
+            enable.textContent="Повторить";
+          }
+        };
+      }
+      shown=true;
+      overlay.classList.add("is-visible");
+    }catch(_){checked=false;}
+  };
+  const observer=loader?new MutationObserver(()=>{
+    if(loader.classList.contains("is-hidden"))setTimeout(maybeShow,450);
+  }):null;
+  if(observer)observer.observe(loader,{attributes:true,attributeFilter:["class"]});
+  window.addEventListener("face-arena-authenticated-boot-stop",()=>setTimeout(maybeShow,450));
+  window.addEventListener("face-arena-snapshot",()=>{if(!checked)setTimeout(maybeShow,450)});
+  if(loader?.classList.contains("is-hidden"))setTimeout(maybeShow,700);
+})();
+</script>
+
+<script>
+(() => {
+  const SUPABASE_URL = "https://nvvkmjeobnnxlrpiuisf.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_-a7Qjy5NL3ZUaKfLpIi4Dg_x2hzmNKE";
+  let client = null;
+  let banner = null;
+  const adminId = "ac86c2a7-9ec6-4016-a0d5-a6810578fd2c";
+  function getClient() {
+    if (!client && window.supabase?.createClient) client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    return client;
+  }
+  function render(controls) {
+    window.FaceArenaPlatformControls = {
+      battlesPaused: controls?.battles_paused === true,
+      publicationsBlocked: controls?.publications_blocked === true
+    };
+    const userId = window.FaceArenaSync?.getUser?.()?.id;
+    if (userId === adminId) {
+      if (banner) banner.remove();
+      banner = null;
+      return;
+    }
+    const paused = window.FaceArenaPlatformControls.battlesPaused;
+    const blocked = window.FaceArenaPlatformControls.publicationsBlocked;
+    if (!paused && !blocked) {
+      if (banner) banner.remove();
+      banner = null;
+      return;
+    }
+    if (!banner) {
+      banner = document.createElement("aside");
+      banner.id = "fa-platform-maintenance-banner";
+      banner.style.cssText = "margin:10px 12px 14px;padding:13px 14px;border:1px solid #553030;border-radius:13px;background:#170e0e;color:#fff;font:600 12px/1.5 Manrope,Arial,sans-serif";
+      const header = document.querySelector("header");
+      if (header?.parentNode) header.insertAdjacentElement("afterend", banner);
+      else document.body.prepend(banner);
+    }
+    let message = "";
+    if (paused && blocked) message = "Техническое обслуживание: баттлы остановлены, новые публикации временно недоступны. Ваши фотографии, профили и результаты завершённых матчей сохранены. Спасибо за понимание.";
+    else if (paused) message = "Баттлы временно приостановлены. Незавершённые матчи отменены без победителя и без изменения рейтинга. Завершённые результаты и фотографии сохранены.";
+    else message = "Новые публикации временно приостановлены. Уже загруженные фотографии, профиль и результаты доступны. Спасибо за понимание.";
+    banner.textContent = message;
+  }
+  async function refresh() {
+    try {
+      const api = getClient();
+      if (!api) return;
+      const { data, error } = await api.rpc("get_arena_platform_controls");
+      if (error) throw error;
+      render((Array.isArray(data) ? data[0] : data) || {});
+    } catch (error) {
+      console.warn("[FACE ARENA maintenance status]", error);
+    }
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", refresh, { once: true });
+  else refresh();
+  setInterval(refresh, 20000);
+  document.addEventListener("visibilitychange", () => { if (!document.hidden) refresh(); });
+  window.addEventListener("face-arena-authenticated-boot-stop", refresh);
+})();
+</script>
+</body>
+</html>
