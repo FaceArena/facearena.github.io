@@ -2645,7 +2645,7 @@ saveState();
   const close=document.getElementById("fa-install-guide-close");
   const loader=document.getElementById("fa-boot-loader");
   if(!overlay||!close)return;
-  const key="fa_install_guide_seen_v1";
+  const key="fa_install_guide_seen_v3";
   let shown=false;
   const hasSeen=()=>{try{return localStorage.getItem(key)==="1"}catch(_){return false}};
   const dismiss=()=>{
