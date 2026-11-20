@@ -11,7 +11,11 @@ const allowedOrigins = new Set([
 ]);
 
 function corsHeaders(origin: string | null) {
-  const allowed = origin && allowedOrigins.has(origin) ? origin : "https://facearena.github.io";
+  const isAllowedOrigin = !!origin && (
+    allowedOrigins.has(origin) ||
+    /^https:\/\/[a-z0-9-]+\.face-arena-cloudflare\.pages\.dev$/i.test(origin)
+  );
+  const allowed = isAllowedOrigin ? origin : "https://facearena.github.io";
   return {
     "Access-Control-Allow-Origin": allowed,
     "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
