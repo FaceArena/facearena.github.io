@@ -487,6 +487,22 @@ html.no-anim .victory-overlay,html.no-anim .victory-panel{transition:none}
 .fa-install-guide-steps strong{display:block;font:700 12px var(--bd);color:#fff;margin:1px 0 3px}
 .fa-install-guide-steps p{margin:0;color:#a5a5a5;font:400 11px/1.45 var(--bd)}
 .fa-install-guide-tip{margin:13px 1px 0;color:#858585;font:400 10px/1.5 var(--bd);text-align:center}
+.fa-install-guide-visual-steps{gap:10px}
+.fa-install-guide-visual-steps li{grid-template-columns:27px minmax(0,1fr);padding:11px}
+.fa-install-guide-shot{margin-top:9px;max-width:250px;min-height:78px;border:1px solid #303030;border-radius:12px;background:#080808;padding:8px;overflow:hidden}
+.fa-shot-browser{display:flex;justify-content:space-between;align-items:center;gap:6px;color:#aaa;font:9px var(--bd)}
+.fa-shot-browser b{background:#202020;border-radius:8px;padding:5px 10px;color:#ddd;font-weight:600}
+.fa-shot-page{height:55px;margin-top:7px;border-radius:7px;background:linear-gradient(145deg,#161616,#070707);display:flex;flex-direction:column;align-items:center;justify-content:center;font:800 10px var(--hd);color:#fff}
+.fa-shot-page em{font-style:normal}.fa-shot-page i{color:#ff3434}.fa-shot-page u{color:#3478ff;text-decoration:none}.fa-shot-page small{margin-top:4px;color:#777;font:7px var(--bd);letter-spacing:2px}
+.fa-shot-toolbar{text-align:center;color:#bbb;font:13px var(--bd);padding-top:5px}
+.fa-shot-share,.fa-shot-menu,.fa-shot-confirm{max-width:210px;margin:auto;border-radius:9px;background:#1b1b1d;padding:9px;color:#eee;font:9px var(--bd)}
+.fa-shot-share-head{font-weight:700;margin-bottom:8px}.fa-shot-share-row{display:flex;justify-content:space-between;color:#aaa;padding:7px 0;border-bottom:1px solid #383838}
+.fa-shot-share-option{padding:9px 4px 3px;font-weight:700}.fa-shot-callout{color:#3478ff;text-align:right;font:700 9px var(--bd);margin-top:5px}
+.fa-shot-menu>div{padding:7px;border-bottom:1px solid #303030}.fa-shot-menu .fa-shot-selected{color:#fff;background:#303033;border-radius:6px}.fa-shot-selected b{float:right;color:#3478ff}
+.fa-shot-confirm{display:grid;justify-items:center;gap:7px}.fa-shot-appicon{width:32px;height:32px;border-radius:8px;background:#080808;border:1px solid #333;display:grid;place-items:center;font:800 12px var(--hd)}.fa-shot-appicon:after{content:"";position:absolute}
+.fa-shot-confirm span{color:#aaa;font-size:8px}.fa-shot-toggle{display:inline-block;background:#287cff;color:#fff;border-radius:12px;padding:2px 7px}.fa-shot-confirm strong{background:#3478ff;border-radius:7px;padding:6px 24px;color:#fff}
+.fa-install-guide-apple-link{display:block;text-align:center;margin:10px auto 0;color:#8eafff;font:700 10px var(--bd);text-decoration:none}
+
 .fa-install-guide-actions{display:grid;grid-template-columns:1fr;gap:8px;margin-top:17px}
 .fa-install-guide-actions button{min-height:47px;border:0;border-radius:12px;background:linear-gradient(100deg,#ef3434,#3478ff);color:#fff;font:800 11px var(--hd);letter-spacing:.04em;text-transform:uppercase;cursor:pointer}
 .fa-install-guide-actions button:focus-visible{outline:2px solid #fff;outline-offset:3px}
@@ -523,13 +539,14 @@ html.no-anim .victory-overlay,html.no-anim .victory-panel{transition:none}
     <div class="fa-install-guide-kicker">Быстрый доступ на iPhone</div>
     <h2 id="fa-install-guide-title">Твоя арена —<br>в одном нажатии</h2>
     <p class="fa-install-guide-intro" id="fa-install-guide-description">Добавь FACE ARENA на главный экран iPhone. Так будет удобнее возвращаться на арену: откроешь её прямо с иконки, без поиска сайта во вкладках.</p>
-    <ol class="fa-install-guide-steps">
-      <li><span class="fa-install-guide-num">1</span><div><strong>Открой сайт в Safari</strong><p>Если ты сейчас в другом браузере или мессенджере, открой FACE ARENA через Safari.</p></div></li>
-      <li><span class="fa-install-guide-num">2</span><div><strong>Нажми «Поделиться»</strong><p>Это значок квадрата со стрелкой вверх в меню Safari.</p></div></li>
-      <li><span class="fa-install-guide-num">3</span><div><strong>Выбери «На экран Домой»</strong><p>Если пункта не видно, прокрути меню вниз и найди его в списке действий.</p></div></li>
-      <li><span class="fa-install-guide-num">4</span><div><strong>Включи «Открывать как веб-приложение»</strong><p>Нажми «Добавить» — и иконка FACE ARENA появится на главном экране.</p></div></li>
+    <ol class="fa-install-guide-steps fa-install-guide-visual-steps">
+      <li><span class="fa-install-guide-num">1</span><div><strong>Открой FACE ARENA в Safari</strong><p>Для установки открой сайт именно в Safari на iPhone.</p><div class="fa-install-guide-shot"><div class="fa-shot-browser"><span>FACE ARENA</span><b>facearena.github.io</b><span>↻</span></div><div class="fa-shot-page">FACE ARENA <em>(<i>F</i><u>A</u>)</em><small>ТВОЯ АРЕНА</small></div><div class="fa-shot-toolbar">◁　○　□　↑</div></div></div></li>
+      <li><span class="fa-install-guide-num">2</span><div><strong>Нажми «Поделиться»</strong><p>Нажми значок квадрата со стрелкой вверх в панели Safari.</p><div class="fa-install-guide-shot"><div class="fa-shot-share"><div class="fa-shot-share-head">Поделиться</div><div class="fa-shot-share-row"><span>AirDrop</span><span>Сообщения</span><span>Почта</span></div><div class="fa-shot-share-option"><b>↑</b>　Поделиться</div></div><div class="fa-shot-callout">↑ Нужная кнопка</div></div></div></li>
+      <li><span class="fa-install-guide-num">3</span><div><strong>Выбери «На экран Домой»</strong><p>Прокрути список действий и нажми «На экран Домой». Если пункта нет — открой «Изменить действия» и добавь его.</p><div class="fa-install-guide-shot"><div class="fa-shot-menu"><div>Добавить в избранное</div><div>Добавить закладку</div><div class="fa-shot-selected">＋　На экран Домой <b>✓</b></div><div>Печать</div></div></div></div></li>
+      <li><span class="fa-install-guide-num">4</span><div><strong>Подтверди установку</strong><p>Оставь «Открывать как веб-приложение» включённым, если переключатель есть, и нажми «Добавить».</p><div class="fa-install-guide-shot"><div class="fa-shot-confirm"><div class="fa-shot-appicon">FA</div><b>FACE ARENA</b><span>Открывать как веб-приложение　<span class="fa-shot-toggle">●</span></span><strong>Добавить</strong></div></div></div></li>
     </ol>
-    <p class="fa-install-guide-tip">Это бесплатно. Установка не удаляет сайт и не меняет твой аккаунт.</p>
+    <p class="fa-install-guide-tip">Готово! Иконка FACE ARENA появится на главном экране. Открывай арену одним нажатием — не нужно каждый раз искать сайт в Safari.</p>
+    <a class="fa-install-guide-apple-link" href="https://support.apple.com/en-lamr/guide/iphone/iphea86e5236/ios" target="_blank" rel="noopener">Официальная инструкция Apple ↗</a>
     <div class="fa-install-guide-actions"><button type="button" id="fa-install-guide-close">Понятно, перейти к арене</button></div>
   </section>
 </div>
