@@ -37,14 +37,14 @@ li span{color:var(--mu);font-size:13px;display:block}
 .k svg{width:15px;height:15px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .note{margin:24px 0 0;color:var(--mu);font-size:12px;text-align:center}
 .back{display:block;width:max-content;margin:26px auto 0;color:#aaa;text-decoration:none;font-size:12px;font-weight:700}
-.back:hover{color:#fff}
+.back:hover{color:#fff}.is-embedded .back{display:none}
 [hidden]{display:none!important}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
 <main class="wrap">
-<img class="icon" alt="Иконка FACE ARENA" width="84" height="84" src="./icons/apple-touch-icon.png">
+<img class="icon" alt="Иконка FACE ARENA" width="84" height="84" src="https://face-arena-cloudflare.pages.dev/IMG_9559.png?v=20261121">
 <div class="brand">FACE ARENA</div>
 <h1>Добавьте на экран «Домой»</h1>
 <p class="lead">Для удобства: FACE ARENA откроется в один тап, как приложение, без адресной строки.</p>
@@ -84,6 +84,7 @@ document.getElementById("and").hidden=selected!=="and";
 });
 });
 })();
+if(window.self!==window.top)document.documentElement.classList.add('is-embedded');
 </script>
 </body>
 </html>
