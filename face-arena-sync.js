@@ -324,7 +324,7 @@
       gate.id = "fa-auth-gate";
       gate.innerHTML = `
         <div id="fa-auth-card">
-          <div class="fa-logo">FACE ARENA</div>
+          <div class="fa-logo">FACE ARENA (<span style="color:#ff3434">F</span><span style="color:#3478ff">A</span>)</div>
           <h2 id="fa-auth-title">Войти в арену</h2>
           <p id="fa-auth-desc">Войдите, чтобы участвовать в общих битвах и сохранять результаты на всех устройствах.</p>
           <input id="fa-auth-name" autocomplete="nickname" maxlength="32" placeholder="Ваше имя">
