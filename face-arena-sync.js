@@ -307,7 +307,7 @@
         #fa-auth-gate{position:fixed;inset:0;z-index:99999;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(5,5,5,.96);backdrop-filter:blur(18px)}
         #fa-auth-gate.on{display:flex}
         #fa-auth-card{width:min(100%,420px);padding:26px 22px;background:#101010;border:1px solid #262626;border-radius:20px}
-        #fa-auth-card .fa-logo{font:800 13px Unbounded,Arial,sans-serif;letter-spacing:.1em;margin-bottom:28px}
+        #fa-auth-card .fa-logo{font:800 13px Unbounded,Arial,sans-serif;letter-spacing:.1em;line-height:1.55;margin-bottom:28px}#fa-auth-card .fa-logo-mark{display:inline-block;letter-spacing:.12em}
         #fa-auth-card h2{font:800 23px Unbounded,Arial,sans-serif;margin:0 0 8px}
         #fa-auth-card p{color:#999;font-size:13px;margin:0 0 18px}
         #fa-auth-card input{display:block;width:100%;margin:10px 0;padding:14px 13px;border-radius:10px;border:1px solid #303030;background:#080808;color:#fff;font:600 14px Manrope,Arial,sans-serif;outline:none}
@@ -324,7 +324,7 @@
       gate.id = "fa-auth-gate";
       gate.innerHTML = `
         <div id="fa-auth-card">
-          <div class="fa-logo">FACE ARENA (<span style="color:#ff3434">F</span><span style="color:#3478ff">A</span>)</div>
+          <div class="fa-logo">FACE ARENA<br><span class="fa-logo-mark">(<span style="color:#ff3434">F</span><span style="color:#3478ff">A</span>)</span></div>
           <h2 id="fa-auth-title">Войти в арену</h2>
           <p id="fa-auth-desc">Войдите, чтобы участвовать в общих битвах и сохранять результаты на всех устройствах.</p>
           <input id="fa-auth-name" autocomplete="nickname" maxlength="32" placeholder="Ваше имя">
