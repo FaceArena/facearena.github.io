@@ -331,7 +331,6 @@
           <input id="fa-auth-email" type="email" autocomplete="email" placeholder="Email">
           <input id="fa-auth-password" type="password" autocomplete="current-password" placeholder="Пароль (от 8 символов)">
           <button id="fa-auth-submit">Войти</button>
-          <button id="fa-auth-google" class="secondary">Продолжить с Google</button>
           <button id="fa-auth-toggle" class="secondary">Создать аккаунт</button>
           <div id="fa-auth-error" role="status" aria-live="polite"></div>
         </div>`;
@@ -342,7 +341,6 @@
         this.renderAuthGate();
       };
       document.getElementById("fa-auth-submit").onclick = () => this.submitAuth();
-      document.getElementById("fa-auth-google").onclick = () => this.googleAuth();
       gate.addEventListener("keydown", e => {
         if (e.key === "Enter") this.submitAuth();
       });
@@ -377,27 +375,17 @@
       errorEl.textContent = "";
       try {
         const result = this.authMode === "signup"
-          ? await this.client.auth.signUp({ email, password, options: { data: { display_name: name }, emailRedirectTo: location.origin + location.pathname } })
+          ? await this.client.auth.signUp({ email, password, options: { data: { display_name: name } } })
           : await this.client.auth.signInWithPassword({ email, password });
         if (result.error) throw result.error;
         if (this.authMode === "signup" && !result.data.session) {
-          errorEl.textContent = "Проверьте почту и подтвердите email, затем войдите.";
+          errorEl.textContent = "Supabase всё ещё требует подтверждение email. Нужно отключить Confirm email в настройках Auth.";
         }
       } catch (error) {
         errorEl.textContent = friendlyError(error, "Не удалось выполнить вход. Проверьте данные и попробуйте снова.");
       } finally {
         button.disabled = false;
       }
-    }
-
-    async googleAuth() {
-      const errorEl = document.getElementById("fa-auth-error");
-      errorEl.textContent = "";
-      const { error } = await this.client.auth.signInWithOAuth({
-        provider: "google",
-        options: { redirectTo: location.origin + location.pathname }
-      });
-      if (error) errorEl.textContent = friendlyError(error, "Не удалось войти через Google. Попробуйте другой способ входа.");
     }
 
     showFatal(message) {
