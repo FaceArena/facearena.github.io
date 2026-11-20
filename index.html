@@ -3098,7 +3098,7 @@ saveState();
   const loader=document.getElementById("fa-boot-loader");
   const pushGuide=document.getElementById("fa-push-onboarding");
   if(!guide||!close)return;
-  const key="fa_install_guide_seen_v1";
+  const key="fa_install_guide_seen_v2";
   const isIOS=/iPhone|iPad|iPod/i.test(navigator.userAgent)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);
   const isStandalone=window.matchMedia("(display-mode: standalone)").matches||navigator.standalone===true;
   if(!isIOS||isStandalone)return;
