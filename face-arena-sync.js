@@ -1207,6 +1207,18 @@
       return true;
     }
 
+    async deleteAccount() {
+      if (!this.isOnline()) throw new Error("Сначала войдите в аккаунт.");
+      const { data, error } = await this.client.functions.invoke("delete-arena-account", {
+        body: { confirmation: "DELETE" }
+      });
+      if (error) throw error;
+      if (!data?.ok) throw new Error(data?.error || "Не удалось удалить аккаунт.");
+      const { error: signOutError } = await this.client.auth.signOut({ scope: "local" });
+      if (signOutError) console.warn("[FACE ARENA account deletion] local sign-out:", signOutError);
+      return data;
+    }
+
     async signOut() {
       await this.client.auth.signOut();
     }
